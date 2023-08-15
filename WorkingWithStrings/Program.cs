@@ -35,7 +35,7 @@ namespace Test1
                 $"ваш возраст {age}, " +
                 $"ваша национальность {nationality}, " +
                 $"ваша профессия {profession}," +
-                $"ваш знак зодиака {zodiacSign}");
+                $"ваш знак зодиака {zodiacSign}.");
         }
     }
 }
