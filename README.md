@@ -1,2 +1,2 @@
-# kocept_art
+# IJunior
 Дз для Яюниор
