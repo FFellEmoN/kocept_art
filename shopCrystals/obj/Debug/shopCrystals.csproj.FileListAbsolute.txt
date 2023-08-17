@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\shopCrystals\bin\Debug\shopCrystals.exe.config
+D:\Repositoryes\kocept_art\shopCrystals\bin\Debug\shopCrystals.exe
+D:\Repositoryes\kocept_art\shopCrystals\bin\Debug\shopCrystals.pdb
+D:\Repositoryes\kocept_art\shopCrystals\obj\Debug\shopCrystals.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\shopCrystals\obj\Debug\shopCrystals.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\shopCrystals\obj\Debug\shopCrystals.exe
+D:\Repositoryes\kocept_art\shopCrystals\obj\Debug\shopCrystals.pdb
