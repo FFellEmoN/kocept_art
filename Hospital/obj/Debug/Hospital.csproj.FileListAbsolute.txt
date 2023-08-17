@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Hospital\bin\Debug\Hospital.exe.config
+D:\Repositoryes\kocept_art\Hospital\bin\Debug\Hospital.exe
+D:\Repositoryes\kocept_art\Hospital\bin\Debug\Hospital.pdb
+D:\Repositoryes\kocept_art\Hospital\obj\Debug\Hospital.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Hospital\obj\Debug\Hospital.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Hospital\obj\Debug\Hospital.exe
+D:\Repositoryes\kocept_art\Hospital\obj\Debug\Hospital.pdb
