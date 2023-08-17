@@ -24,7 +24,6 @@ namespace Hospital
             minutes %= minInHours;
 
             Console.WriteLine($"Вы должны отстоять в очереди {hours} часа и {minutes} минут.");
-            Console.ReadKey();
         }
     }
 }
