@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\OutputControl\bin\Debug\OutputControl.exe.config
+D:\Repositoryes\kocept_art\OutputControl\bin\Debug\OutputControl.exe
+D:\Repositoryes\kocept_art\OutputControl\bin\Debug\OutputControl.pdb
+D:\Repositoryes\kocept_art\OutputControl\obj\Debug\OutputControl.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\OutputControl\obj\Debug\OutputControl.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\OutputControl\obj\Debug\OutputControl.exe
+D:\Repositoryes\kocept_art\OutputControl\obj\Debug\OutputControl.pdb
