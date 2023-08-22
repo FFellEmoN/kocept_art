@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\JustFor\bin\Debug\JustFor.exe.config
+D:\Repositoryes\kocept_art\JustFor\bin\Debug\JustFor.exe
+D:\Repositoryes\kocept_art\JustFor\bin\Debug\JustFor.pdb
+D:\Repositoryes\kocept_art\JustFor\obj\Debug\JustFor.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\JustFor\obj\Debug\JustFor.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\JustFor\obj\Debug\JustFor.exe
+D:\Repositoryes\kocept_art\JustFor\obj\Debug\JustFor.pdb
