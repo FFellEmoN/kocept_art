@@ -10,19 +10,19 @@ namespace Hospital
     {
         static void Main(string[] args)
         {
-            const int timeForOnePerson = 10;
-            const int minInHours = 60;
+            int timeForOnePerson = 10;
+            int minInHours = 60;
             int numberOfPeople;
             int hoursInLine;
             int minutesInLine;
+            int justMinutes;
 
             Console.WriteLine("Введите количество человек в очереди.");
             numberOfPeople = Convert.ToInt32(Console.ReadLine());
-            minutesInLine = numberOfPeople * timeForOnePerson;
-            hoursInLine = minutesInLine / minInHours;
-            minutesInLine %= minInHours;
+            justMinutes = numberOfPeople * timeForOnePerson;
+            hoursInLine = justMinutes / minInHours;
+            minutesInLine = justMinutes % minInHours;
             Console.WriteLine($"Вы должны отстоять в очереди {hoursInLine} часа и {minutesInLine} минут.");
-            Console.ReadKey();
         }
     }
 }
