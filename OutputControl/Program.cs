@@ -13,14 +13,13 @@ namespace OutputControl
             string controlWorld = "exit";
             string masage;
 
-            Console.Write("Введите проверочное слово: ");
-            masage = Console.ReadLine();
-            while (masage != controlWorld)
+            do
             {
-                Console.WriteLine("Введите новое проверочное слово!");
+                Console.Write("Введите проверочное слово: ");
                 masage = Console.ReadLine();
-            }
-            Console.WriteLine("Проверочное слово верное!");
+            } while (masage != controlWorld);
+
+                Console.WriteLine("Проверочное слово верное!");
         }
     }
 }

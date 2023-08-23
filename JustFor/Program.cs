@@ -16,6 +16,7 @@ namespace JustFor
 
             Console.Write("Введите сообщение: ");
             masage = Console.ReadLine();
+
             Console.Write("Введите количество повторений: ");
             numberOfCycles = Convert.ToInt32(Console.ReadLine());
 
