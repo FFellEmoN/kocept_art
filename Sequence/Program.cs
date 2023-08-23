@@ -19,7 +19,6 @@ namespace Sequence
                 Console.WriteLine(value);
                 value += valueSteap;
             }
-            Console.ReadKey();
         }
     }
 }
