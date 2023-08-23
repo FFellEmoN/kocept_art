@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Sequence\bin\Debug\Sequence.exe.config
+D:\Repositoryes\kocept_art\Sequence\bin\Debug\Sequence.exe
+D:\Repositoryes\kocept_art\Sequence\bin\Debug\Sequence.pdb
+D:\Repositoryes\kocept_art\Sequence\obj\Debug\Sequence.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Sequence\obj\Debug\Sequence.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Sequence\obj\Debug\Sequence.exe
+D:\Repositoryes\kocept_art\Sequence\obj\Debug\Sequence.pdb
