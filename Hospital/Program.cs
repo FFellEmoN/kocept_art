@@ -15,13 +15,13 @@ namespace Hospital
             int numberOfPeople;
             int hoursInLine;
             int minutesInLine;
-            int justMinutes;
+            int TotalWaitingTimeInMinutes;
 
-            Console.WriteLine("Введите количество человек в очереди.");
+            Console.Write("Введите количество человек в очереди: ");
             numberOfPeople = Convert.ToInt32(Console.ReadLine());
-            justMinutes = numberOfPeople * timeForOnePerson;
-            hoursInLine = justMinutes / minInHours;
-            minutesInLine = justMinutes % minInHours;
+            TotalWaitingTimeInMinutes = numberOfPeople * timeForOnePerson;
+            hoursInLine = TotalWaitingTimeInMinutes / minInHours;
+            minutesInLine = TotalWaitingTimeInMinutes % minInHours;
             Console.WriteLine($"Вы должны отстоять в очереди {hoursInLine} часа и {minutesInLine} минут.");
         }
     }
