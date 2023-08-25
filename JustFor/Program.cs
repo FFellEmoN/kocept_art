@@ -12,17 +12,17 @@ namespace JustFor
         static void Main(string[] args)
         {
             int numberOfCycles;
-            string masage;
+            string massage;
 
             Console.Write("Введите сообщение: ");
-            masage = Console.ReadLine();
+            massage = Console.ReadLine();
 
             Console.Write("Введите количество повторений: ");
             numberOfCycles = Convert.ToInt32(Console.ReadLine());
 
             for (int i = 0; i < numberOfCycles; i++)
             {
-                Console.WriteLine(masage);
+                Console.WriteLine(massage);
             }
 
             Console.ReadLine();
