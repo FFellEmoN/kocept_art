@@ -11,13 +11,13 @@ namespace OutputControl
         static void Main(string[] args)
         {
             string controlWorld = "exit";
-            string masage;
+            string massage;
 
             do
             {
                 Console.Write("Введите проверочное слово: ");
-                masage = Console.ReadLine();
-            } while (masage != controlWorld);
+                massage = Console.ReadLine();
+            } while (massage != controlWorld);
 
                 Console.WriteLine("Проверочное слово верное!");
         }
