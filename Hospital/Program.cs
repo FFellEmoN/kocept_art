@@ -11,7 +11,7 @@ namespace Hospital
         static void Main(string[] args)
         {
             int timeForOnePerson = 10;
-            int minInHours = 60;
+            int minutes = 60;
             int numberOfPeople;
             int hoursInLine;
             int minutesInLine;
@@ -20,8 +20,8 @@ namespace Hospital
             Console.Write("Введите количество человек в очереди: ");
             numberOfPeople = Convert.ToInt32(Console.ReadLine());
             TotalWaitingTimeInMinutes = numberOfPeople * timeForOnePerson;
-            hoursInLine = TotalWaitingTimeInMinutes / minInHours;
-            minutesInLine = TotalWaitingTimeInMinutes % minInHours;
+            hoursInLine = TotalWaitingTimeInMinutes / minutes;
+            minutesInLine = TotalWaitingTimeInMinutes % minutes;
             Console.WriteLine($"Вы должны отстоять в очереди {hoursInLine} часа и {minutesInLine} минут.");
         }
     }

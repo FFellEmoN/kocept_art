@@ -11,16 +11,12 @@ namespace SumOfNumbers
         static void Main(string[] args)
         {
             int number;
-            int multipleNumber = 3;
+            int firstMultipleNumber = 3;
+            int secondMultipleNumber = 5;
             int sumValue;
 
             Random random = new Random();
-            number = random.Next(0,101);
-
-            for (int i = 0; i < number; i++) 
-            { 
-                sumValue += 
-            }
+            number = random.Next(0, 101);
         }
     }
 }
