@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\SumOfNumbers\bin\Debug\SumOfNumbers.exe.config
+D:\Repositoryes\kocept_art\SumOfNumbers\bin\Debug\SumOfNumbers.exe
+D:\Repositoryes\kocept_art\SumOfNumbers\bin\Debug\SumOfNumbers.pdb
+D:\Repositoryes\kocept_art\SumOfNumbers\obj\Debug\SumOfNumbers.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\SumOfNumbers\obj\Debug\SumOfNumbers.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\SumOfNumbers\obj\Debug\SumOfNumbers.exe
+D:\Repositoryes\kocept_art\SumOfNumbers\obj\Debug\SumOfNumbers.pdb
