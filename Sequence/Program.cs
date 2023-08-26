@@ -10,12 +10,13 @@ namespace Sequence
     {
         static void Main(string[] args)
         {
-            int valueSteap = 7;
-            int finishNumber = 96;
+            int startValue = 5;
+            int steapValue = 7;
+            int finisValue = 96;
 
-            for (int value = 5; value <= finishNumber; value += valueSteap )
+            for (int i = startValue; i <= finisValue; i += steapValue)
             {
-                Console.WriteLine(value);
+                Console.WriteLine(i);
             }
         }
     }
