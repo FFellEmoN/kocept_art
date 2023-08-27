@@ -11,17 +11,17 @@ namespace Hospital
         static void Main(string[] args)
         {
             int timeForOnePerson = 10;
-            int minutes = 60;
+            int minutesInHour = 60;
             int numberOfPeople;
             int hoursInLine;
             int minutesInLine;
-            int TotalWaitingTimeInMinutes;
+            int totalWaitingTimeInMinutes;
 
             Console.Write("Введите количество человек в очереди: ");
             numberOfPeople = Convert.ToInt32(Console.ReadLine());
-            TotalWaitingTimeInMinutes = numberOfPeople * timeForOnePerson;
-            hoursInLine = TotalWaitingTimeInMinutes / minutes;
-            minutesInLine = TotalWaitingTimeInMinutes % minutes;
+            totalWaitingTimeInMinutes = numberOfPeople * timeForOnePerson;
+            hoursInLine = totalWaitingTimeInMinutes / minutesInHour;
+            minutesInLine = totalWaitingTimeInMinutes % minutesInHour;
             Console.WriteLine($"Вы должны отстоять в очереди {hoursInLine} часа и {minutesInLine} минут.");
         }
     }
