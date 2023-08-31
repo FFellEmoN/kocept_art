@@ -10,12 +10,12 @@ namespace CurrencyConverter
     {
         static void Main(string[] args)
         {
-            const string numberOfOperation_1 = "1";
-            const string numberOfOperation_2 = "2";
-            const string numberOfOperation_3 = "3";
-            const string numberOfOperation_4 = "4";
-            const string numberOfOperation_5 = "5";
-            const string numberOfOperation_6 = "6";
+            const string NumberOfOperationMenu_1 = "1";
+            const string NumberOfOperationMenu_2 = "2";
+            const string NumberOfOperationMenu_3 = "3";
+            const string NumberOfOperationMenu_4 = "4";
+            const string NumberOfOperationMenu_5 = "5";
+            const string NumberOfOperationMenu_6 = "6";
             
             float rublesInWallet = 3000;
             float dollarsInWalet = 100;
@@ -44,7 +44,7 @@ namespace CurrencyConverter
 
                 switch (desiredOperatoion)
                 {
-                    case numberOfOperation_1:
+                    case NumberOfOperationMenu_1:
                         Console.WriteLine("Обмен рублей на доллар.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
@@ -58,7 +58,7 @@ namespace CurrencyConverter
                             Console.WriteLine("Недопустимое количество рублей.");
                         }
                         break;
-                    case numberOfOperation_2:
+                    case NumberOfOperationMenu_2:
                         Console.WriteLine("Обмен рублей на евро.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
@@ -72,7 +72,7 @@ namespace CurrencyConverter
                             Console.WriteLine("Недопустимое количество рублей.");
                         }
                         break;
-                    case numberOfOperation_3:
+                    case NumberOfOperationMenu_3:
                         Console.WriteLine("Обмен долларов на рубль.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
@@ -86,7 +86,7 @@ namespace CurrencyConverter
                             Console.WriteLine("Недопустимое количество долларов.");
                         }
                         break;
-                    case numberOfOperation_4:
+                    case NumberOfOperationMenu_4:
                         Console.WriteLine("Обмен долларов на евро.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
@@ -100,7 +100,7 @@ namespace CurrencyConverter
                             Console.WriteLine("Недопустимое количество долларов.");
                         }
                         break;
-                    case numberOfOperation_5:
+                    case NumberOfOperationMenu_5:
                         Console.WriteLine("Обмен евро на рубли.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
@@ -114,7 +114,7 @@ namespace CurrencyConverter
                             Console.WriteLine("Недопустимое количество eвро.");
                         }
                         break;
-                    case numberOfOperation_6:
+                    case NumberOfOperationMenu_6:
                         Console.WriteLine("Обмен евро на доллары.");
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
