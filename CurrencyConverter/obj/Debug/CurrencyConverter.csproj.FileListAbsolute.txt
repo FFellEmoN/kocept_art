@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\CurrencyConverter\bin\Debug\CurrencyConverter.exe.config
+D:\Repositoryes\kocept_art\CurrencyConverter\bin\Debug\CurrencyConverter.exe
+D:\Repositoryes\kocept_art\CurrencyConverter\bin\Debug\CurrencyConverter.pdb
+D:\Repositoryes\kocept_art\CurrencyConverter\obj\Debug\CurrencyConverter.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\CurrencyConverter\obj\Debug\CurrencyConverter.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\CurrencyConverter\obj\Debug\CurrencyConverter.exe
+D:\Repositoryes\kocept_art\CurrencyConverter\obj\Debug\CurrencyConverter.pdb
