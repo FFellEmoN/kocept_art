@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\OutputName\bin\Debug\OutputName.exe.config
+D:\Repositoryes\kocept_art\OutputName\bin\Debug\OutputName.exe
+D:\Repositoryes\kocept_art\OutputName\bin\Debug\OutputName.pdb
+D:\Repositoryes\kocept_art\OutputName\obj\Debug\OutputName.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\OutputName\obj\Debug\OutputName.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\OutputName\obj\Debug\OutputName.exe
+D:\Repositoryes\kocept_art\OutputName\obj\Debug\OutputName.pdb
