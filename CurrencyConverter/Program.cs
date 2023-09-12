@@ -20,11 +20,9 @@ namespace CurrencyConverter
             float rublesInWallet = 3000;
             float dollarsInWalet = 100;
             float euroInWalet = 200;
-
             float rubleToDollar = 0.010449f, dollarToRuble = 95.71f;
             float rubleToEuro = 0.009664f, euroToRuble = 103.48f;
             float dollarToEuro = 0.92f, euroToDollar = 1.08f;
-
             float exchangeCurrencyCount;
 
             string desiredOperatoion;
@@ -33,12 +31,13 @@ namespace CurrencyConverter
 
             do {
                 Console.WriteLine("Выберите необоходимую операцию.");
-                Console.WriteLine("1 - обменять рубль на доллары");
-                Console.WriteLine("2 - обменять рубль на евро");
-                Console.WriteLine("3 - обменять доллар на рубль");
-                Console.WriteLine("4 - обменять доллар на евро");
-                Console.WriteLine("5 - обменять евро на рубль");
-                Console.WriteLine("6 - обменять евро на доллар");
+                Console.WriteLine($"{NumberOfOperationMenu_1} - обменять рубль на доллары");;
+                Console.WriteLine($"{NumberOfOperationMenu_2} - обменять рубль на евро");
+                Console.WriteLine($"{NumberOfOperationMenu_3} - обменять доллар на рубль");
+                Console.WriteLine($"{NumberOfOperationMenu_4} - обменять доллар на евро");
+                Console.WriteLine($"{NumberOfOperationMenu_5} - обменять евро на рубль");
+                Console.WriteLine($"{NumberOfOperationMenu_6} - обменять евро на доллар");
+
                 Console.Write("Выш выбор: ");
                 desiredOperatoion = Console.ReadLine();
 
@@ -46,8 +45,10 @@ namespace CurrencyConverter
                 {
                     case NumberOfOperationMenu_1:
                         Console.WriteLine("Обмен рублей на доллар.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (rublesInWallet >= exchangeCurrencyCount)
                         {
                             rublesInWallet -= exchangeCurrencyCount;
@@ -60,8 +61,10 @@ namespace CurrencyConverter
                         break;
                     case NumberOfOperationMenu_2:
                         Console.WriteLine("Обмен рублей на евро.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (rublesInWallet >= exchangeCurrencyCount)
                         {
                             rublesInWallet -= exchangeCurrencyCount;
@@ -74,8 +77,10 @@ namespace CurrencyConverter
                         break;
                     case NumberOfOperationMenu_3:
                         Console.WriteLine("Обмен долларов на рубль.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (dollarsInWalet >= exchangeCurrencyCount)
                         {
                             dollarsInWalet -= exchangeCurrencyCount;
@@ -88,8 +93,10 @@ namespace CurrencyConverter
                         break;
                     case NumberOfOperationMenu_4:
                         Console.WriteLine("Обмен долларов на евро.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (dollarsInWalet >= exchangeCurrencyCount)
                         {
                             dollarsInWalet -= exchangeCurrencyCount;
@@ -102,8 +109,10 @@ namespace CurrencyConverter
                         break;
                     case NumberOfOperationMenu_5:
                         Console.WriteLine("Обмен евро на рубли.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (euroInWalet >= exchangeCurrencyCount)
                         {
                             euroInWalet -= exchangeCurrencyCount;
@@ -116,8 +125,10 @@ namespace CurrencyConverter
                         break;
                     case NumberOfOperationMenu_6:
                         Console.WriteLine("Обмен евро на доллары.");
+
                         Console.WriteLine("Сколько вы хотите обменять ?");
                         exchangeCurrencyCount = Convert.ToInt32(Console.ReadLine());
+
                         if (euroInWalet >= exchangeCurrencyCount)
                         {
                             euroInWalet -= exchangeCurrencyCount;
@@ -137,8 +148,8 @@ namespace CurrencyConverter
                 Console.WriteLine($"            {dollarsInWalet} долларов;");
                 Console.WriteLine($"            {euroInWalet} евро.");
                 Console.WriteLine();
-
                 Console.WriteLine("Закончить операцию ?");
+
                 Console.WriteLine("0 - НЕТ, 1 - ДА");
                 answerForExit = Convert.ToInt32(Console.ReadLine());
             } while (answerForExit < 1);
