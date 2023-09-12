@@ -16,8 +16,8 @@ namespace ConsoleMenu
             const string NumberOfOperationMenu_4 = "4";
 
             int desiredCollor;
-            int windowWidth = 600;
-            int windowHeight = 600;
+            int windowWidth;
+            int windowHeight;
 
             string desiredOperatoion;
 
