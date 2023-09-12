@@ -14,9 +14,11 @@ namespace SumOfNumbers
             int firstMultipleNumber = 3;
             int secondMultipleNumber = 5;
             int sumNumber = 0;
+            int minValue = 0;
+            int maxValue = 101;
 
             Random random = new Random();
-            number = random.Next(0, 101);
+            number = random.Next(minValue, maxValue);
 
             for (int i = 0; i <= number; i++)
             {
