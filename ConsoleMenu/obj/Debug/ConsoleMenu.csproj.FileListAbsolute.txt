@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ConsoleMenu\bin\Debug\ConsoleMenu.exe.config
+D:\Repositoryes\kocept_art\ConsoleMenu\bin\Debug\ConsoleMenu.exe
+D:\Repositoryes\kocept_art\ConsoleMenu\bin\Debug\ConsoleMenu.pdb
+D:\Repositoryes\kocept_art\ConsoleMenu\obj\Debug\ConsoleMenu.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ConsoleMenu\obj\Debug\ConsoleMenu.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ConsoleMenu\obj\Debug\ConsoleMenu.exe
+D:\Repositoryes\kocept_art\ConsoleMenu\obj\Debug\ConsoleMenu.pdb
