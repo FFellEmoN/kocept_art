@@ -25,7 +25,7 @@ namespace ConsoleMenu
 
             string desiredOperatoion;
 
-            bool exitProgramTriger = true;
+            bool IsClosing = true;
 
             do
             {
@@ -49,7 +49,6 @@ namespace ConsoleMenu
                         
                         Console.WindowHeight = windowHeight;
                         Console.WindowWidth = windowWidth;
-                        Console.Clear();
                         break;
 
                     case ChangeConsoleCollorMenu:
@@ -61,13 +60,11 @@ namespace ConsoleMenu
                         if (desiredCollor == answerYellowConsole)
                         {
                             Console.BackgroundColor = ConsoleColor.Yellow;
-                            Console.Clear();
                         } 
 
                         if (desiredCollor == answerGrayConsole)
                         {
                             Console.BackgroundColor = ConsoleColor.Gray;
-                            Console.Clear();
                         }
                         break;
 
@@ -80,23 +77,20 @@ namespace ConsoleMenu
                         if (desiredCollor == answerRedText)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
-                            Console.Clear();
                         }
 
                         if(desiredCollor == answerBlueText)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.Clear();
                         }
-                        Console.Clear();
                         break;
 
                     case ExitProgramMenu:
                         Console.WriteLine("Всего доброго!");
-                        exitProgramTriger = false;
+                        IsClosing = false;
                         break;
                 }
-            } while (exitProgramTriger);
+            } while (IsClosing);
         }
     }
 }
