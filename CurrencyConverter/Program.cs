@@ -10,12 +10,12 @@ namespace CurrencyConverter
     {
         static void Main(string[] args)
         {
-            const string ConvertRubleToDollar = "1";
-            const string ConvertRubleToEuro = "2";
-            const string ConvertDollarToRuble = "3";
-            const string ConvertDollarToEuro = "4";
-            const string ConvertEuroToRuble = "5";
-            const string ConvertEuroToDollar = "6";
+            const string ConvertRubleToDollarMenu = "1";
+            const string ConvertRubleToEuroMenu = "2";
+            const string ConvertDollarToRubleMenu = "3";
+            const string ConvertDollarToEuroMenu = "4";
+            const string ConvertEuroToRubleMenu = "5";
+            const string ConvertEuroToDollarMenu = "6";
 
             float rublesInWallet = 3000;
             float dollarsInWalet = 100;
@@ -37,19 +37,19 @@ namespace CurrencyConverter
             do
             {
                 Console.WriteLine("Выберите необоходимую операцию.");
-                Console.WriteLine($"{ConvertRubleToDollar} - обменять рубль на доллары"); ;
-                Console.WriteLine($"{ConvertRubleToEuro} - обменять рубль на евро");
-                Console.WriteLine($"{ConvertDollarToRuble} - обменять доллар на рубль");
-                Console.WriteLine($"{ConvertDollarToEuro} - обменять доллар на евро");
-                Console.WriteLine($"{ConvertEuroToRuble} - обменять евро на рубль");
-                Console.WriteLine($"{ConvertEuroToDollar} - обменять евро на доллар");
+                Console.WriteLine($"{ConvertRubleToDollarMenu} - обменять рубль на доллары"); ;
+                Console.WriteLine($"{ConvertRubleToEuroMenu} - обменять рубль на евро");
+                Console.WriteLine($"{ConvertDollarToRubleMenu} - обменять доллар на рубль");
+                Console.WriteLine($"{ConvertDollarToEuroMenu} - обменять доллар на евро");
+                Console.WriteLine($"{ConvertEuroToRubleMenu} - обменять евро на рубль");
+                Console.WriteLine($"{ConvertEuroToDollarMenu} - обменять евро на доллар");
 
                 Console.Write("Выш выбор: ");
                 desiredOperatoion = Console.ReadLine();
 
                 switch (desiredOperatoion)
                 {
-                    case ConvertRubleToDollar:
+                    case ConvertRubleToDollarMenu:
                         Console.WriteLine("Обмен рублей на доллар.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
@@ -66,7 +66,7 @@ namespace CurrencyConverter
                         }
                         break;
 
-                    case ConvertRubleToEuro:
+                    case ConvertRubleToEuroMenu:
                         Console.WriteLine("Обмен рублей на евро.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
@@ -83,7 +83,7 @@ namespace CurrencyConverter
                         }
                         break;
 
-                    case ConvertDollarToRuble:
+                    case ConvertDollarToRubleMenu:
                         Console.WriteLine("Обмен долларов на рубль.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
@@ -100,7 +100,7 @@ namespace CurrencyConverter
                         }
                         break;
 
-                    case ConvertDollarToEuro:
+                    case ConvertDollarToEuroMenu:
                         Console.WriteLine("Обмен долларов на евро.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
@@ -117,7 +117,7 @@ namespace CurrencyConverter
                         }
                         break;
 
-                    case ConvertEuroToRuble:
+                    case ConvertEuroToRubleMenu:
                         Console.WriteLine("Обмен евро на рубли.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
@@ -134,7 +134,7 @@ namespace CurrencyConverter
                         }
                         break;
 
-                    case ConvertEuroToDollar:
+                    case ConvertEuroToDollarMenu:
                         Console.WriteLine("Обмен евро на доллары.");
 
                         Console.WriteLine("Сколько вы хотите обменять ?");
