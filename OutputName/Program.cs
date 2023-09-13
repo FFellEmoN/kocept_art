@@ -11,28 +11,23 @@ namespace OutputName
         static void Main(string[] args)
         {
             string name;
+            string characterString = "";
 
             char character;
-
-            int additionalCharacters = 3;
 
             Console.WriteLine("Введите ваше имя.");
             name = Console.ReadLine();
             Console.WriteLine("Введите символ для рамки вокруг имени.");
-            character = Convert.ToChar(Console.ReadLine());
-            
-            for (int i = 0; i <= name.Length + additionalCharacters; i++)
+            character = Console.ReadKey(true).KeyChar;
+
+            for (int i = 0; i <= name.Length; i++)
             {
-                Console.Write(character);
+                characterString += character;
             }
 
-            Console.WriteLine();
+            Console.WriteLine(characterString + character + character + character);
             Console.WriteLine(character + " " + name + " " + character);
-
-            for (int i = 0; i <= name.Length + additionalCharacters; i++)
-            {
-                Console.Write(character);
-            }
+            Console.WriteLine(characterString + character + character + character);
         }
     }
 }
