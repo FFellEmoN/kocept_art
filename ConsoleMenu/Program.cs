@@ -10,14 +10,18 @@ namespace ConsoleMenu
     {
         static void Main(string[] args)
         {
-            const string ChangeTheConsoleSize = "1";
-            const string ChangeTheConsoleCollor = "2";
-            const string ChangeTheTextCollor = "3";
-            const string ExitTheProgram = "4";
+            const string ChangeConsoleSizeMenu = "1";
+            const string ChangeConsoleCollorMenu = "2";
+            const string ChangeTextCollorMenu = "3";
+            const string ExitProgramMenu = "4";
 
             int desiredCollor;
             int windowWidth;
             int windowHeight;
+            int answerYellowConsole = 1;
+            int answerGrayConsole = 2;
+            int answerRedText = 1;
+            int answerBlueText = 2;
 
             string desiredOperatoion;
 
@@ -26,10 +30,10 @@ namespace ConsoleMenu
             do
             {
                 Console.WriteLine("Выберите необоходимую операцию.");
-                Console.WriteLine($"{ChangeTheConsoleSize} - изменить размер консоли"); ;
-                Console.WriteLine($"{ChangeTheConsoleCollor} - изменить цвет консоли");
-                Console.WriteLine($"{ChangeTheTextCollor} - изменить цвет текста");
-                Console.WriteLine($"{ExitTheProgram} - выйти из программы");
+                Console.WriteLine($"{ChangeConsoleSizeMenu} - изменить размер консоли"); ;
+                Console.WriteLine($"{ChangeConsoleCollorMenu} - изменить цвет консоли");
+                Console.WriteLine($"{ChangeTextCollorMenu} - изменить цвет текста");
+                Console.WriteLine($"{ExitProgramMenu} - выйти из программы");
 
                 Console.Write("Выш выбор: ");
                 desiredOperatoion = Console.ReadLine();
@@ -37,7 +41,7 @@ namespace ConsoleMenu
 
                 switch (desiredOperatoion)
                 {
-                    case ChangeTheConsoleSize:
+                    case ChangeConsoleSizeMenu:
                         Console.WriteLine("Введите ширину консоли.");
                         windowWidth = Convert.ToInt32(Console.ReadLine());
                         Console.WriteLine("Введите высоту консоли");
@@ -47,41 +51,47 @@ namespace ConsoleMenu
                         Console.WindowWidth = windowWidth;
                         Console.Clear();
                         break;
-                    case ChangeTheConsoleCollor:
+
+                    case ChangeConsoleCollorMenu:
                         Console.WriteLine("Выбирите цвет консоли");
 
-                        Console.WriteLine("1 - желтый, 2 - серый");
+                        Console.WriteLine($"{answerYellowConsole} - желтый, {answerGrayConsole} - серый");
                         desiredCollor = Convert.ToInt32(Console.ReadLine());
 
-                        if (desiredCollor == 1)
+                        if (desiredCollor == answerYellowConsole)
                         {
                             Console.BackgroundColor = ConsoleColor.Yellow;
                             Console.Clear();
-                        } else
+                        } 
+
+                        if (desiredCollor == answerGrayConsole)
                         {
                             Console.BackgroundColor = ConsoleColor.Gray;
                             Console.Clear();
                         }
                         break;
-                    case ChangeTheTextCollor:
+
+                    case ChangeTextCollorMenu:
                         Console.WriteLine("Выбирите цвет текста");
 
-                        Console.WriteLine("1 - красный, 2 - синий");
+                        Console.WriteLine($"{answerRedText} - красный, {answerBlueText} - синий");
                         desiredCollor = Convert.ToInt32(Console.ReadLine());
 
-                        if (desiredCollor == 1)
+                        if (desiredCollor == answerRedText)
                         {
                             Console.ForegroundColor = ConsoleColor.Red;
                             Console.Clear();
                         }
-                        else
+
+                        if(desiredCollor == answerBlueText)
                         {
                             Console.ForegroundColor = ConsoleColor.Blue;
                             Console.Clear();
                         }
                         Console.Clear();
                         break;
-                    case ExitTheProgram:
+
+                    case ExitProgramMenu:
                         Console.WriteLine("Всего доброго!");
                         exitProgramTriger = false;
                         break;
