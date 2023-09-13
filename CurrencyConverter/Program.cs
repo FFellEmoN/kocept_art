@@ -20,9 +20,12 @@ namespace CurrencyConverter
             float rublesInWallet = 3000;
             float dollarsInWalet = 100;
             float euroInWalet = 200;
-            float rubleToDollar = 0.010449f, dollarToRuble = 95.71f;
-            float rubleToEuro = 0.009664f, euroToRuble = 103.48f;
-            float dollarToEuro = 0.92f, euroToDollar = 1.08f;
+            float rubleToDollar = 0.010449f;
+            float dollarToRuble = 95.71f;
+            float rubleToEuro = 0.009664f;
+            float euroToRuble = 103.48f;
+            float dollarToEuro = 0.92f;
+            float euroToDollar = 1.08f;
             float exchangeCurrencyCount;
 
             string desiredOperatoion;
