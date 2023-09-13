@@ -11,8 +11,8 @@ namespace SumOfNumbers
         static void Main(string[] args)
         {
             int number;
-            int firstMultipleNumber = 3;
-            int secondMultipleNumber = 5;
+            int divider1 = 3;
+            int divider2 = 5;
             int sumNumber = 0;
             int minValue = 0;
             int maxValue = 101;
@@ -22,14 +22,14 @@ namespace SumOfNumbers
 
             for (int i = 0; i <= number; i++)
             {
-                if (i % firstMultipleNumber == 0 || i % secondMultipleNumber == 0)
+                if (i % divider1 == 0 || i % divider2 == 0)
                 {
                     sumNumber += i;
                 }
             }
 
             Console.WriteLine($"Сумма всех положительных чисел меньше {number} (включая число)" +
-                $", которое кратное 3 или 5 равна {sumNumber}");
+                $", которое кратное {divider1} или {divider2} равна {sumNumber}");
         }
     }
 }
