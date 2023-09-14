@@ -11,6 +11,7 @@ namespace OutputName
         static void Main(string[] args)
         {
             string name;
+            string middleLine;
             string characterString = "";
 
             char character;
@@ -20,14 +21,16 @@ namespace OutputName
             Console.WriteLine("Введите символ для рамки вокруг имени.");
             character = Console.ReadKey(true).KeyChar;
 
-            for (int i = 0; i <= name.Length; i++)
+            for (int i = 0; i < name.Length; i++)
             {
                 characterString += character;
             }
 
-            Console.WriteLine(characterString + character + character + character);
-            Console.WriteLine(character + " " + name + " " + character);
-            Console.WriteLine(characterString + character + character + character);
+            middleLine = character + name + character;
+
+            Console.WriteLine(characterString);
+            Console.WriteLine(middleLine);
+            Console.WriteLine(characterString);
         }
     }
 }
