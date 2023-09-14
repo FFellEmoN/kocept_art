@@ -12,35 +12,35 @@ namespace PasswordProtectedProgram
         {
             int numberOfAttemptsBeforeBlocking = 3;
             int numberOfFailAttempts = 0;
+            int numberOfAttemps;
 
             string secretMassage = "Ура, пароль верный!";
             string password = "qwerty";
-            string checkPassword;
+            string passwordVerified;
 
             do
             {
                 Console.Write("Введите пароль: ");
-                checkPassword = Console.ReadLine();
+                passwordVerified = Console.ReadLine();
 
-                if (password == checkPassword)
+                if (password == passwordVerified)
                 {
                     Console.WriteLine(secretMassage);
-                    break;
                 }
 
-                if(numberOfAttemptsBeforeBlocking != 0)
+                if (numberOfAttemptsBeforeBlocking != 0)
                 {
                     numberOfFailAttempts++;
                     Console.WriteLine("Пароль не верный, повторите попытку.");
-                    Console.WriteLine($"Осталось попыток: {numberOfAttemptsBeforeBlocking - numberOfFailAttempts}");
+                    numberOfAttemps = numberOfAttemptsBeforeBlocking - numberOfFailAttempts;
+                    Console.WriteLine($"Осталось попыток: {numberOfAttemps}");
                 }
 
-                if(numberOfFailAttempts ==  numberOfAttemptsBeforeBlocking)
+                if (numberOfFailAttempts == numberOfAttemptsBeforeBlocking)
                 {
                     Console.WriteLine("Заблокированно!");
-                    break;
                 }
-            } while (password != checkPassword);
+            } while (password != passwordVerified || numberOfFailAttempts != numberOfAttemptsBeforeBlocking);
         }
     }
 }
