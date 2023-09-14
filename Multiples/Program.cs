@@ -13,33 +13,35 @@ namespace Multiples
             int numberN;
             int maxNumberN = 27;
             int minNumberN = 1;
-            int valueMax = 999;
-            int valueMin = 100;
-            int value;
+            int maxThreeDigitNumber = 999;
+            int minThreeDigitNumber = 100;
+            int value = 0;
             int numberOfMultiples = 0;
+
+            bool isNumberOutOfRange;
 
             do {
                 Console.WriteLine($"Введите число N в диапозоне ({minNumberN} <= N <= {maxNumberN})");
                 numberN = Convert.ToInt32(Console.ReadLine());
 
-                if (numberN >= minNumberN && numberN <= maxNumberN)
-                {
-                    value = numberN;
-                    break;
-                }
-                else
+                isNumberOutOfRange = numberN < minNumberN || numberN > maxNumberN;
+
+                if (isNumberOutOfRange)
                 {
                     Console.WriteLine("Вы ввели число в неверном диапозоне, попробуйте еще раз.");
                 }
-            } while (true);
+            } while (isNumberOutOfRange);
 
-            while (value <= valueMax)
+            for (int i = 0; i <= maxThreeDigitNumber;i += numberN)
             {
-                value += numberN;
-                if (value >= valueMin) numberOfMultiples++;
+                if (i >= minThreeDigitNumber)
+                {
+                    numberOfMultiples++;
+                }
             }
 
             Console.WriteLine($"Колличество трехзначных чисел кратных {numberN} равно {numberOfMultiples}");
+            Console.ReadKey();
         }
     }
 }
