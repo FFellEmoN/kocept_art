@@ -14,6 +14,8 @@ namespace OutputName
             string middleLine;
             string characterString = "";
 
+            int numberCompensatingCharacters = 2;
+
             char character;
 
             Console.WriteLine("Введите ваше имя.");
@@ -21,7 +23,7 @@ namespace OutputName
             Console.WriteLine("Введите символ для рамки вокруг имени.");
             character = Console.ReadKey(true).KeyChar;
 
-            for (int i = 0; i < name.Length; i++)
+            for (int i = 0; i < name.Length + numberCompensatingCharacters; i++)
             {
                 characterString += character;
             }
@@ -31,6 +33,7 @@ namespace OutputName
             Console.WriteLine(characterString);
             Console.WriteLine(middleLine);
             Console.WriteLine(characterString);
+            Console.ReadKey();
         }
     }
 }
