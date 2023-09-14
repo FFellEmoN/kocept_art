@@ -18,7 +18,7 @@ namespace PasswordProtectedProgram
             string password = "qwerty";
             string passwordVerified;
 
-            do
+            for (int i = 0; i < numberOfAttemptsBeforeBlocking; i++)
             {
                 Console.Write("Введите пароль: ");
                 passwordVerified = Console.ReadLine();
@@ -26,11 +26,15 @@ namespace PasswordProtectedProgram
                 if (password == passwordVerified)
                 {
                     Console.WriteLine(secretMassage);
+                    break;
                 }
-
-                if (numberOfAttemptsBeforeBlocking != 0)
+                else
                 {
                     numberOfFailAttempts++;
+                }
+
+                if (numberOfFailAttempts != 0 && numberOfFailAttempts < numberOfAttemptsBeforeBlocking)
+                {
                     Console.WriteLine("Пароль не верный, повторите попытку.");
                     numberOfAttemps = numberOfAttemptsBeforeBlocking - numberOfFailAttempts;
                     Console.WriteLine($"Осталось попыток: {numberOfAttemps}");
@@ -39,8 +43,9 @@ namespace PasswordProtectedProgram
                 if (numberOfFailAttempts == numberOfAttemptsBeforeBlocking)
                 {
                     Console.WriteLine("Заблокированно!");
+                    break;
                 }
-            } while (password != passwordVerified || numberOfFailAttempts != numberOfAttemptsBeforeBlocking);
+            }
         }
     }
 }
