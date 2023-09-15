@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ParenthesisExpression\bin\Debug\ParenthesisExpression.exe.config
+D:\Repositoryes\kocept_art\ParenthesisExpression\bin\Debug\ParenthesisExpression.exe
+D:\Repositoryes\kocept_art\ParenthesisExpression\bin\Debug\ParenthesisExpression.pdb
+D:\Repositoryes\kocept_art\ParenthesisExpression\obj\Debug\ParenthesisExpression.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ParenthesisExpression\obj\Debug\ParenthesisExpression.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ParenthesisExpression\obj\Debug\ParenthesisExpression.exe
+D:\Repositoryes\kocept_art\ParenthesisExpression\obj\Debug\ParenthesisExpression.pdb
