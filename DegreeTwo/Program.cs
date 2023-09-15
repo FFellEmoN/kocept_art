@@ -15,9 +15,10 @@ namespace DegreeTwo
             int startDegree = 1;
             int degree = startDegree;
             int result = 1;
+            int maxRandomNumber = 11;
 
             Random random = new Random();
-            conditionNumber = random.Next(11);
+            conditionNumber = random.Next(maxRandomNumber);
 
             Console.WriteLine($"Случайное число: {conditionNumber}");
 
