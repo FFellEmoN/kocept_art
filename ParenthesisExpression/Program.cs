@@ -10,7 +10,7 @@ namespace ParenthesisExpression
     {
         static void Main(string[] args)
         {
-            string lineSymbols = "(())";
+            string lineSymbols = "())(()";
 
             bool isLineCorrect = true;
 
@@ -19,14 +19,19 @@ namespace ParenthesisExpression
             int death = 0;
             int maxDeath = 0;
 
+            char openSymbol = '(';
+            char closeSymbol = ')';
+
             for (int i = 0; i < lineSymbols.Length; i++)
             {
-                if (lineSymbols[firstSymbolCorrectLintSymbol] == ')' || lineSymbols[lastSymbolCorrectLineSymbol] == '(')
+                if (lineSymbols[firstSymbolCorrectLintSymbol] == closeSymbol || 
+                    lineSymbols[lastSymbolCorrectLineSymbol] == openSymbol ||
+                    death < 0)
                 {
                     isLineCorrect = false;
                 }
 
-                if (lineSymbols[i] == '(') 
+                if (lineSymbols[i] == openSymbol) 
                 {
                     death++;
 
