@@ -42,13 +42,13 @@ namespace BossFight
             
             string namePlayer = "Темный маг";
             string nameBoss = "Дракула";
-            string spellDarkSpirit = "Темный дух"; //Призывает темного духа (-100 хп игроку)
-            string spellVandu = "Ванду"; //Темный дух наносит урон (исп. только после его призыва)(-200 хп врагу)
-            string spellFireBall = "Огненный шар"; //Игрок наносит урон (-50 хп врагу)
-            string spellBloodSpear = "Кровавое копье"; //- 50 хп игроку, -100 хп врагу
+            string spellDarkSpirit = "Темный дух"; 
+            string spellVandu = "Ванду"; 
+            string spellFireBall = "Огненный шар";
+            string spellBloodSpear = "Кровавое копье";
             string absurdPrayer = "Абсурдная молитва";
-            string attack = "Удар";//hit -50 hp player
-            string powerfulAttack = "Мощный удар";//hit -100 hp player
+            string attack = "Удар";
+            string powerfulAttack = "Мощный удар";
             string attackMultiplierLine = Convert.ToString(attackMultiplier * 100) + "%";
 
             bool doesDarkSpiritExist = false;
