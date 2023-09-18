@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\MaxValue\bin\Debug\MaxValue.exe.config
+D:\Repositoryes\kocept_art\MaxValue\bin\Debug\MaxValue.exe
+D:\Repositoryes\kocept_art\MaxValue\bin\Debug\MaxValue.pdb
+D:\Repositoryes\kocept_art\MaxValue\obj\Debug\MaxValue.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\MaxValue\obj\Debug\MaxValue.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\MaxValue\obj\Debug\MaxValue.exe
+D:\Repositoryes\kocept_art\MaxValue\obj\Debug\MaxValue.pdb
