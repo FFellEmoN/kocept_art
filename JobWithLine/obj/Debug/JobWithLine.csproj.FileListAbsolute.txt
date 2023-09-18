@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\JobWithLine\bin\Debug\JobWithLine.exe.config
+D:\Repositoryes\kocept_art\JobWithLine\bin\Debug\JobWithLine.exe
+D:\Repositoryes\kocept_art\JobWithLine\bin\Debug\JobWithLine.pdb
+D:\Repositoryes\kocept_art\JobWithLine\obj\Debug\JobWithLine.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\JobWithLine\obj\Debug\JobWithLine.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\JobWithLine\obj\Debug\JobWithLine.exe
+D:\Repositoryes\kocept_art\JobWithLine\obj\Debug\JobWithLine.pdb
