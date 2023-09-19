@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MaxValue
 {
@@ -12,8 +8,8 @@ namespace MaxValue
         {
             int[,] matrix = new int[10, 10];
 
-            int maxValue = 0;
-            int newValue = 0;
+            int maxValue = int.MinValue;
+            int newElementMatrix = 0;
             int minRandomValue = 0;
             int maxRandomValue = 10;
 
@@ -34,6 +30,7 @@ namespace MaxValue
                         maxValue = matrix[i, j];
                     }
                 }
+
                 Console.WriteLine();
             }
 
@@ -45,10 +42,12 @@ namespace MaxValue
                 {
                     if (maxValue == matrix[i, j])
                     {
-                        matrix[i, j] = newValue;
+                        matrix[i, j] = newElementMatrix;
                     }
+
                     Console.Write(matrix[i, j] + " ");
                 }
+
                 Console.WriteLine();
             }
 
