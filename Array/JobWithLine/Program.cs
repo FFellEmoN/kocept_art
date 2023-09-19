@@ -16,12 +16,12 @@ namespace JobWithLine
             };
 
             int firstIndexArray = array[0, 0];
-            int numberLine = 1;
-            int numberColumn = 0;
+            int lineIndex = 1;
+            int columnIndex = 0;
             int sumLine = 0;
             int productColumn = firstIndexArray;
-            int realyNumberLine = numberLine + 1;
-            int realyNumberColumn = numberColumn + 1;
+            int realyNumberLine = lineIndex + 1;
+            int realyNumberColumn = columnIndex + 1;
 
             Console.WriteLine("Массив:");
 
@@ -34,26 +34,14 @@ namespace JobWithLine
                 Console.WriteLine();
             }
 
-            for (int i = 0; i < array.GetLength(0); i++)
+            for (int j = 0; j < array.GetLength(1); j++)
             {
-                for (int j = 0; j < array.GetLength(1); j++) 
-                {
-                    if (i == numberLine)
-                    {
-                        sumLine += array[i, j];
-                    }
-                }
+                sumLine += array[lineIndex, j];
             }
 
             for (int i = 0; i < array.GetLength(0); i++)
             {
-                for (int j = 0; j < array.GetLength(1); j++)
-                {
-                    if (j == numberColumn && array[i, j] != firstIndexArray)
-                    {
-                        productColumn *= array[i, j];
-                    }
-                }
+                        productColumn *= array[i, columnIndex];
             }
 
             Console.WriteLine($"Сумма {realyNumberLine} строки: {sumLine}");
