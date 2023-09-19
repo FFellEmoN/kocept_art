@@ -5,3 +5,10 @@ D:\Repositoryes\kocept_art\LocalMax\obj\Debug\LocalMax.csproj.AssemblyReference.
 D:\Repositoryes\kocept_art\LocalMax\obj\Debug\LocalMax.csproj.CoreCompileInputs.cache
 D:\Repositoryes\kocept_art\LocalMax\obj\Debug\LocalMax.exe
 D:\Repositoryes\kocept_art\LocalMax\obj\Debug\LocalMax.pdb
+D:\Repositoryes\kocept_art\Array\LocalMax\obj\Debug\LocalMax.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Array\LocalMax\obj\Debug\LocalMax.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Array\LocalMax\obj\Debug\LocalMax.exe
+D:\Repositoryes\kocept_art\Array\LocalMax\obj\Debug\LocalMax.pdb
+D:\Repositoryes\kocept_art\Array\LocalMax\bin\Debug\LocalMax.exe.config
+D:\Repositoryes\kocept_art\Array\LocalMax\bin\Debug\LocalMax.exe
+D:\Repositoryes\kocept_art\Array\LocalMax\bin\Debug\LocalMax.pdb

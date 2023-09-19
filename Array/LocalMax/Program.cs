@@ -30,19 +30,19 @@ namespace LocalMax
 
             Console.WriteLine("\nВсе локальные максимумы");
 
+            if (array[firstLocalNumber] > array[firstLocalNumber + nextStep])
+            {
+                Console.Write(array[firstLocalNumber] + " ");
+            }
+
+            if (array[lastLocalNumber] > array[lastLocalNumber + lastStep])
+            {
+                Console.Write(array[lastLocalNumber] + " ");
+            }
+
             for (int i = 0; i < array.Length; i++)
             {
-                if (i == firstLocalNumber && array[i] > array[i + nextStep])
-                {
-                    Console.Write(array[i] + " ");
-                }
-
-                if (i == lastLocalNumber && array[i] > array[i + lastStep])
-                {
-                    Console.Write(array[i] + " ");
-                }
-
-                if (i != firstLocalNumber && i != lastLocalNumber && 
+                if (i != firstLocalNumber && i != lastLocalNumber &&
                     array[i] > array[i + nextStep] && array[i] > array[i + lastStep])
                 {
                     Console.Write(array[i] + " ");
