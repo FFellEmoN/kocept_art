@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Split\bin\Debug\Split.exe.config
+D:\Repositoryes\kocept_art\Split\bin\Debug\Split.exe
+D:\Repositoryes\kocept_art\Split\bin\Debug\Split.pdb
+D:\Repositoryes\kocept_art\Split\obj\Debug\Split.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Split\obj\Debug\Split.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Split\obj\Debug\Split.exe
+D:\Repositoryes\kocept_art\Split\obj\Debug\Split.pdb
