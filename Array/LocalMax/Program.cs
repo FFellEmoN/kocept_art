@@ -22,6 +22,7 @@ namespace LocalMax
             Random random = new Random();
 
             Console.WriteLine($"Массив из {array.Length} элементов");
+
             for (int i = 0; i < array.Length; i++)
             {
                 array[i] = random.Next(maxRandomValue);
