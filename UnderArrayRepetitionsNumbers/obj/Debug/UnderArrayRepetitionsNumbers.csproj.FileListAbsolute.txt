@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\bin\Debug\UnderArrayRepetitionsNumbers.exe.config
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\bin\Debug\UnderArrayRepetitionsNumbers.exe
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\bin\Debug\UnderArrayRepetitionsNumbers.pdb
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\obj\Debug\UnderArrayRepetitionsNumbers.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\obj\Debug\UnderArrayRepetitionsNumbers.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\obj\Debug\UnderArrayRepetitionsNumbers.exe
+D:\Repositoryes\kocept_art\UnderArrayRepetitionsNumbers\obj\Debug\UnderArrayRepetitionsNumbers.pdb
