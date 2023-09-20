@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\bin\Debug\ShiftingArrayValues.exe.config
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\bin\Debug\ShiftingArrayValues.exe
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\bin\Debug\ShiftingArrayValues.pdb
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\obj\Debug\ShiftingArrayValues.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\obj\Debug\ShiftingArrayValues.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\obj\Debug\ShiftingArrayValues.exe
+D:\Repositoryes\kocept_art\Array\ShiftingArrayValues\obj\Debug\ShiftingArrayValues.pdb
