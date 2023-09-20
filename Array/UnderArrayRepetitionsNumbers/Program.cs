@@ -42,7 +42,6 @@ namespace UnderArrayRepetitionsNumbers
                         maxSequence = counterMaxSequence;
                         mostFrequentRecurringNumber = array[lastStep];
                     }
-
                     counterMaxSequence = 1;
                 }
 
