@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\SortNumber\bin\Debug\SortNumber.exe.config
+D:\Repositoryes\kocept_art\SortNumber\bin\Debug\SortNumber.exe
+D:\Repositoryes\kocept_art\SortNumber\bin\Debug\SortNumber.pdb
+D:\Repositoryes\kocept_art\SortNumber\obj\Debug\SortNumber.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\SortNumber\obj\Debug\SortNumber.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\SortNumber\obj\Debug\SortNumber.exe
+D:\Repositoryes\kocept_art\SortNumber\obj\Debug\SortNumber.pdb
