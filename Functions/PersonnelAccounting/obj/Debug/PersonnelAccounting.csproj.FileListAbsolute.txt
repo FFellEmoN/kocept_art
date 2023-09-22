@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\bin\Debug\PersonnelAccounting.exe.config
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\bin\Debug\PersonnelAccounting.exe
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\bin\Debug\PersonnelAccounting.pdb
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\obj\Debug\PersonnelAccounting.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\obj\Debug\PersonnelAccounting.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\obj\Debug\PersonnelAccounting.exe
+D:\Repositoryes\kocept_art\Functions\PersonnelAccounting\obj\Debug\PersonnelAccounting.pdb
