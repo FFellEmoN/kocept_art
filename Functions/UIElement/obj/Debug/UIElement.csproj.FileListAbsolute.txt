@@ -1,0 +1,7 @@
+D:\ProjectsVisualStudia\UIElement\bin\Debug\UIElement.exe.config
+D:\ProjectsVisualStudia\UIElement\bin\Debug\UIElement.exe
+D:\ProjectsVisualStudia\UIElement\bin\Debug\UIElement.pdb
+D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.csproj.AssemblyReference.cache
+D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.csproj.CoreCompileInputs.cache
+D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.exe
+D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.pdb

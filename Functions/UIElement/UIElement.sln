@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34009.444
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UIElement", "UIElement.csproj", "{FD9EF38F-B18D-423A-B8C6-A8475F4CD7A1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD9EF38F-B18D-423A-B8C6-A8475F4CD7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD9EF38F-B18D-423A-B8C6-A8475F4CD7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD9EF38F-B18D-423A-B8C6-A8475F4CD7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD9EF38F-B18D-423A-B8C6-A8475F4CD7A1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1E4D6248-12CC-42C4-B0F8-4048296E3932}
+	EndGlobalSection
+EndGlobal
