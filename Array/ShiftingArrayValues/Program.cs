@@ -29,6 +29,9 @@ namespace ShiftingArrayValues
             Console.Write("\nВведите количество сдвигов: ");
             numberShifts = Convert.ToInt32(Console.ReadLine());
 
+            if (numberShifts >= array.Length)
+                numberShifts %= array.Length;
+
             for (int i = 0; i < numberShifts; i++)
             {
                 firstArrayValue = array[firstIndexArray];
