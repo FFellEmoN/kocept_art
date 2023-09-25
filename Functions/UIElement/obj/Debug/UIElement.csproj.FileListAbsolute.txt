@@ -5,3 +5,10 @@ D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.csproj.AssemblyReference.c
 D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.csproj.CoreCompileInputs.cache
 D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.exe
 D:\ProjectsVisualStudia\UIElement\obj\Debug\UIElement.pdb
+D:\Repositoryes\kocept_art\Functions\UIElement\bin\Debug\UIElement.exe.config
+D:\Repositoryes\kocept_art\Functions\UIElement\bin\Debug\UIElement.exe
+D:\Repositoryes\kocept_art\Functions\UIElement\bin\Debug\UIElement.pdb
+D:\Repositoryes\kocept_art\Functions\UIElement\obj\Debug\UIElement.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Functions\UIElement\obj\Debug\UIElement.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Functions\UIElement\obj\Debug\UIElement.exe
+D:\Repositoryes\kocept_art\Functions\UIElement\obj\Debug\UIElement.pdb
