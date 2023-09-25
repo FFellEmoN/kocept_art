@@ -1,0 +1,7 @@
+D:\ProjectsVisualStudia\ReadInt\bin\Debug\ReadInt.exe.config
+D:\ProjectsVisualStudia\ReadInt\bin\Debug\ReadInt.exe
+D:\ProjectsVisualStudia\ReadInt\bin\Debug\ReadInt.pdb
+D:\ProjectsVisualStudia\ReadInt\obj\Debug\ReadInt.csproj.AssemblyReference.cache
+D:\ProjectsVisualStudia\ReadInt\obj\Debug\ReadInt.csproj.CoreCompileInputs.cache
+D:\ProjectsVisualStudia\ReadInt\obj\Debug\ReadInt.exe
+D:\ProjectsVisualStudia\ReadInt\obj\Debug\ReadInt.pdb
