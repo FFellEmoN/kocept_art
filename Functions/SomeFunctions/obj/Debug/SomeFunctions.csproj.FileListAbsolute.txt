@@ -5,3 +5,10 @@ D:\Repositoryes\kocept_art\Array\SomeFunctions\obj\Debug\SomeFunctions.csproj.As
 D:\Repositoryes\kocept_art\Array\SomeFunctions\obj\Debug\SomeFunctions.csproj.CoreCompileInputs.cache
 D:\Repositoryes\kocept_art\Array\SomeFunctions\obj\Debug\SomeFunctions.exe
 D:\Repositoryes\kocept_art\Array\SomeFunctions\obj\Debug\SomeFunctions.pdb
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\bin\Debug\SomeFunctions.exe.config
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\bin\Debug\SomeFunctions.exe
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\bin\Debug\SomeFunctions.pdb
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\obj\Debug\SomeFunctions.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\obj\Debug\SomeFunctions.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\obj\Debug\SomeFunctions.exe
+D:\Repositoryes\kocept_art\Functions\SomeFunctions\obj\Debug\SomeFunctions.pdb

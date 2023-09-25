@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.IO;
-using System.Threading;
 
 namespace SomeFunctions
 {
@@ -16,11 +11,13 @@ namespace SomeFunctions
 
             char[,] map = ReadMap("map.txt");
 
-            ConsoleKeyInfo pressedKey = new ConsoleKeyInfo('w', ConsoleKey.W, false, false, false);
+            ConsoleKeyInfo pressedKey;
 
             int pacmanX = 1;
             int pacmanY = 1;
             int score = 0;
+            int positionScoreX = map.GetLength(0);
+            int positionScoreY = 0;
 
             while (true)
             {
@@ -34,7 +31,7 @@ namespace SomeFunctions
                 Console.Write('@');
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(32, 0);
+                Console.SetCursorPosition(positionScoreX, positionScoreY);
                 Console.Write($"Score: {score}");
 
                 pressedKey = Console.ReadKey();
@@ -83,7 +80,7 @@ namespace SomeFunctions
                 pacmanX = nextPacmanPositionX;
                 pacmanY = nextPacmanPositionY;
 
-                if(nextCell == '.')
+                if (nextCell == '.')
                 {
                     score++;
                     map[nextPacmanPositionX, nextPacmanPositionY] = ' ';
@@ -107,16 +104,16 @@ namespace SomeFunctions
             return direction;
         }
 
-            private static int GetMaxLengthOfLine(string[] lines)
-            {
-                int maxLength = lines[0].Length;
+        private static int GetMaxLengthOfLine(string[] lines)
+        {
+            int maxLength = lines[0].Length;
 
-                foreach (var line in lines)
-                    if (line.Length > maxLength)
-                        maxLength = line.Length;
+            foreach (var line in lines)
+                if (line.Length > maxLength)
+                    maxLength = line.Length;
 
-                return maxLength;
-            }
-        
+            return maxLength;
+        }
+
     }
 }
