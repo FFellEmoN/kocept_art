@@ -39,23 +39,23 @@ namespace PersonnelAccounting
 
                 switch (disiredOperation)
                 {
-                    case 1:
+                    case AddDossierMenu:
                         AddDossier(ref listPersonnels, ref listPosts);
                         break;
 
-                    case 2:
+                    case WriteAllDossiersMenu:
                         WriteAllDossiers(listPersonnels, listPosts);
                         break;
 
-                    case 3:
+                    case RemoveDossierMenu:
                         DeletePersonnelInDossier(ref listPersonnels, ref listPosts);
                         break;
 
-                    case 4:
-                        searchSurname(listPersonnels, listPosts);
+                    case SearchBySurnameMenu:
+                        SearchSurname(listPersonnels, listPosts);
                         break;
 
-                    case 5:
+                    case ExitMenu:
                         Console.WriteLine("Досвидания!");
                         break;
 
@@ -63,9 +63,9 @@ namespace PersonnelAccounting
                         Console.WriteLine("\nТакой операции не существует\n");
                         break;
                 }
+
                 Console.ReadKey();
                 Console.Clear();
-
             } while (disiredOperation != ExitMenu);
         }
 
@@ -73,9 +73,8 @@ namespace PersonnelAccounting
         {
             int valueIncreasingArray = 1;
 
-            listPersonnels = ResizeStringArray(listPersonnels, valueIncreasingArray);
-            listPosts = ResizeStringArray(listPosts, valueIncreasingArray);
-
+            listPersonnels = IncreaseStringArray(listPersonnels, valueIncreasingArray);
+            listPosts = IncreaseStringArray(listPosts, valueIncreasingArray);
             int lastIndexArray = listPosts.Length - 1;
 
             Console.Write("Введите фамилию: ");
@@ -92,26 +91,29 @@ namespace PersonnelAccounting
             listPosts[lastIndexArray] = post;
         }
 
-        private static string[] ResizeStringArray(string[] array, int value)
+        private static string[] IncreaseStringArray(string[] array, int value)
         {
             int lengthArray = array.Length + value;
 
             string[] newArray = new string[lengthArray];
 
-            if (value > 0)
+            for (int i = 0; i < array.Length; i++)
             {
-                for (int i = 0; i < array.Length; i++)
-                {
-                    newArray[i] = array[i];
-                }
+                newArray[i] = array[i];
             }
 
-            if(value < 0)
+            return newArray;
+        }
+
+        private static string[] ReduceStringArray(string[] array, int value)
+        {
+            int lengthArray = array.Length + value;
+
+            string[] newArray = new string[lengthArray];
+
+            for (int i = 0; i < newArray.Length; i++)
             {
-                for (int i = 0; i < newArray.Length; i++)
-                {
-                    newArray[i] = array[i];
-                }
+                newArray[i] = array[i];
             }
 
             return newArray;
@@ -119,7 +121,7 @@ namespace PersonnelAccounting
 
         private static void WriteAllDossiers(string[] listPersonnels, string[] listPosts)
         {
-            if (isArrayEmpty(listPersonnels))
+            if (IsArrayEmpty(listPersonnels))
             {
                 return;
             }
@@ -134,7 +136,7 @@ namespace PersonnelAccounting
 
         private static void DeletePersonnelInDossier(ref string[] listPersonnels, ref string[] listPosts)
         {
-            if (isArrayEmpty(listPersonnels))
+            if (IsArrayEmpty(listPersonnels))
             {
                 return;
             }
@@ -171,13 +173,13 @@ namespace PersonnelAccounting
                 }
             }
 
-            listPersonnels = ResizeStringArray(listPersonnels, valueIncreasingArray);
-            listPosts = ResizeStringArray(listPosts, valueIncreasingArray);
+            listPersonnels = ReduceStringArray(listPersonnels, valueIncreasingArray);
+            listPosts = ReduceStringArray(listPosts, valueIncreasingArray);
         }
 
-        private static void searchSurname(string[] listPersonnels, string[] listPosts)
+        private static void SearchSurname(string[] listPersonnels, string[] listPosts)
         {
-            if (isArrayEmpty(listPersonnels))
+            if (IsArrayEmpty(listPersonnels))
             {
                 return;
             }
@@ -187,18 +189,22 @@ namespace PersonnelAccounting
             bool isSurnameFound = false;
 
             int indexCorrector = 1;
+            int firstSymbolSurnameArray = 0;
+
+            string[] surnameArray;
 
             Console.Write("Введите фамилию: ");
             surname = Console.ReadLine().ToLower();
 
             for (int i = 0; i < listPersonnels.Length; i++)
             {
-                listPersonnels[i].ToLower();
+                surnameArray = listPersonnels[i].Split(' ');
+                surnameArray[firstSymbolSurnameArray] = surnameArray[firstSymbolSurnameArray].ToLower();
 
-                if (listPersonnels[i].Contains(surname))
+                if (surnameArray[firstSymbolSurnameArray].Contains(surname))
                 {
                     Console.WriteLine($"{i + indexCorrector}) {listPersonnels[i]} - {listPosts[i]}");
-                        isSurnameFound = true;
+                    isSurnameFound = true;
                 }
             }
 
@@ -208,7 +214,7 @@ namespace PersonnelAccounting
             }
         }
 
-        private static bool isArrayEmpty(string[] listPersonnels)
+        private static bool IsArrayEmpty(string[] listPersonnels)
         {
             if (listPersonnels.Length == 0)
             {
