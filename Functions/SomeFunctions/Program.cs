@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 
 namespace SomeFunctions
 {
@@ -8,18 +9,26 @@ namespace SomeFunctions
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
+            string pathMap = "map.txt";
 
-            char[,] map = ReadMap("map.txt");
+            char[,] map = ReadMap(pathMap);
 
             ConsoleKeyInfo pressedKey;
+            ConsoleKeyInfo pressedKeyExit;
 
-            int pacmanX = 1;
-            int pacmanY = 1;
+            int pacmanPositionX = 1;
+            int pacmanPositionY = 1;
             int score = 0;
-            int positionScoreX = map.GetLength(0);
-            int positionScoreY = 0;
+            int scorePositionX = map.GetLength(0);
+            int scorePositionY = 0;
+            int textPositionX = 0;
+            int textPositionY = map.GetLength(1) + 1;
 
-            while (true)
+            bool quitGame = true;
+
+            char pacmanSymbolOnMap = '@';
+
+            while (quitGame)
             {
                 Console.Clear();
 
@@ -27,22 +36,34 @@ namespace SomeFunctions
                 DrawMap(map);
 
                 Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.SetCursorPosition(pacmanX, pacmanY);
-                Console.Write('@');
+                Console.SetCursorPosition(pacmanPositionX, pacmanPositionY);
+                Console.Write(pacmanSymbolOnMap);
 
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.SetCursorPosition(positionScoreX, positionScoreY);
+                Console.SetCursorPosition(scorePositionX, scorePositionY);
                 Console.Write($"Score: {score}");
+
+;
+                Console.SetCursorPosition(textPositionX, textPositionY);
+                Console.WriteLine("Для выхода из игры нажмите ESC");
 
                 pressedKey = Console.ReadKey();
 
-                HandelInput(pressedKey, ref pacmanX, ref pacmanY, map, ref score);
+                if (pressedKey.Key == ConsoleKey.Escape)
+                {
+                    quitGame = false;
+                    Console.Clear();
+
+                    Console.WriteLine("До свидания!");
+                }
+
+                HandelInput(pressedKey, ref pacmanPositionX, ref pacmanPositionY, map, ref score);
             }
         }
 
-        private static char[,] ReadMap(string path)
+        private static char[,] ReadMap(string pathMap)
         {
-            string[] file = File.ReadAllLines("map.txt");
+            string[] file = File.ReadAllLines(pathMap);
 
             char[,] map = new char[GetMaxLengthOfLine(file), file.Length];
 
@@ -66,24 +87,26 @@ namespace SomeFunctions
             }
         }
 
-        private static void HandelInput(ConsoleKeyInfo pressedKey, ref int pacmanX, ref int pacmanY, char[,] map, ref int score)
+        private static void HandelInput(ConsoleKeyInfo pressedKey, ref int pacmanPositionX, ref int pacmanPositionY, char[,] map, ref int score)
         {
             int[] direction = GetDirection(pressedKey);
 
-            int nextPacmanPositionX = pacmanX + direction[0];
-            int nextPacmanPositionY = pacmanY + direction[1];
+            int nextPacmanPositionX = pacmanPositionX + direction[0];
+            int nextPacmanPositionY = pacmanPositionY + direction[1];
 
             char nextCell = map[nextPacmanPositionX, nextPacmanPositionY];
+            char freeSpaceSymbol = ' ';
+            char pointSymbol = '.';
 
-            if (nextCell == ' ' || nextCell == '.')
+            if (nextCell == freeSpaceSymbol || nextCell == pointSymbol)
             {
-                pacmanX = nextPacmanPositionX;
-                pacmanY = nextPacmanPositionY;
+                pacmanPositionX = nextPacmanPositionX;
+                pacmanPositionY = nextPacmanPositionY;
 
-                if (nextCell == '.')
+                if (nextCell == pointSymbol)
                 {
                     score++;
-                    map[nextPacmanPositionX, nextPacmanPositionY] = ' ';
+                    map[nextPacmanPositionX, nextPacmanPositionY] = freeSpaceSymbol;
                 }
             }
         }
@@ -114,6 +137,5 @@ namespace SomeFunctions
 
             return maxLength;
         }
-
     }
 }
