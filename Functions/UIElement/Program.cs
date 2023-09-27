@@ -13,46 +13,37 @@ namespace UIElement
             float health = 40;
             float maxHealth = 560;
 
-            int positionX = 0;
-            int positionY = 0;
+            int positionHealthBarX = 0;
+            int positionHealthBarY = 0;
             int sizeBar = 10;
 
             ConsoleColor healthColor = ConsoleColor.Green;
             ConsoleColor percentsColor = ConsoleColor.Red;
 
-            DrawBar(sizeBar, health, maxHealth, percentsColor, healthColor, positionX, positionY);
+            DrawBar(sizeBar, health, maxHealth, percentsColor, healthColor, positionHealthBarX, positionHealthBarY);
         }
 
-        private static void DrawBar(int size, float value, float maxValue, ConsoleColor percentsColor, ConsoleColor healthColor, int positionX, int positionY)
+        private static void DrawBar(int size, float health, float maxHealth, ConsoleColor percentsColor, ConsoleColor healthColor, int positionHealthBarX, int positionHealthBarY)
         {
-            ConsoleColor defaultColor = Console.BackgroundColor;
+            ConsoleColor defaultColorHealthBar = Console.BackgroundColor;
             ConsoleColor defaultTextColor = ConsoleColor.White;
 
             string bar = "";
 
-            int percentsHelth = Convert.ToInt32(value / maxValue * 100);
+            int percentsHelth = Convert.ToInt32(health / maxHealth * 100);
             int startValue = 0;
-            float divisionPrice = maxValue / size;
 
-            //for (int i = 0; i < value; i++)
-            //{
-            //    bar += " ";
-            //}
-            bar = fillingLine(bar, startValue, value, divisionPrice);
+            float divisionPriceBar = maxHealth / size;
 
-            Console.SetCursorPosition(positionX, positionY);
+            bar = fillingLine(startValue, health, divisionPriceBar);
+
+            Console.SetCursorPosition(positionHealthBarX, positionHealthBarY);
             Console.Write('[');
             Console.BackgroundColor = healthColor;
             Console.Write(bar);
-            Console.BackgroundColor = defaultColor;
+            Console.BackgroundColor = defaultColorHealthBar;
 
-            //bar = "";
-
-            //for (int i = value; i < maxValue; i++)
-            //{
-            //    bar += " ";
-            //}
-            bar = fillingLine(bar, value, maxValue, divisionPrice);
+            bar = fillingLine(health, maxHealth, divisionPriceBar);
 
             Console.Write(bar + ']');
             Console.ForegroundColor = percentsColor;
@@ -61,19 +52,19 @@ namespace UIElement
             Console.WriteLine();
         }
 
-        private static string fillingLine(string line, float startValue, float finishValue, float divisionPrice)
+        private static string fillingLine(float health, float maxHealth, float divisionPrice)
         {
-            line = "";
+            string lineBar = "";
 
-            finishValue = finishValue / divisionPrice;
-            startValue = startValue / divisionPrice;
+            maxHealth = maxHealth / divisionPrice;
+            health = health / divisionPrice;
 
-            for (float i = startValue; i < finishValue; i++)
+            for (float i = health; i < maxHealth; i++)
             {
-                line += " ";
+                lineBar += " ";
             }
 
-            return line;
+            return lineBar;
         }
     }
 }
