@@ -26,9 +26,6 @@ namespace KansasCityShuffle
             Console.WriteLine("\nДвумерный массив после перемешивания");
             Shuffle(twoDimensionalArray);
             WriteArray(twoDimensionalArray);
-
-
-
         }
 
         private static void Shuffle(int[] array)
@@ -39,7 +36,7 @@ namespace KansasCityShuffle
 
             for (int i = 0; i < lengthArray; i++)
             {
-                swap(array, i, i + random.Next(lengthArray - i));
+                SwapElements(array, i, i + random.Next(lengthArray - i));
             }
         }
 
@@ -54,19 +51,19 @@ namespace KansasCityShuffle
             {
                 for (int j = 0; j < leangthColomnArray; j++)
                 {
-                    swap(array, i + random.Next(leangthLineArray - i), j + random.Next(leangthColomnArray - j), i, j);
+                    SwapElements(array, i + random.Next(leangthLineArray - i), j + random.Next(leangthColomnArray - j), i, j);
                 }
             }
         }
-        private static void swap(int[] array, int aIndex, int bIndex)
+
+        private static void SwapElements(int[] array, int aIndex, int bIndex)
         {
             int temp = array[aIndex];
             array[aIndex] = array[bIndex];
             array[bIndex] = temp;
-
         }
 
-        private static void swap(int[,] array, int changeLine, int changeColomn, int aIndex, int bIndex)
+        private static void SwapElements(int[,] array, int changeLine, int changeColomn, int aIndex, int bIndex)
         {
             int temp = array[aIndex, bIndex];
             array[aIndex, bIndex] = array[changeLine, changeColomn];
