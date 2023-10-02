@@ -30,30 +30,34 @@ namespace UIElement
 
             string bar = "";
 
+            char openBracket = '[';
+            char closeBracket = ']';
+
             int percentsHelth = Convert.ToInt32(health / maxHealth * 100);
             int startValue = 0;
 
             float divisionPriceBar = maxHealth / size;
 
-            bar = fillingLine(startValue, health, divisionPriceBar);
+            bar = FillLine(startValue, health, divisionPriceBar);
 
             Console.SetCursorPosition(positionHealthBarX, positionHealthBarY);
-            Console.Write('[');
+            Console.Write(openBracket);
             Console.BackgroundColor = healthColor;
             Console.Write(bar);
             Console.BackgroundColor = defaultColorHealthBar;
 
-            bar = fillingLine(health, maxHealth, divisionPriceBar);
+            bar = FillLine(health, maxHealth, divisionPriceBar);
 
-            Console.Write(bar + ']');
+            Console.Write(bar + closeBracket);
             Console.ForegroundColor = percentsColor;
             Console.Write($" {percentsHelth}%");
             Console.ForegroundColor = defaultTextColor;
             Console.WriteLine();
         }
 
-        private static string fillingLine(float health, float maxHealth, float divisionPrice)
+        private static string FillLine(float health, float maxHealth, float divisionPrice)
         {
+            string spaceChare = " ";
             string lineBar = "";
 
             maxHealth = maxHealth / divisionPrice;
@@ -61,7 +65,7 @@ namespace UIElement
 
             for (float i = health; i < maxHealth; i++)
             {
-                lineBar += " ";
+                lineBar += spaceChare;
             }
 
             return lineBar;
