@@ -14,7 +14,8 @@ namespace SomeFunctions
             char[,] map = ReadMap(pathMap);
 
             ConsoleKeyInfo pressedKey;
-            ConsoleKeyInfo pressedKeyExit;
+
+            ConsoleKey pressedKeyExit = ConsoleKey.Escape;
 
             int pacmanPositionX = 1;
             int pacmanPositionY = 1;
@@ -24,11 +25,11 @@ namespace SomeFunctions
             int textPositionX = 0;
             int textPositionY = map.GetLength(1) + 1;
 
-            bool quitGame = true;
+            bool doQuitGame = true;
 
             char pacmanSymbolOnMap = '@';
 
-            while (quitGame)
+            while (doQuitGame)
             {
                 Console.Clear();
 
@@ -49,9 +50,9 @@ namespace SomeFunctions
 
                 pressedKey = Console.ReadKey();
 
-                if (pressedKey.Key == ConsoleKey.Escape)
+                if (pressedKey.Key == pressedKeyExit)
                 {
-                    quitGame = false;
+                    doQuitGame = false;
                     Console.Clear();
 
                     Console.WriteLine("До свидания!");
@@ -115,13 +116,19 @@ namespace SomeFunctions
         {
             int[] direction = { 0, 0 };
 
-            if (pressedKey.Key == ConsoleKey.UpArrow)
+            ConsoleKey upwardMoovment = ConsoleKey.UpArrow;
+            ConsoleKey downwardMoovment = ConsoleKey.DownArrow;
+            ConsoleKey moovmentLeft = ConsoleKey.LeftArrow;
+            ConsoleKey moovmentRight = ConsoleKey.RightArrow;
+            
+
+            if (pressedKey.Key == upwardMoovment)
                 direction[1] = -1;
-            else if (pressedKey.Key == ConsoleKey.DownArrow)
+            else if (pressedKey.Key == downwardMoovment)
                 direction[1] = 1;
-            else if (pressedKey.Key == ConsoleKey.LeftArrow)
+            else if (pressedKey.Key == moovmentLeft)
                 direction[0] = -1;
-            else if (pressedKey.Key == ConsoleKey.RightArrow)
+            else if (pressedKey.Key == moovmentRight)
                 direction[0] = 1;
 
             return direction;
