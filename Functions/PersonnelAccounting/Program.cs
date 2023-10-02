@@ -1,6 +1,5 @@
 ﻿using System;
 
-
 namespace PersonnelAccounting
 {
     internal class Program
