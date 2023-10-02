@@ -1,12 +1,5 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml.Linq;
+
 
 namespace PersonnelAccounting
 {
@@ -14,16 +7,18 @@ namespace PersonnelAccounting
     {
         static void Main(string[] args)
         {
-            const int AddDossierMenu = 1;
-            const int WriteAllDossiersMenu = 2;
-            const int RemoveDossierMenu = 3;
-            const int SearchBySurnameMenu = 4;
-            const int ExitMenu = 5;
+            const string AddDossierMenu = "1";
+            const string WriteAllDossiersMenu = "2";
+            const string RemoveDossierMenu = "3";
+            const string SearchBySurnameMenu = "4";
+            const string ExitMenu = "5";
 
             string[] fullNames = new string[0];
             string[] posts = new string[0];
 
-            int disiredOperation;
+            string disiredOperation;
+
+            bool doExit = true;
 
             do
             {
@@ -35,7 +30,7 @@ namespace PersonnelAccounting
                 Console.WriteLine($"{ExitMenu} - выход");
 
                 Console.Write("\nВведите желаемую операцию: ");
-                disiredOperation = Convert.ToInt32(Console.ReadLine());
+                disiredOperation = Console.ReadLine();
 
                 switch (disiredOperation)
                 {
@@ -48,7 +43,7 @@ namespace PersonnelAccounting
                         break;
 
                     case RemoveDossierMenu:
-                        DeletePersonnelInDossier(ref fullNames, ref posts);
+                        DeleteDossier(ref fullNames, ref posts);
                         break;
 
                     case SearchBySurnameMenu:
@@ -57,6 +52,7 @@ namespace PersonnelAccounting
 
                     case ExitMenu:
                         Console.WriteLine("Досвидания!");
+                        doExit = false;
                         break;
 
                     default:
@@ -66,7 +62,7 @@ namespace PersonnelAccounting
 
                 Console.ReadKey();
                 Console.Clear();
-            } while (disiredOperation != ExitMenu);
+            } while (doExit);
         }
 
         private static void AddDossier(ref string[] listPersonnels, ref string[] listPosts)
@@ -94,34 +90,36 @@ namespace PersonnelAccounting
             int value = 1;
             int lengthArray = array.Length + value;
 
-            string[] newArray = new string[lengthArray];
+            string[] tempArray = new string[lengthArray];
 
             for (int i = 0; i < array.Length; i++)
             {
-                newArray[i] = array[i];
+                tempArray[i] = array[i];
             }
 
-            return newArray;
+            return tempArray;
         }
 
         private static string[] ReduceStringArray(string[] array, int numberOnListDeleted)
         {
             int value = -1;
             int indexComponentDeleted = numberOnListDeleted - 1;
-            int lastIndexArray = array.Length - 1;
             int lengthArray = array.Length + value;
+            int startIndex = indexComponentDeleted + 1;
 
-            string[] newArray = new string[lengthArray];
+            string[] tempArray = new string[lengthArray];
 
-            for (int i = 0; i < newArray.Length; i++)
+            for (int i = 0; i < indexComponentDeleted; i++)
             {
-                if (i >= indexComponentDeleted)
-                    newArray[i] = array[i + 1];
-                else
-                    newArray[i] = array[i];
+                    tempArray[i] = array[i];
             }
 
-            return newArray;
+            for(int i = startIndex; i < array.Length; i++)
+            {
+                tempArray[i - 1] = array[i];
+            }
+
+            return tempArray;
         }
 
         private static void WriteAllDossiers(string[] fullName, string[] posts)
@@ -137,7 +135,7 @@ namespace PersonnelAccounting
             }
         }
 
-        private static void DeletePersonnelInDossier(ref string[] fullName, ref string[] posts)
+        private static void DeleteDossier(ref string[] fullName, ref string[] posts)
         {
             if (IsArrayEmpty(fullName))
                 return;
@@ -150,11 +148,6 @@ namespace PersonnelAccounting
             numberOnListDeleted = Convert.ToInt32(Console.ReadLine());
 
             if (numberOnListDeleted <= 0 || numberOnListDeleted > fullName.Length)
-            {
-                Console.WriteLine("Некорректный ввод");
-                return;
-            }
-            else if (numberOnListDeleted % 1 != 0)
             {
                 Console.WriteLine("Некорректный ввод");
                 return;
