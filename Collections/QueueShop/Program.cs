@@ -14,13 +14,13 @@ namespace QueueShop
             int checkAmount_3 = 134;
             int checkAmount_4 = 78;
             int shopAccount = 0;
+            int lengthQueueBuyers;
 
             buyers.Enqueue(checkAmount_1);
             buyers.Enqueue(checkAmount_2);
             buyers.Enqueue(checkAmount_3);
             buyers.Enqueue(checkAmount_4);
-
-            int lengthQueueBuyers = buyers.Count;
+            lengthQueueBuyers = buyers.Count;
 
             for (int i = 0; i < lengthQueueBuyers; i++)
             {
