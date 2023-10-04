@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\bin\Debug\ExplanatoryDictionary.exe.config
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\bin\Debug\ExplanatoryDictionary.exe
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\bin\Debug\ExplanatoryDictionary.pdb
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\obj\Debug\ExplanatoryDictionary.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\obj\Debug\ExplanatoryDictionary.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\obj\Debug\ExplanatoryDictionary.exe
+D:\Repositoryes\kocept_art\Collections\ExplanatoryDictionary\obj\Debug\ExplanatoryDictionary.pdb
