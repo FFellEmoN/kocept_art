@@ -36,7 +36,6 @@ namespace DynamicArrayUp
 
                         Console.WriteLine("Все элементы успешно просуммированы");
                         Console.WriteLine($"Сумма всех элементов = {sumInputValue}");
-
                         break;
 
                     case ExitProgramMenu:
