@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\bin\Debug\DynamicArrayUp.exe.config
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\bin\Debug\DynamicArrayUp.exe
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\bin\Debug\DynamicArrayUp.pdb
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\obj\Debug\DynamicArrayUp.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\obj\Debug\DynamicArrayUp.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\obj\Debug\DynamicArrayUp.exe
+D:\Repositoryes\kocept_art\Collections\DynamicArrayUp\obj\Debug\DynamicArrayUp.pdb
