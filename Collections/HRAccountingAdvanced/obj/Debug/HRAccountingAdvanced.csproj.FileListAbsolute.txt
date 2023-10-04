@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\bin\Debug\HRAccountingAdvanced.exe.config
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\bin\Debug\HRAccountingAdvanced.exe
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\bin\Debug\HRAccountingAdvanced.pdb
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\obj\Debug\HRAccountingAdvanced.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\obj\Debug\HRAccountingAdvanced.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\obj\Debug\HRAccountingAdvanced.exe
+D:\Repositoryes\kocept_art\Collections\HRAccountingAdvanced\obj\Debug\HRAccountingAdvanced.pdb
