@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Collections\QueueShop\bin\Debug\QueueShop.exe.config
+D:\Repositoryes\kocept_art\Collections\QueueShop\bin\Debug\QueueShop.exe
+D:\Repositoryes\kocept_art\Collections\QueueShop\bin\Debug\QueueShop.pdb
+D:\Repositoryes\kocept_art\Collections\QueueShop\obj\Debug\QueueShop.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Collections\QueueShop\obj\Debug\QueueShop.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Collections\QueueShop\obj\Debug\QueueShop.exe
+D:\Repositoryes\kocept_art\Collections\QueueShop\obj\Debug\QueueShop.pdb
