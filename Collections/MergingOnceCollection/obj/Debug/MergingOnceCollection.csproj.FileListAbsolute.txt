@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\bin\Debug\MergingOnceCollecton.exe.config
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\bin\Debug\MergingOnceCollecton.exe
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\bin\Debug\MergingOnceCollecton.pdb
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\obj\Debug\MergingOnceCollection.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\obj\Debug\MergingOnceCollection.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\obj\Debug\MergingOnceCollecton.exe
+D:\Repositoryes\kocept_art\Collections\MergingOnceCollection\obj\Debug\MergingOnceCollecton.pdb
