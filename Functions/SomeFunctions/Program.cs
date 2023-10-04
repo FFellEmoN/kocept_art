@@ -8,6 +8,7 @@ namespace SomeFunctions
         static void Main(string[] args)
         {
             Console.CursorVisible = false;
+
             string pathMap = "map.txt";
 
             char[,] map = ReadMap(pathMap);
@@ -24,14 +25,13 @@ namespace SomeFunctions
             int textPositionX = 0;
             int textPositionY = map.GetLength(1) + 1;
 
-            bool doQuitGame = true;
+            bool isWork = true;
 
             char pacmanSymbolOnMap = '@';
 
-            while (doQuitGame)
+            while (isWork)
             {
                 Console.Clear();
-
                 Console.ForegroundColor = ConsoleColor.Blue;
                 DrawMap(map);
 
@@ -43,7 +43,6 @@ namespace SomeFunctions
                 Console.SetCursorPosition(scorePositionX, scorePositionY);
                 Console.Write($"Score: {score}");
 
-;
                 Console.SetCursorPosition(textPositionX, textPositionY);
                 Console.WriteLine("Для выхода из игры нажмите ESC");
 
@@ -51,7 +50,7 @@ namespace SomeFunctions
 
                 if (pressedKey.Key == pressedKeyExit)
                 {
-                    doQuitGame = false;
+                    isWork = false;
                     Console.Clear();
 
                     Console.WriteLine("До свидания!");
@@ -115,19 +114,18 @@ namespace SomeFunctions
         {
             int[] direction = { 0, 0 };
 
-            ConsoleKey upwardMoovment = ConsoleKey.UpArrow;
-            ConsoleKey downwardMoovment = ConsoleKey.DownArrow;
-            ConsoleKey moovmentLeft = ConsoleKey.LeftArrow;
-            ConsoleKey moovmentRight = ConsoleKey.RightArrow;
-            
+            ConsoleKey upCommand = ConsoleKey.UpArrow;
+            ConsoleKey downCommand = ConsoleKey.DownArrow;
+            ConsoleKey leftCommand = ConsoleKey.LeftArrow;
+            ConsoleKey rightCommand = ConsoleKey.RightArrow;
 
-            if (pressedKey.Key == upwardMoovment)
+            if (pressedKey.Key == upCommand)
                 direction[1] = -1;
-            else if (pressedKey.Key == downwardMoovment)
+            else if (pressedKey.Key == downCommand)
                 direction[1] = 1;
-            else if (pressedKey.Key == moovmentLeft)
+            else if (pressedKey.Key == leftCommand)
                 direction[0] = -1;
-            else if (pressedKey.Key == moovmentRight)
+            else if (pressedKey.Key == rightCommand)
                 direction[0] = 1;
 
             return direction;
