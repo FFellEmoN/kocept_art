@@ -14,12 +14,11 @@ namespace DynamicArrayUp
             List<int> listInputNumber = new List<int>();
 
             int inputValue;
-            int sumInputValue;
 
             string desiredAction;
 
             bool isInteger;
-            bool doExit = true;
+            bool isWork = true;
 
             do
             {
@@ -32,41 +31,52 @@ namespace DynamicArrayUp
                 switch (desiredAction)
                 {
                     case SumAllInputValueMenu:
-                        sumInputValue = listInputNumber.Sum();
-
-                        Console.WriteLine("Все элементы успешно просуммированы");
-                        Console.WriteLine($"Сумма всех элементов = {sumInputValue}");
+                        SumElemetsList(listInputNumber);
                         break;
 
                     case ExitProgramMenu:
-                        Console.WriteLine("Досвидания!");
-
-                        doExit = false;
+                        isWork = false;
                         break;
 
                     default:
-                        inputValue = Convert.ToInt32(desiredAction);
-
-                        isInteger = inputValue % 1 == 0;
-
-                        if (isInteger)
-                        {
-                            listInputNumber.Add(inputValue);
-                        }
-                        else
-                        {
-                            Console.WriteLine("Не коректный ввод, попробуйти еще раз.");
-                        }
+                        InputNumberList(listInputNumber, desiredAction);
                         break;
                 }
 
-                if (doExit)
+                if (isWork)
                 {
                     Console.WriteLine("Нажмите любую клавишу для того, чтобы продолжить.");
                     Console.ReadLine();
                     Console.Clear();
                 }
-            } while (doExit);
+            } while (isWork);
+
+            Console.WriteLine("Досвидания!");
+        }
+
+        private static void SumElemetsList(List<int> listInputNumber)
+        {
+            int sumInputValue = listInputNumber.Sum();
+
+            Console.WriteLine("Все элементы успешно просуммированы");
+            Console.WriteLine($"Сумма всех элементов = {sumInputValue}");
+        }
+
+        private static void InputNumberList(List<int> listInputNumber, string desiredAction)
+        {
+            int inputValue = Convert.ToInt32(desiredAction);
+
+            //Проверка корректности ввода целого числа
+            bool isInteger = inputValue % 1 == 0;
+
+            if (isInteger)
+            {
+                listInputNumber.Add(inputValue);
+            }
+            else
+            {
+                Console.WriteLine("Не коректный ввод, попробуйти еще раз.");
+            }
         }
     }
 }

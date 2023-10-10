@@ -12,7 +12,9 @@ namespace HRAccountingAdvanced
             const string RemoveDossierMenu = "3";
             const string ExitMenu = "4";
 
-            Dictionary<string, string> dossiers = new Dictionary<string, string>();
+         //   Dictionary<string, string> dossiers = new Dictionary<string, string>();
+            List<string> fullNameList = new List<string>();
+            List<string> postsList = new List<string>();
 
             string disiredOperation;
 
@@ -32,15 +34,15 @@ namespace HRAccountingAdvanced
                 switch (disiredOperation)
                 {
                     case AddDossierMenu:
-                        AddDossier(dossiers);
+                        AddDossier(fullNameList, postsList);
                         break;
 
                     case WriteAllDossiersMenu:
-                        WriteAllDossiers(dossiers);
+                        WriteAllDossiers(fullNameList, postsList);
                         break;
 
                     case RemoveDossierMenu:
-                        DeleteDossier(dossiers);
+                        DeleteDossier(fullNameList, postsList);
                         break;
 
                     case ExitMenu:
@@ -58,46 +60,50 @@ namespace HRAccountingAdvanced
             } while (doExit);
         }
 
-        private static void AddDossier(Dictionary<string, string> dossiers)
+        private static void AddDossier(List<string> fullNameList, List<string> postsList)
         {
             Console.Write("Введите ФИО: ");
             string fullName = Console.ReadLine();
             Console.Write("\n\nВведите должность: ");
             string post = Console.ReadLine();
 
-            dossiers.Add(fullName, post);
+            fullNameList.Add(fullName);
+            postsList.Add(post);
         }
 
-        private static void WriteAllDossiers(Dictionary<string, string> dossiers)
+        private static void WriteAllDossiers(List<string> fullNameList, List<string> postsList)
         {
-            if (IsArrayEmpty(dossiers))
+            if (IsArrayEmpty(fullNameList))
                 return;
 
-            int personOnDictionary = 1;
+            int correctIndexValue = 1;
+            int indexList;
 
-            foreach (KeyValuePair<string, string> item in dossiers)
+            foreach (string fullName in fullNameList)
             {
-                Console.WriteLine($"{personOnDictionary}) {item.Key} - {item.Value}");
-
-                personOnDictionary++;
+                indexList = fullNameList.IndexOf(fullName);
+                Console.WriteLine($"{indexList + correctIndexValue}) {fullName} - {postsList[indexList]}");
             }
         }
 
-        private static void DeleteDossier(Dictionary<string, string> dossiers)
+        private static void DeleteDossier(List<string> fullNameList, List<string> postsList)
         {
-            if (IsArrayEmpty(dossiers))
+            if (IsArrayEmpty(fullNameList))
                 return;
 
-            string keyOnListDeleted;
+            int correctIndexValue = 1;
+            int indexList;
 
-            WriteAllDossiers(dossiers);
+            WriteAllDossiers(fullNameList, postsList);
 
-            Console.Write("\nКого удалить из списка (введите ФИО): ");
-            keyOnListDeleted = Console.ReadLine();
+            Console.Write("\nКого удалить из списка (введите порядковый номер): ");
+            int personeListDeleted = Convert.ToInt32(Console.ReadLine());
 
-            if (dossiers.ContainsKey(keyOnListDeleted))
+            if (fullNameList.Count >= personeListDeleted && personeListDeleted > 0)
             {
-                dossiers.Remove(keyOnListDeleted);
+                indexList = personeListDeleted - correctIndexValue;
+                fullNameList.RemoveAt(indexList);
+                postsList.RemoveAt(indexList);
             }
             else
             {
@@ -106,9 +112,9 @@ namespace HRAccountingAdvanced
             }
         }
 
-        private static bool IsArrayEmpty(Dictionary<string, string> dossiers)
+        private static bool IsArrayEmpty(List<string> fullNameList)
         {
-            if (dossiers.Count == 0)
+            if (fullNameList.Count == 0)
             {
                 Console.WriteLine("Список пуст!");
                 return true;
