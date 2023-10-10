@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\bin\Debug\WorkFeatures.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\bin\Debug\WorkFeatures.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\bin\Debug\WorkFeatures.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\obj\Debug\WorkFeatures.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\obj\Debug\WorkFeatures.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\obj\Debug\WorkFeatures.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkFeatures\obj\Debug\WorkFeatures.pdb

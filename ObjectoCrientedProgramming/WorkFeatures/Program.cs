@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WorkFeatures
 {
@@ -11,11 +6,23 @@ namespace WorkFeatures
     {
         static void Main(string[] args)
         {
+            Player player = new Player('@', 30, 5);
+            Randerer randerer = new Randerer();
+
+            randerer.Draw(player);
+            Console.ReadKey();
         }
     }
 
     class Player
     {
+        public Player(char symbolPlayer, int positionPlayerX, int positionPlayerY)
+        {
+                this.symbolPlayer = symbolPlayer;
+                this.positionPlayerX = positionPlayerX;
+                this.positionPlayerY = positionPlayerY;
+        }
+
         public char symbolPlayer { get; private set; }
         public int positionPlayerX { get; private set; }
         public int positionPlayerY { get; private set; }
@@ -25,8 +32,10 @@ namespace WorkFeatures
     {
         public void Draw(Player player)
         {
-            Console.SetCursorPosition(player.positionPlayerX, player.positionPlayerY);
-            Console.WriteLine(player.symbolPlayer);
+                Console.CursorVisible = false;
+                Console.SetCursorPosition(player.positionPlayerX, player.positionPlayerY);
+                Console.WriteLine(player.symbolPlayer);
+            }
         }
     }
 }
