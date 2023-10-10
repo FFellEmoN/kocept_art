@@ -13,11 +13,8 @@ namespace DynamicArrayUp
 
             List<int> listInputNumber = new List<int>();
 
-            int inputValue;
-
             string desiredAction;
 
-            bool isInteger;
             bool isWork = true;
 
             do
@@ -64,12 +61,7 @@ namespace DynamicArrayUp
 
         private static void InputNumberList(List<int> listInputNumber, string desiredAction)
         {
-            int inputValue = Convert.ToInt32(desiredAction);
-
-            //Проверка корректности ввода целого числа
-            bool isInteger = inputValue % 1 == 0;
-
-            if (isInteger)
+            if (int.TryParse(desiredAction, out int inputValue))
             {
                 listInputNumber.Add(inputValue);
             }
