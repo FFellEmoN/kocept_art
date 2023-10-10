@@ -76,13 +76,12 @@ namespace HRAccountingAdvanced
             if (IsArrayEmpty(fullNameList))
                 return;
 
-            int correctIndexValue = 1;
             int indexList;
 
             foreach (string fullName in fullNameList)
             {
                 indexList = fullNameList.IndexOf(fullName);
-                Console.WriteLine($"{indexList + correctIndexValue}) {fullName} - {postsList[indexList]}");
+                Console.WriteLine($"{indexList + 1}) {fullName} - {postsList[indexList]}");
             }
         }
 
@@ -91,17 +90,16 @@ namespace HRAccountingAdvanced
             if (IsArrayEmpty(fullNameList))
                 return;
 
-            int correctIndexValue = 1;
             int indexList;
 
             WriteAllDossiers(fullNameList, postsList);
 
             Console.Write("\nКого удалить из списка (введите порядковый номер): ");
-            int personeListDeleted = Convert.ToInt32(Console.ReadLine());
+            string inputValue = Console.ReadLine();
 
-            if (fullNameList.Count >= personeListDeleted && personeListDeleted > 0)
+            if (int.TryParse(inputValue, out int personeListDeleted) && fullNameList.Count >= personeListDeleted)
             {
-                indexList = personeListDeleted - correctIndexValue;
+                indexList = personeListDeleted - 1;
                 fullNameList.RemoveAt(indexList);
                 postsList.RemoveAt(indexList);
             }
