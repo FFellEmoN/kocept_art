@@ -23,7 +23,7 @@ namespace DynamicArrayUp
                 Console.WriteLine($"{ExitProgramMenu} - выйти из программы");
 
                 Console.Write("\nВыбирите команду или введите любое целочисленное значение: ");
-                desiredAction = Convert.ToString(Console.ReadLine());
+                desiredAction = Console.ReadLine();
 
                 switch (desiredAction)
                 {
@@ -36,7 +36,7 @@ namespace DynamicArrayUp
                         break;
 
                     default:
-                        InputNumberList(listInputNumber, desiredAction);
+                        AddNumber(listInputNumber, desiredAction);
                         break;
                 }
 
@@ -59,7 +59,7 @@ namespace DynamicArrayUp
             Console.WriteLine($"Сумма всех элементов = {sumInputValue}");
         }
 
-        private static void InputNumberList(List<int> listInputNumber, string desiredAction)
+        private static void AddNumber(List<int> listInputNumber, string desiredAction)
         {
             if (int.TryParse(desiredAction, out int inputValue))
             {
