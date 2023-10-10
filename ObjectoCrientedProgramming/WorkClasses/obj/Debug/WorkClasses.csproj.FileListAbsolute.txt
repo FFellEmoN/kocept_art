@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\bin\Debug\WorkClasses.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\bin\Debug\WorkClasses.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\bin\Debug\WorkClasses.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\obj\Debug\WorkClasses.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\obj\Debug\WorkClasses.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\obj\Debug\WorkClasses.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\WorkClasses\obj\Debug\WorkClasses.pdb
