@@ -8,7 +8,7 @@ namespace WorkClasses
         {
             Player player = new Player(1, "SuperMan", "Супер герой с множеством способностей");
 
-            player.ShowInfoPlayer();
+            player.ShowInfo();
         }
     }
 
@@ -25,7 +25,7 @@ namespace WorkClasses
             _description = description;
         }
 
-        public void ShowInfoPlayer()
+        public void ShowInfo()
         {
             Console.WriteLine("Информа об игроке");
             Console.WriteLine($"_id: {_id}\nИмя: {_name}\nОписание: {_description}.");
