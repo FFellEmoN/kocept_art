@@ -12,8 +12,7 @@ namespace HRAccountingAdvanced
             const string RemoveDossierMenu = "3";
             const string ExitMenu = "4";
 
-         //   Dictionary<string, string> dossiers = new Dictionary<string, string>();
-            List<string> fullNameList = new List<string>();
+            List<string> fullNames = new List<string>();
             List<string> postsList = new List<string>();
 
             string disiredOperation;
@@ -34,15 +33,15 @@ namespace HRAccountingAdvanced
                 switch (disiredOperation)
                 {
                     case AddDossierMenu:
-                        AddDossier(fullNameList, postsList);
+                        AddDossier(fullNames, postsList);
                         break;
 
                     case WriteAllDossiersMenu:
-                        WriteAllDossiers(fullNameList, postsList);
+                        WriteAllDossiers(fullNames, postsList);
                         break;
 
                     case RemoveDossierMenu:
-                        DeleteDossier(fullNameList, postsList);
+                        DeleteDossier(fullNames, postsList);
                         break;
 
                     case ExitMenu:
@@ -60,47 +59,48 @@ namespace HRAccountingAdvanced
             } while (doExit);
         }
 
-        private static void AddDossier(List<string> fullNameList, List<string> postsList)
+        private static void AddDossier(List<string> fullNames, List<string> postsList)
         {
             Console.Write("Введите ФИО: ");
-            string fullName = Console.ReadLine();
+            string name = Console.ReadLine();
             Console.Write("\n\nВведите должность: ");
             string post = Console.ReadLine();
 
-            fullNameList.Add(fullName);
+            fullNames.Add(name);
             postsList.Add(post);
         }
 
-        private static void WriteAllDossiers(List<string> fullNameList, List<string> postsList)
+        private static void WriteAllDossiers(List<string> fullNames, List<string> postsList)
         {
-            if (IsArrayEmpty(fullNameList))
+            if (IsArrayEmpty(fullNames.Count))
                 return;
 
             int indexList;
 
-            foreach (string fullName in fullNameList)
+            foreach (string name in fullNames)
             {
-                indexList = fullNameList.IndexOf(fullName);
-                Console.WriteLine($"{indexList + 1}) {fullName} - {postsList[indexList]}");
+                indexList = name.IndexOf(name);
+                Console.WriteLine($"{indexList + 1}) {name} - {postsList[indexList]}");
             }
         }
 
-        private static void DeleteDossier(List<string> fullNameList, List<string> postsList)
+        private static void DeleteDossier(List<string> fullNames, List<string> postsList)
         {
-            if (IsArrayEmpty(fullNameList))
+            if (IsArrayEmpty(fullNames.Count))
                 return;
 
             int indexList;
 
-            WriteAllDossiers(fullNameList, postsList);
+            WriteAllDossiers(fullNames, postsList);
 
             Console.Write("\nКого удалить из списка (введите порядковый номер): ");
             string inputValue = Console.ReadLine();
 
-            if (int.TryParse(inputValue, out int personeListDeleted) && fullNameList.Count >= personeListDeleted)
+            if (int.TryParse(inputValue, out int personeListDeleted) && 
+                fullNames.Count >= personeListDeleted && personeListDeleted > 0)
             {
                 indexList = personeListDeleted - 1;
-                fullNameList.RemoveAt(indexList);
+                fullNames.RemoveAt(indexList);
                 postsList.RemoveAt(indexList);
             }
             else
@@ -110,17 +110,9 @@ namespace HRAccountingAdvanced
             }
         }
 
-        private static bool IsArrayEmpty(List<string> fullNameList)
+        private static bool IsArrayEmpty(int lengthList)
         {
-            if (fullNameList.Count == 0)
-            {
-                Console.WriteLine("Список пуст!");
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return lengthList > 0;
         }
     }
 }
