@@ -20,9 +20,9 @@ namespace WorkClasses
 
         public Player(int id, string name, string description)
         {
-            this._idPlayer = id;
-            this._namePlayer = name;
-            this._descriptionPlayer = description;
+            _idPlayer = id;
+            _namePlayer = name;
+            _descriptionPlayer = description;
         }
 
         public void ShowInfoPlayer()
