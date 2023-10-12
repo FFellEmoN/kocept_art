@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\bin\Debug\PlayerDatabase.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\bin\Debug\PlayerDatabase.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\bin\Debug\PlayerDatabase.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\obj\Debug\PlayerDatabase.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\obj\Debug\PlayerDatabase.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\obj\Debug\PlayerDatabase.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PlayerDatabase\obj\Debug\PlayerDatabase.pdb
