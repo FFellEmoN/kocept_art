@@ -14,21 +14,21 @@ namespace WorkClasses
 
     class Player
     {
-        private int _idPlayer;
-        private string _namePlayer;
-        private string _descriptionPlayer;
+        private int _id;
+        private string _name;
+        private string _description;
 
         public Player(int id, string name, string description)
         {
-            _idPlayer = id;
-            _namePlayer = name;
-            _descriptionPlayer = description;
+            _id = id;
+            _name = name;
+            _description = description;
         }
 
         public void ShowInfoPlayer()
         {
             Console.WriteLine("Информа об игроке");
-            Console.WriteLine($"_idPlayer: {_idPlayer}\nИмя: {_namePlayer}\nОписание: {_descriptionPlayer}.");
+            Console.WriteLine($"_id: {_id}\nИмя: {_name}\nОписание: {_description}.");
         }
     }
 }
