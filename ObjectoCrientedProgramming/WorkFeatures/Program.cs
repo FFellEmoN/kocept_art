@@ -16,16 +16,16 @@ namespace WorkFeatures
 
     class Player
     {
-        public Player(char symbolPlayer, int positionPlayerX, int positionPlayerY)
+        public Player(char symbol, int positionX, int positionY)
         {
-                SymbolPlayer = symbolPlayer;
-                PositionPlayerX = positionPlayerX;
-                PositionPlayerY = positionPlayerY;
+                Symbol = symbol;
+                PositionX = positionX;
+                PositionY = positionY;
         }
 
-        public char SymbolPlayer { get; private set; }
-        public int PositionPlayerX { get; private set; }
-        public int PositionPlayerY { get; private set; }
+        public char Symbol { get; private set; }
+        public int PositionX { get; private set; }
+        public int PositionY { get; private set; }
     }
 
     class Randerer
@@ -33,8 +33,8 @@ namespace WorkFeatures
         public void Draw(Player player)
         {
                 Console.CursorVisible = false;
-                Console.SetCursorPosition(player.PositionPlayerX, player.PositionPlayerY);
-                Console.WriteLine(player.SymbolPlayer);
+                Console.SetCursorPosition(player.PositionX, player.PositionY);
+                Console.WriteLine(player.Symbol);
             }
         }
     }
