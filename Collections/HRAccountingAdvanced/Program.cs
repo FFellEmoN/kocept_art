@@ -45,7 +45,6 @@ namespace HRAccountingAdvanced
                         break;
 
                     case ExitMenu:
-                        Console.WriteLine("Досвидания!");
                         doExit = false;
                         break;
 
@@ -57,6 +56,8 @@ namespace HRAccountingAdvanced
                 Console.ReadKey();
                 Console.Clear();
             } while (doExit);
+
+            Console.WriteLine("Досвидания!");
         }
 
         private static void AddDossier(List<string> fullNames, List<string> postsList)
@@ -73,22 +74,24 @@ namespace HRAccountingAdvanced
         private static void WriteAllDossiers(List<string> fullNames, List<string> postsList)
         {
             if (IsArrayEmpty(fullNames.Count))
-                return;
-
-            int indexList;
-
-            foreach (string name in fullNames)
             {
-                indexList = name.IndexOf(name);
-                Console.WriteLine($"{indexList + 1}) {name} - {postsList[indexList]}");
+                Console.WriteLine("Cписок пуст!");
+                return;
+            }
+
+            for (int i = 0; i < fullNames.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}) {fullNames[i]} - {postsList[i]}");
             }
         }
 
         private static void DeleteDossier(List<string> fullNames, List<string> postsList)
         {
             if (IsArrayEmpty(fullNames.Count))
+            {
+                Console.WriteLine("Cписок пуст!");
                 return;
-
+            }
             int indexList;
 
             WriteAllDossiers(fullNames, postsList);
@@ -96,7 +99,7 @@ namespace HRAccountingAdvanced
             Console.Write("\nКого удалить из списка (введите порядковый номер): ");
             string inputValue = Console.ReadLine();
 
-            if (int.TryParse(inputValue, out int personeListDeleted) && 
+            if (int.TryParse(inputValue, out int personeListDeleted) &&
                 fullNames.Count >= personeListDeleted && personeListDeleted > 0)
             {
                 indexList = personeListDeleted - 1;
@@ -112,7 +115,7 @@ namespace HRAccountingAdvanced
 
         private static bool IsArrayEmpty(int lengthList)
         {
-            return lengthList > 0;
+            return lengthList == 0;
         }
     }
 }
