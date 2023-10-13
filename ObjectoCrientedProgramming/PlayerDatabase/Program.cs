@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Security.Cryptography;
 
 namespace PlayerDatabase
 {
@@ -7,11 +9,11 @@ namespace PlayerDatabase
     {
         static void Main(string[] args)
         {
-            const string AddPlayerName = "1";
-            const string RemovePlayerName = "2";
-            const string BanPlayerName = "3";
-            const string UnbanPlayerName = "4";
-            const string ExitName = "5";
+            const string AddPlayerMenu = "1";
+            const string RemovePlayerMenu = "2";
+            const string BanPlayerMenu = "3";
+            const string UnbanPlayerMenu = "4";
+            const string ExitMenu = "5";
 
             string desiredAction;
 
@@ -21,34 +23,34 @@ namespace PlayerDatabase
 
             do
             {
-                Console.WriteLine($"{AddPlayerName} - добавить игрока");
-                Console.WriteLine($"{RemovePlayerName} - удалить игрока");
-                Console.WriteLine($"{BanPlayerName} - забанить игрока");
-                Console.WriteLine($"{UnbanPlayerName} - разбанить игрока");
-                Console.WriteLine($"{ExitName} - закрыть программу");
+                Console.WriteLine($"{AddPlayerMenu} - добавить игрока");
+                Console.WriteLine($"{RemovePlayerMenu} - удалить игрока");
+                Console.WriteLine($"{BanPlayerMenu} - забанить игрока");
+                Console.WriteLine($"{UnbanPlayerMenu} - разбанить игрока");
+                Console.WriteLine($"{ExitMenu} - закрыть программу");
 
                 Console.Write("\nВыбирите действие: ");
                 desiredAction = Console.ReadLine();
 
                 switch (desiredAction)
                 {
-                    case AddPlayerName:
+                    case AddPlayerMenu:
                         database.AddPlayer();
                         break;
 
-                    case RemovePlayerName:
+                    case RemovePlayerMenu:
                         database.RemovePlayer();
                         break;
 
-                    case BanPlayerName:
+                    case BanPlayerMenu:
                         database.BanPlayer();
                         break;
 
-                    case UnbanPlayerName:
+                    case UnbanPlayerMenu:
                         database.UnbanPlayer();
                         break;
 
-                    case ExitName:
+                    case ExitMenu:
                         isWork = false;
                         break;
 
@@ -68,12 +70,13 @@ namespace PlayerDatabase
 
     class Player
     {
-        public Player(string name)
+        public Player(string name, int id)
         {
             Name = name;
+            Id = id + 1;
         }
 
-        public int Id { get; set; }
+        public int Id { get; private set; }
 
         public int Level { get; set; }
 
@@ -85,10 +88,8 @@ namespace PlayerDatabase
     class Database
     {
         private List<Player> _players = new List<Player>();
-        private List<Player> _banPlayers = new List<Player>();
 
-        private string _idPlayer;
-        private bool _isExist = false;
+        private int _idPlayer;
 
         public void AddPlayer()
         {
@@ -97,12 +98,12 @@ namespace PlayerDatabase
 
             Random random = new Random();
 
-            Player player = new Player(namePlayer);
+            Player player = new Player(namePlayer, _idPlayer);
+            _idPlayer++;
 
             int levelPlayer = random.Next(0, 10);
 
             player.Level = levelPlayer;
-            player.Id = _players.Count;
             _players.Add(player);
         }
 
@@ -114,30 +115,13 @@ namespace PlayerDatabase
                 return;
             }
 
+            Console.WriteLine("Удалить игрока\n");
+
             ShowAllPlayers(_players);
 
-            Console.WriteLine("Введите id игрока, которого хотите удалить.");
-            string idPlayer = Console.ReadLine();
-
-            if (CheckingCorrectnessId(idPlayer, out int id))
+            if (TryGetPlayer(_players, out Player player ))
             {
-                foreach (Player player in _players)
-                {
-                    if (player.Id == id)
-                    {
-                        _players.Remove(player);
-                        _isExist = true;
-                        break;
-                    }
-                }
-                if (_isExist == false)
-                    Console.WriteLine("Игрок не найден.");
-
-                _isExist = false;
-            }
-            else
-            {
-                Console.WriteLine("Такого Id не существует.");
+                _players.Remove(player);
             }
         }
 
@@ -149,89 +133,65 @@ namespace PlayerDatabase
                 return;
             }
 
+            Console.WriteLine("Заблокировать игрока!\n");
+
             ShowAllPlayers(_players);
 
-            Console.WriteLine("Введите id игрока, которого необходимо заблокировать.");
-            _idPlayer = Console.ReadLine();
-
-            if (CheckingCorrectnessId(_idPlayer, out int id))
+            if (TryGetPlayer(_players, out Player player))
             {
-                foreach (Player player in _players)
+                if (player.IsBan == false)
                 {
-                    if (player.Id == id)
-                    {
-                        _isExist = true;
-
-                        if (player.IsBan == false)
-                        {
-                            player.IsBan = true;
-                            _banPlayers.Add(player);
-                            Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nЗаблокирован!");
-                        }
-                        else
-                        {
-                            Console.WriteLine("Игрок уже заблокирован!");
-                        }
-                    }
+                    player.IsBan = true;
+                    Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nЗаблокирован!");
                 }
-                if (_isExist == false)
+                else
                 {
-                    Console.WriteLine("Игрок не найден.");
+                    Console.WriteLine("Игрок уже заблокирован!");
                 }
-
-                _isExist = false;
-            }
-            else
-            {
-                Console.WriteLine("Вы ввели не число.");
             }
         }
 
         public void UnbanPlayer()
         {
-            if (_banPlayers.Count == 0)
+            if (_players.Count == 0)
             {
                 Console.WriteLine("Список пуст");
                 return;
             }
 
-            ShowAllPlayers(_banPlayers);
+            Console.WriteLine("Разблокировка игрока\n");
 
-            Console.WriteLine("Введите id игрока, которого необходимо разблокировать.");
-            _idPlayer = Console.ReadLine();
+            ShowAllPlayers(_players);
 
-            if (CheckingCorrectnessId(_idPlayer, out int id))
+            if (TryGetPlayer(_players, out Player player))
             {
-                foreach (Player player in _banPlayers)
+                if (player.IsBan == true)
                 {
-                    if (player.Id == id)
-                    {
-                        player.IsBan = false;
-                        _banPlayers.Remove(player);
-                        Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nРазблокирован!");
-                        _isExist = true;
-                        break;
-                    }
+                    player.IsBan = false;
+                    Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nРазблокирован!");
                 }
-
-                if (_isExist == false)
-                {
-                    Console.WriteLine("Игрок не найден.");
-                }
-
-                _isExist = false;
-            }
-            else
-            {
-                Console.WriteLine("Вы ввели не число.");
+                else
+                    Console.WriteLine("Игрок не был заблокирован!");
             }
         }
 
         public bool CheckingCorrectnessId(string idPlayer, out int id)
         {
-            return int.TryParse(idPlayer, out id) &&
-                            id <= _players.Count &&
-                            id >= 0;
+            if (int.TryParse(idPlayer, out id))
+            {
+                if (id > 0)
+                    return true;
+                else
+                {
+                    Console.WriteLine("id не может существовать!");
+                    return false;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число.");
+                return false;
+            }
         }
 
         private void ShowAllPlayers(List<Player> list)
@@ -240,6 +200,29 @@ namespace PlayerDatabase
             {
                 Console.WriteLine($"Игрок: {player.Name} id:{player.Id}");
             }
+        }
+
+        private bool TryGetPlayer(List<Player> players, out Player objPlayer)
+        {
+            Console.Write("Введите id игрока: ");
+            string idPlayer = Console.ReadLine();
+
+            if (CheckingCorrectnessId(idPlayer, out int id))
+            {
+                foreach (Player player in players)
+                {
+                    if (player.Id == id)
+                    {
+                        objPlayer = player;
+                        return true;
+                    }
+                }
+            }
+
+            Console.WriteLine("Игрок не найден.");
+
+            objPlayer = null;
+            return false;
         }
     }
 }
