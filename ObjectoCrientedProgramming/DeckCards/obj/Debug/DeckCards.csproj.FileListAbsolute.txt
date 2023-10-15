@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\bin\Debug\DeckCards.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\bin\Debug\DeckCards.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\bin\Debug\DeckCards.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\obj\Debug\DeckCards.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\obj\Debug\DeckCards.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\obj\Debug\DeckCards.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\DeckCards\obj\Debug\DeckCards.pdb
