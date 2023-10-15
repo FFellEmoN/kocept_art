@@ -92,6 +92,7 @@ namespace HRAccountingAdvanced
                 Console.WriteLine("Cписок пуст!");
                 return;
             }
+
             int indexList;
 
             WriteAllDossiers(fullNames, postsList);
@@ -100,7 +101,8 @@ namespace HRAccountingAdvanced
             string inputValue = Console.ReadLine();
 
             if (int.TryParse(inputValue, out int personeListDeleted) &&
-                fullNames.Count >= personeListDeleted && personeListDeleted > 0)
+                fullNames.Count >= personeListDeleted && 
+                personeListDeleted > 0)
             {
                 indexList = personeListDeleted - 1;
                 fullNames.RemoveAt(indexList);
