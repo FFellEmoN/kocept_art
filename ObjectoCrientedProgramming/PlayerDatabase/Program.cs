@@ -11,7 +11,8 @@ namespace PlayerDatabase
             const string RemovePlayerMenu = "2";
             const string BanPlayerMenu = "3";
             const string UnbanPlayerMenu = "4";
-            const string ExitMenu = "5";
+            const string ShowAllPlayersMenu = "5";
+            const string ExitMenu = "6";
 
             string desiredAction;
 
@@ -25,6 +26,7 @@ namespace PlayerDatabase
                 Console.WriteLine($"{RemovePlayerMenu} - удалить игрока");
                 Console.WriteLine($"{BanPlayerMenu} - забанить игрока");
                 Console.WriteLine($"{UnbanPlayerMenu} - разбанить игрока");
+                Console.WriteLine($"{ShowAllPlayersMenu} - показать всех игроков");
                 Console.WriteLine($"{ExitMenu} - закрыть программу");
 
                 Console.Write("\nВыбирите действие: ");
@@ -46,6 +48,10 @@ namespace PlayerDatabase
 
                     case UnbanPlayerMenu:
                         database.UnbanPlayer();
+                        break;
+
+                    case ShowAllPlayersMenu:
+                        database.ShowAllPlayers();
                         break;
 
                     case ExitMenu:
@@ -76,11 +82,26 @@ namespace PlayerDatabase
 
         public int Id { get; private set; }
 
-        public int Level { get; set; }
+        public int Level { get; private set; }
 
         public string Name { get; private set; }
 
-        public bool IsBan { get; set; }
+        public bool IsBan { get; private set; }
+
+        public void Ban()
+        {
+            IsBan = true;
+        }
+
+        public void Unban()
+        {
+            IsBan = false;
+        }
+
+        public void SetLevel(int level)
+        {
+            Level = level;
+        }
     }
 
     class Database
@@ -101,7 +122,7 @@ namespace PlayerDatabase
 
             int levelPlayer = random.Next(0, 10);
 
-            player.Level = levelPlayer;
+            player.SetLevel(levelPlayer);
             _players.Add(player);
         }
 
@@ -115,9 +136,9 @@ namespace PlayerDatabase
 
             Console.WriteLine("Удалить игрока\n");
 
-            ShowAllPlayers(_players);
+            ShowAllPlayers();
 
-            if (TryGetPlayer(_players, out Player player ))
+            if (TryGetPlayer(_players, out Player player))
             {
                 _players.Remove(player);
             }
@@ -133,13 +154,13 @@ namespace PlayerDatabase
 
             Console.WriteLine("Заблокировать игрока!\n");
 
-            ShowAllPlayers(_players);
+            ShowAllPlayers();
 
             if (TryGetPlayer(_players, out Player player))
             {
                 if (player.IsBan == false)
                 {
-                    player.IsBan = true;
+                    player.Ban();
                     Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nЗаблокирован!");
                 }
                 else
@@ -159,13 +180,13 @@ namespace PlayerDatabase
 
             Console.WriteLine("Разблокировка игрока\n");
 
-            ShowAllPlayers(_players);
+            ShowAllPlayers();
 
             if (TryGetPlayer(_players, out Player player))
             {
                 if (player.IsBan == true)
                 {
-                    player.IsBan = false;
+                    player.Unban();
                     Console.WriteLine($"Игрок: {player.Name}\nid:{player.Id}\nРазблокирован!");
                 }
                 else
@@ -192,9 +213,9 @@ namespace PlayerDatabase
             }
         }
 
-        private void ShowAllPlayers(List<Player> list)
+        public void ShowAllPlayers()
         {
-            foreach (Player player in list)
+            foreach (Player player in _players)
             {
                 Console.WriteLine($"Игрок: {player.Name} id:{player.Id}");
             }
