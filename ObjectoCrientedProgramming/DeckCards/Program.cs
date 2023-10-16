@@ -31,6 +31,7 @@ namespace DeckCards
     class Player
     {
         private List<Cards> _cardsOnHand;
+
         public Player(int numberOnTable, string name)
         {
             _cardsOnHand = new List<Cards>();
@@ -40,14 +41,13 @@ namespace DeckCards
         }
 
         public int NumberOnTable { get; private set; }
+        public int MaxCards { get; private set; }
 
         public string Name { get; private set; }
 
-        public int MaxCards { get; private set; }
-
         public void PutCardInHand(Cards card)
         {
-            if (_cardsOnHand.Count < 4)
+            if (_cardsOnHand.Count < MaxCards)
             {
                 _cardsOnHand.Add(card);
             }
@@ -73,19 +73,24 @@ namespace DeckCards
 
     class Cards
     {
+        private int _minValue = 2;
+        private int _maxValue = 15;
+        private int _minValueCollor = 0;
+        private int _maxValueCollor = 2;
+        private int _minValueSuit = 0;
+        private int _maxValueSuit = 4;
+
+        private static Random _random = new Random();
         public Cards()
         {
-            Random random = new Random();
-
-            Value = random.Next(2, 15);
-            Collor = SetCollor(random.Next(0, 2));
-            Suit = SetSuit(random.Next(0, 4));
+            Value = _random.Next(_minValue, _maxValue);
+            Collor = SetCollor(_random.Next(_minValueCollor, _maxValueCollor));
+            Suit = SetSuit(_random.Next(_minValueSuit, _maxValueSuit));
         }
 
         public int Value { get; private set; }
 
         public string Collor { get; private set; }
-
         public string Suit { get; private set; }
 
         private string SetCollor(int value)
@@ -130,6 +135,7 @@ namespace DeckCards
     class Deck
     {
         private Stack<Cards> _deck;
+        private int _cardsInDeck = 54;
 
         public Deck()
         {
@@ -139,7 +145,7 @@ namespace DeckCards
 
         private void FillDeck()
         {
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < _cardsInDeck; i++)
             {
                 _deck.Push(new Cards());
             }
