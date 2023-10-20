@@ -54,8 +54,8 @@ namespace DeckCards
                         break;
                 }
 
-                Console.ReadKey();
                 Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
+                Console.ReadKey();
                 Console.Clear();
             } while (isWork);
         }
@@ -126,7 +126,7 @@ namespace DeckCards
         {
             Value = _random.Next(_minValue, _maxValue);
             Collor = SetCollor(_random.Next(_minValueCollor, _maxValueCollor));
-            Suit = SetSuit(_random.Next(_minValueSuit, _maxValueSuit));
+            Suit = SetSuit();
         }
 
         public int Value { get; private set; }
