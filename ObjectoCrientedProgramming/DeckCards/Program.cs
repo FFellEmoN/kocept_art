@@ -7,24 +7,57 @@ namespace DeckCards
     {
         static void Main(string[] args)
         {
+            const string ShowHandCardsMenu = "1";
+            const string PutCardMenu = "2";
+            const string DiscardsCardsHand = "3";
+            const string ExitMenu = "4";
+
+            bool isWork = true;
+
+            string disaredAction;
+
             int numberOnTable = 0;
 
             var deck = new Deck();
-            var player_1 = new Player(++numberOnTable, "Maks");
+            var player = new Player(++numberOnTable, "Maks");
 
-            PutCardsInHand(player_1, deck);
-
-            Console.WriteLine($"Рука {player_1.Name}");
-            player_1.ShowCardsHand();
-            Console.ReadKey();
-        }
-
-        private static void PutCardsInHand(Player player, Deck deck)
-        {
-            for (int i = 0; i < player.MaxCards; i++)
+            do
             {
-                player.PutCardInHand(deck.GetCard());
-            }
+                Console.WriteLine($"{ShowHandCardsMenu} - показать карты на руках.");
+                Console.WriteLine($"{PutCardMenu} - взять карту.");
+                Console.WriteLine($"{DiscardsCardsHand} - cбросить карты с руки.");
+                Console.WriteLine($"{ExitMenu} - выйти из приложения.");
+
+                Console.WriteLine("Выбирите желаемое действие");
+                disaredAction = Console.ReadLine();
+
+                switch (disaredAction)
+                {
+                    case ShowHandCardsMenu:
+                        player.ShowCardsHand();
+                        break;
+
+                    case PutCardMenu:
+                        player.PutCardInHand(deck.GetCard());
+                        break;
+
+                    case DiscardsCardsHand:
+                        player.DiscardAllCards();
+                        break;
+
+                    case ExitMenu:
+                        isWork = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Действие не существует.");
+                        break;
+                }
+
+                Console.ReadKey();
+                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
+                Console.Clear();
+            } while (isWork);
         }
     }
 
@@ -35,12 +68,10 @@ namespace DeckCards
         public Player(int numberOnTable, string name)
         {
             _cardsOnHand = new List<Cards>();
-            NumberOnTable = numberOnTable;
             Name = name;
             MaxCards = 4;
         }
 
-        public int NumberOnTable { get; private set; }
         public int MaxCards { get; private set; }
 
         public string Name { get; private set; }
@@ -64,10 +95,20 @@ namespace DeckCards
 
         public void ShowCardsHand()
         {
+            if (_cardsOnHand.Count <= 0)
+            {
+                Console.WriteLine("Список пуст!");
+            }
+
             foreach (Cards card in _cardsOnHand)
             {
                 Console.WriteLine($"Значение: {card.Value}\nЦвет: {card.Collor}\nМасть: {card.Suit}\n");
             }
+        }
+
+        public void DiscardAllCards()
+        {
+            _cardsOnHand.Clear();
         }
     }
 
@@ -95,40 +136,18 @@ namespace DeckCards
 
         private string SetCollor(int value)
         {
-            if (value > 0)
-            {
-                return "черная";
-            }
-            else
-            {
-                return "красная";
-            }
+            string[] collor = { "черный", "красный"};
+            Random random = new Random();
+
+            return collor[random.Next(0, collor.Length)];
         }
 
-        private string SetSuit(int value)
+        private string SetSuit()
         {
-            const int crosses = 0;
-            const int spades = 1;
-            const int hearts = 2;
-            const int diamonds = 3;
-
-            switch (value)
-            {
-                case crosses:
-                    return "крести";
-
-                case spades:
-                    return "пики";
-
-                case hearts:
-                    return "черви";
-
-                case diamonds:
-                    return "бубны";
-
-                default:
-                    return "";
-            }
+            string[] suit = { "крести", "пики", "черви", "бубны" };
+            Random random = new Random();
+            
+            return suit[random.Next(0, suit.Length)];
         }
     }
 
