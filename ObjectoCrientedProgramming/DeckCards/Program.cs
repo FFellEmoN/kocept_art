@@ -78,7 +78,7 @@ namespace DeckCards
 
         public void PutCardInHand(Cards card)
         {
-            if (_cardsOnHand.Count < MaxCards)
+            if (_cardsOnHand.Count < MaxCards && card != null)
             {
                 _cardsOnHand.Add(card);
             }
@@ -172,7 +172,14 @@ namespace DeckCards
 
         public Cards GetCard()
         {
-            return _deck.Pop();
+            if (_deck.Count > 0)
+            {
+                return _deck.Pop();
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }
