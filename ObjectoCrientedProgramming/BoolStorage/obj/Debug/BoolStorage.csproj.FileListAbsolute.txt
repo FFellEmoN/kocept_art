@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\bin\Debug\BoolStorage.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\bin\Debug\BoolStorage.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\bin\Debug\BoolStorage.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\obj\Debug\BoolStorage.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\obj\Debug\BoolStorage.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\obj\Debug\BoolStorage.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\BoolStorage\obj\Debug\BoolStorage.pdb

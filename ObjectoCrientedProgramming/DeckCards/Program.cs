@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Server;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DeckCards
 {
@@ -16,10 +18,8 @@ namespace DeckCards
 
             string disaredAction;
 
-            int numberOnTable = 0;
-
             var deck = new Deck();
-            var player = new Player(++numberOnTable, "Maks");
+            var player = new Player("Maks");
 
             do
             {
@@ -58,16 +58,18 @@ namespace DeckCards
                 Console.ReadKey();
                 Console.Clear();
             } while (isWork);
+
+            Console.WriteLine("До свидания.");
         }
     }
 
     class Player
     {
-        private List<Cards> _cardsOnHand;
+        private List<Card> _cardsOnHand;
 
-        public Player(int numberOnTable, string name)
+        public Player(string name)
         {
-            _cardsOnHand = new List<Cards>();
+            _cardsOnHand = new List<Card>();
             Name = name;
             MaxCards = 4;
         }
@@ -76,7 +78,7 @@ namespace DeckCards
 
         public string Name { get; private set; }
 
-        public void PutCardInHand(Cards card)
+        public void PutCardInHand(Card card)
         {
             if (_cardsOnHand.Count < MaxCards && card != null)
             {
@@ -88,7 +90,7 @@ namespace DeckCards
             }
         }
 
-        public void PickUpCardInDeck(Cards card)
+        public void PickUpCardInDeck(Card card)
         {
             _cardsOnHand.Remove(card);
         }
@@ -100,7 +102,7 @@ namespace DeckCards
                 Console.WriteLine("Список пуст!");
             }
 
-            foreach (Cards card in _cardsOnHand)
+            foreach (Card card in _cardsOnHand)
             {
                 Console.WriteLine($"Значение: {card.Value}\nЦвет: {card.Collor}\nМасть: {card.Suit}\n");
             }
@@ -112,74 +114,109 @@ namespace DeckCards
         }
     }
 
-    class Cards
+    class Card
     {
-        private int _minValue = 2;
-        private int _maxValue = 15;
-        private int _minValueCollor = 0;
-        private int _maxValueCollor = 2;
-        private int _minValueSuit = 0;
-        private int _maxValueSuit = 4;
 
-        private static Random _random = new Random();
-        public Cards()
+        public Card(int value, string collor, string suit)
         {
-            Value = _random.Next(_minValue, _maxValue);
-            Collor = SetCollor(_random.Next(_minValueCollor, _maxValueCollor));
-            Suit = SetSuit();
+            Value = value;
+            Collor = collor;
+            Suit = suit;
         }
 
         public int Value { get; private set; }
 
         public string Collor { get; private set; }
         public string Suit { get; private set; }
-
-        private string SetCollor(int value)
-        {
-            string[] collor = { "черный", "красный"};
-            Random random = new Random();
-
-            return collor[random.Next(0, collor.Length)];
-        }
-
-        private string SetSuit()
-        {
-            string[] suit = { "крести", "пики", "черви", "бубны" };
-            Random random = new Random();
-            
-            return suit[random.Next(0, suit.Length)];
-        }
     }
 
     class Deck
     {
-        private Stack<Cards> _deck;
+        private static Stack<Card> _deck;
+
+        private int _minValue = 2;
+        private int _maxValue = 15;
+        private int _minValueCollor = 0;
+        private int _maxValueCollor = 2;
+        private int _minValueSuit = 0;
+        private int _maxValueSuit = 4;
         private int _cardsInDeck = 54;
+
+        private static Random _random = new Random();
 
         public Deck()
         {
-            _deck = new Stack<Cards>();
+            _deck = new Stack<Card>();
             FillDeck();
         }
 
         private void FillDeck()
         {
+            string[] _suit = { "крести", "пики", "черви", "бубны" };
+            string[] _collor = { "черный", "красный" };
+
             for (int i = 0; i < _cardsInDeck; i++)
             {
-                _deck.Push(new Cards());
+                int value = _random.Next(_minValue, _maxValue);
+                string collor = _collor[_random.Next(_minValueCollor, _maxValueCollor)];
+                string suit = _suit[_random.Next(_minValueSuit, _maxValueSuit)];
+
+                _deck.Push(new Card(value, collor, suit));
             }
+
+            ShuffleStack(_deck);
         }
 
-        public Cards GetCard()
+        public Card GetCard()
         {
             if (_deck.Count > 0)
             {
+                Console.WriteLine("Вы взяли карту.");
                 return _deck.Pop();
             }
             else
             {
+                Console.WriteLine("Колода пуста.");
                 return null;
             }
+        }
+
+        private Stack<Card> ShuffleStack(Stack<Card> stack)
+        {
+            List<Card> list = stack.ToList();
+
+            Shuffle(list);
+
+            return ToStack(list);
+        }
+
+        private static void Shuffle(List<Card> list)
+        {
+            int countList = list.Count;
+
+            Random random = new Random();
+
+            for (int i = 0; i < countList; i++)
+            {
+                SwapElements(list, i, i + random.Next(countList - i));
+            }
+        }
+
+        private static void SwapElements(List<Card> list, int aIndex, int bIndex)
+        {
+            Card temp = list[aIndex];
+            list[aIndex] = list[bIndex];
+            list[bIndex] = temp;
+        }
+
+        public static Stack<Card> ToStack(List<Card> list)
+        {
+            Stack<Card> stack = new Stack<Card>();
+
+            foreach (Card card in list)
+                stack.Push(card);
+
+            return stack;
         }
     }
 }
