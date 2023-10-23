@@ -132,7 +132,7 @@ namespace DeckCards
 
     class Deck
     {
-        private static Stack<Card> _deck;
+        private static Stack<Card> _cards;
 
         private int _minValue = 2;
         private int _maxValue = 15;
@@ -146,11 +146,11 @@ namespace DeckCards
 
         public Deck()
         {
-            _deck = new Stack<Card>();
-            FillDeck();
+            _cards = new Stack<Card>();
+            Fill();
         }
 
-        private void FillDeck()
+        private void Fill()
         {
             string[] _suit = { "крести", "пики", "черви", "бубны" };
             string[] _collor = { "черный", "красный" };
@@ -161,18 +161,18 @@ namespace DeckCards
                 string collor = _collor[_random.Next(_minValueCollor, _maxValueCollor)];
                 string suit = _suit[_random.Next(_minValueSuit, _maxValueSuit)];
 
-                _deck.Push(new Card(value, collor, suit));
+                _cards.Push(new Card(value, collor, suit));
             }
 
-            ShuffleStack(_deck);
+            ShuffleStack(_cards);
         }
 
         public Card GetCard()
         {
-            if (_deck.Count > 0)
+            if (_cards.Count > 0)
             {
                 Console.WriteLine("Вы взяли карту.");
-                return _deck.Pop();
+                return _cards.Pop();
             }
             else
             {
