@@ -38,7 +38,7 @@ namespace DeckCards
                         break;
 
                     case PutCardMenu:
-                        player.PutCardInHand(deck.GetCard());
+                        player.PutCardInHand(deck.GiveCard());
                         break;
 
                     case DiscardsCardsHand:
@@ -83,16 +83,13 @@ namespace DeckCards
             if (_cardsOnHand.Count < MaxCards && card != null)
             {
                 _cardsOnHand.Add(card);
+
+                Console.WriteLine("Вы взяли карту.");
             }
             else
             {
                 Console.WriteLine("На руках максимальное число карт.");
             }
-        }
-
-        public void PickUpCardInDeck(Card card)
-        {
-            _cardsOnHand.Remove(card);
         }
 
         public void ShowCardsHand()
@@ -116,7 +113,6 @@ namespace DeckCards
 
     class Card
     {
-
         public Card(int value, string collor, string suit)
         {
             Value = value;
@@ -132,15 +128,7 @@ namespace DeckCards
 
     class Deck
     {
-        private static Stack<Card> _cards;
-
-        private int _minValue = 2;
-        private int _maxValue = 15;
-        private int _minValueCollor = 0;
-        private int _maxValueCollor = 2;
-        private int _minValueSuit = 0;
-        private int _maxValueSuit = 4;
-        private int _cardsInDeck = 54;
+        private Stack<Card> _cards;
 
         private static Random _random = new Random();
 
@@ -150,28 +138,10 @@ namespace DeckCards
             Fill();
         }
 
-        private void Fill()
-        {
-            string[] _suit = { "крести", "пики", "черви", "бубны" };
-            string[] _collor = { "черный", "красный" };
-
-            for (int i = 0; i < _cardsInDeck; i++)
-            {
-                int value = _random.Next(_minValue, _maxValue);
-                string collor = _collor[_random.Next(_minValueCollor, _maxValueCollor)];
-                string suit = _suit[_random.Next(_minValueSuit, _maxValueSuit)];
-
-                _cards.Push(new Card(value, collor, suit));
-            }
-
-            ShuffleStack(_cards);
-        }
-
-        public Card GetCard()
+        public Card GiveCard()
         {
             if (_cards.Count > 0)
             {
-                Console.WriteLine("Вы взяли карту.");
                 return _cards.Pop();
             }
             else
@@ -181,16 +151,17 @@ namespace DeckCards
             }
         }
 
-        private Stack<Card> ShuffleStack(Stack<Card> stack)
+        private Stack<Card> ToStack(List<Card> list)
         {
-            List<Card> list = stack.ToList();
+            Stack<Card> stack = new Stack<Card>();
 
-            Shuffle(list);
+            foreach (Card card in list)
+                stack.Push(card);
 
-            return ToStack(list);
+            return stack;
         }
 
-        private static void Shuffle(List<Card> list)
+        private void Shuffle(List<Card> list)
         {
             int countList = list.Count;
 
@@ -202,21 +173,45 @@ namespace DeckCards
             }
         }
 
-        private static void SwapElements(List<Card> list, int aIndex, int bIndex)
+        private void SwapElements(List<Card> list, int aIndex, int bIndex)
         {
             Card temp = list[aIndex];
             list[aIndex] = list[bIndex];
             list[bIndex] = temp;
         }
 
-        public static Stack<Card> ToStack(List<Card> list)
+        private Stack<Card> ShuffleStack(Stack<Card> stack)
         {
-            Stack<Card> stack = new Stack<Card>();
+            List<Card> list = stack.ToList();
 
-            foreach (Card card in list)
-                stack.Push(card);
+            Shuffle(list);
 
-            return stack;
+            return ToStack(list);
+        }
+
+        private void Fill()
+        {
+            int minValue = 2;
+            int maxValue = 15;
+            int minValueCollor = 0;
+            int maxValueCollor = 2;
+            int minValueSuit = 0;
+            int maxValueSuit = 4;
+            int cardsInside = 54;
+
+            string[] suits = { "крести", "пики", "черви", "бубны" };
+            string[] collors = { "черный", "красный" };
+
+            for (int i = 0; i < cardsInside; i++)
+            {
+                int value = _random.Next(minValue, maxValue);
+                string collor = collors[_random.Next(minValueCollor, maxValueCollor)];
+                string suit = suits[_random.Next(minValueSuit, maxValueSuit)];
+
+                _cards.Push(new Card(value, collor, suit));
+            }
+
+            _cards = ShuffleStack(_cards);
         }
     }
 }
