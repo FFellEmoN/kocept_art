@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using static System.Collections.Specialized.BitVector32;
 
 namespace BookStorage
 {
@@ -27,12 +22,13 @@ namespace BookStorage
             do
             {
                 Console.WriteLine($"{AddBookMenu} - добавить книгу.");
-                Console.WriteLine($"{GetBookMenu} - показать книгу по номеру.");
+                Console.WriteLine($"{GetBookMenu} - показать книгу по названию, автору, году издания.");
                 Console.WriteLine($"{ShowAllBook} - показать все книги.");
                 Console.WriteLine($"{DeleteBookMenu} - удалить книгу по номеру.");
 
-                Console.WriteLine("Выбирите желаемое действие");
+                Console.Write("Выбирите желаемое действие: ");
                 desiredAction = Console.ReadLine();
+                Console.WriteLine();
 
                 switch (desiredAction)
                 {
@@ -49,6 +45,7 @@ namespace BookStorage
                         break;
 
                     case DeleteBookMenu:
+                        books.DealetBook();
                         break;
 
                     case ExitMenu:
@@ -63,7 +60,6 @@ namespace BookStorage
                 Console.ReadKey();
                 Console.Clear();
             } while (isWork);
-
         }
     }
 
@@ -102,81 +98,156 @@ namespace BookStorage
 
         public void TryGetBook()
         {
-            int allCoincidence = 0;
+            string conditionYear = "0";
+            string conditionAuthor = "1";
+            string conditionTitle = "2";
 
             bool includeIndex = false;
 
             Console.Write("Введите год издания книги: ");
             string year = Console.ReadLine().ToLower();
 
-            TryGet(year, out int coincidence);
-            allCoincidence = coincidence;
+            TryGet(year, conditionYear);
 
-            Console.WriteLine($"\nНайденно {coincidence} совпадений.");
+            Console.WriteLine($"\nВсего найденно {_found.Count} совпадений.");
 
             Console.Write("\nВведите автора книги: ");
             string author = Console.ReadLine().ToLower();
 
-            TryGet(author, out coincidence);
-            allCoincidence += coincidence;
+            TryGet(author, conditionAuthor);
 
-            Console.WriteLine($"\nНайденно {coincidence} совпадений.");
+            Console.WriteLine($"\nВсего найденно {_found.Count} совпадений.");
 
             Console.Write("\nВведите названии книги: ");
             string title = Console.ReadLine().ToLower();
 
-            TryGet(title, out coincidence);
-            allCoincidence += coincidence;
+            TryGet(title, conditionTitle);
 
-            Console.WriteLine($"\nНайденно {coincidence} совпадений.");
+            Console.WriteLine($"\nВсего найденно {_found.Count} совпадений.");
 
-            Console.WriteLine($"Вот все найденные книги по вашему запросу {allCoincidence}.\n");
+            Console.WriteLine("Совпадения: ");
             ShowAllFind(includeIndex);
+
             _found = new List<Book>();
-        }
-
-        private void ShowAllFind(bool triger)
-        {
-            int index = 1;
-
-            if (triger)
-            {
-                foreach (Book book in _found)
-                {
-                    Console.WriteLine($"{_found[index]}) Год: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}");
-
-                    index++;
-                }
-            }
-            else
-            {
-                foreach (Book book in _found)
-                {
-                    Console.WriteLine($"Год: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}");
-                }
-            }
         }
 
         public void ShowAll()
         {
             foreach (Book book in _library)
             {
-                Console.WriteLine($"Год: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}");
+                Console.WriteLine($"Год: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}\n");
             }
         }
 
-        private void TryGet(string line, out int i)
+        public void DealetBook()
         {
-            i = 0;
+            string conditinTitle = "2";
 
+            bool includeIndex = true;
+
+            Console.WriteLine("Какую книгу удалить ?");
+
+            Console.Write("Введите название: ");
+            string titleDelate = Console.ReadLine().ToLower();
+
+            TryGet(titleDelate, conditinTitle);
+
+            if (_found.Count > 0)
+            {
+                ShowAllFind(includeIndex);
+
+                Console.WriteLine("Введите номер книги, которую хотите удалить.");
+                string number = Console.ReadLine();
+
+                if (int.TryParse(number, out int index) && index <= _found.Count && index > 0)
+                {
+                    foreach (Book book in _library)
+                    {
+                        if (_found[index - 1].Equals(book))
+                        {
+                            _library.Remove(book);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Вы ввели не число или некоректное число.");
+                }
+
+                _found = new List<Book>();
+            }
+            else
+            {
+                Console.WriteLine("Ни одной книги не найдено.");
+            }
+        }
+
+        private bool SearchCriteriaMatch(Book book, string line, string conditionNumber)
+        {
+            const string Year = "0";
+            const string Author = "1";
+            const string Title = "2";
+
+            bool isHave = false;
+
+            switch (conditionNumber)
+            {
+                case Year:
+                    isHave = book.YearRelease.ToLower() == line;
+                    break;
+
+                case Author:
+                    isHave = book.Author.ToLower() == line;
+                    break;
+
+                case Title:
+                    isHave = book.Title.ToLower() == line;
+                    break;
+
+                default:
+                    Console.WriteLine("Условия не существует.");
+                    break;
+            }
+
+            return isHave;
+        }
+
+        private void ShowAllFind(bool triger)
+        {
+            if (triger)
+            {
+                foreach (Book book in _found)
+                {
+                    Console.WriteLine($"{_found.IndexOf(book) + 1}) Год: {book.YearRelease}\n   Автор: {book.Author}\n   Название: {book.Title}\n");
+                }
+            }
+            else
+            {
+                foreach (Book book in _found)
+                {
+                    Console.WriteLine($"Год: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}\n");
+                }
+            }
+        }
+
+        /// <summary>
+        /// Добовляет в список найденные книги из библиотеки по указанным параметрам. 
+        /// Для поиск по году  conditionNumber = 0.
+        /// Для поиск по автору  conditionNumber = 1.
+        /// Для поиск по названию  conditionNumber = 2.
+        /// </summary>
+        /// <param name="line">Строка по которой ведется поиск</param>
+        /// /// <param name="conditionNumber">Желаемое условие поиска</param>
+        private void TryGet(string line, string conditionNumber)
+        {
             if (_found.Count == 0)
             {
                 foreach (Book book in _library)
                 {
-                    if (SearchCriteriaMatch(book, line))
+                    if (SearchCriteriaMatch(book, line, conditionNumber))
                     {
                         _found.Add(book);
-                        i++;
                     }
                 }
             }
@@ -184,10 +255,12 @@ namespace BookStorage
             {
                 foreach (Book book in _found)
                 {
-                    if (SearchCriteriaMatch(book, line))
+                    if (SearchCriteriaMatch(book, line, conditionNumber))
                     {
-                        _tempList.Add(book);
-                        i++;
+                        if (_found.Contains(book) == false)
+                        {
+                            _tempList.Add(book);
+                        }
                     }
                 }
 
@@ -195,32 +268,6 @@ namespace BookStorage
                     _found.Add(book);
 
                 _tempList.Clear();
-            }
-        }
-
-        private bool SearchCriteriaMatch(Book book, string line)
-        {
-            return book.YearRelease.ToLower() == line || book.Author.ToLower() == line || book.Title.ToLower() == line;
-        }
-
-        public void DealetBook()
-        {
-            bool includeIndex = true;
-
-            Console.WriteLine("Какую книгу удалить ?");
-            Console.Write("Введите название: ");
-            string titleDelate = Console.ReadLine().ToLower();
-            TryGet(titleDelate, out int i);
-
-            ShowAllFind(includeIndex);
-
-            Console.WriteLine("Введите номер книги, которую хотите удалить.");
-            int number = Convert.ToInt32(Console.ReadLine());
-
-            foreach (Book book in _library)
-            {
-                if (_found[number - 1].Equals(book))
-                    _library.Remove(book);
             }
         }
     }
