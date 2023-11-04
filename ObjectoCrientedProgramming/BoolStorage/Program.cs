@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 
 namespace BookStorage
 {
@@ -17,7 +18,7 @@ namespace BookStorage
 
             string desiredAction;
 
-            var books = new BookStorage();
+            var bookStrorage = new BookStorage();
 
             do
             {
@@ -34,19 +35,19 @@ namespace BookStorage
                 switch (desiredAction)
                 {
                     case AddBookMenu:
-                        books.AddBook();
+                        bookStrorage.AddBook();
                         break;
 
                     case FindBookMenu:
-                        books.FindBook();
+                        bookStrorage.FindBook();
                         break;
 
                     case ShowAllBook:
-                        books.ShowAll();
+                        bookStrorage.ShowAll();
                         break;
 
                     case DeleteBookMenu:
-                        books.DealetBook();
+                        bookStrorage.DealetBook();
                         break;
 
                     case ExitMenu:
@@ -69,7 +70,7 @@ namespace BookStorage
 
     class Book
     {
-        public Book(string title, string author, string yearRalease, int uniqueCode)
+        public Book(string title, string author, int yearRalease, int uniqueCode)
         {
             Title = title;
             Author = author;
@@ -81,31 +82,39 @@ namespace BookStorage
 
         public string Title { get; private set; }
         public string Author { get; private set; }
-        public string YearRelease { get; private set; }
+        public int YearRelease { get; private set; }
 
     }
 
     class BookStorage
     {
-        private static List<Book> _library = new List<Book>();
+        private List<Book> _books = new List<Book>();
 
+        private int _uniqueCode = -1;
         public void AddBook()
         {
-            int uniqueCode = _library.Count;
+            _uniqueCode++;
 
             Console.Write("Введите название книги: ");
             string title = Console.ReadLine();
             Console.Write("\nВведите имя автора: ");
             string author = Console.ReadLine();
             Console.Write("\nВведите год издания книги: ");
-            string yearRalease = Console.ReadLine();
+            string year = Console.ReadLine();
 
-            _library.Add(new Book(title, author, yearRalease, uniqueCode));
+            if (int.TryParse(year, out int yearRalease))
+            {
+                _books.Add(new Book(title, author, yearRalease, _uniqueCode));
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число.");
+            }
         }
 
         public void FindBook()
         {
-            if (_library.Count == 0)
+            if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста.");
                 return;
@@ -114,7 +123,14 @@ namespace BookStorage
             Console.Write("Введите год издания книги: ");
             string year = Console.ReadLine().ToLower();
 
-            FindYear(year);
+            if (int.TryParse(year, out int yearRalease))
+            {
+                FindYear(yearRalease);
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число.");
+            }
 
             Console.Write("\nВведите автора книги: ");
             string author = Console.ReadLine().ToLower();
@@ -129,26 +145,26 @@ namespace BookStorage
 
         public void ShowAll()
         {
-            if (_library.Count == 0)
+            if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста.");
                 return;
             }
 
-            foreach (Book book in _library)
+            foreach (Book book in _books)
             {
                 Show(book);
             }
         }
 
-        public void Show(Book book)
+        private void Show(Book book)
         {
             Console.WriteLine($"Код книги: {book.UniqueCode}\nГод: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}\n");
         }
 
         public void DealetBook()
         {
-            if (_library.Count == 0)
+            if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста.");
 
@@ -159,18 +175,18 @@ namespace BookStorage
 
             ShowAll();
 
-            if (_library.Count > 0)
+            if (_books.Count > 0)
             {
                 Console.WriteLine("Введите код книги, которую хотите удалить.");
                 string number = Console.ReadLine();
 
-                if (int.TryParse(number, out int index) && index <= _library.Count && index > 0)
+                if (int.TryParse(number, out int index) && index <= _books.Count && index > 0)
                 {
-                    foreach (Book book in _library)
+                    foreach (Book book in _books)
                     {
-                        if (_library[index].Equals(book))
+                        if (_books[index].Equals(book))
                         {
-                            _library.Remove(book);
+                            _books.Remove(book);
                             break;
                         }
                     }
@@ -186,9 +202,9 @@ namespace BookStorage
             }
         }
 
-        private bool SearchYearMatch(Book book, string year)
+        private bool SearchYearMatch(Book book, int year)
         {
-            return book.YearRelease.ToLower() == year;
+            return book.YearRelease == year;
         }
 
         private bool SearchAuthorMatch(Book book, string author)
@@ -201,41 +217,38 @@ namespace BookStorage
             return book.Title.ToLower() == title;
         }
 
-        private void FindYear(string year)
+        private void FindYear(int year)
         {
-            foreach (Book book in _library)
+            foreach (Book book in _books)
             {
                 if (SearchYearMatch(book, year))
                 {
                     Console.WriteLine("Подходящие книги по году:");
                     Show(book);
-                    break;
                 }
             }
         }
 
         private void FindAuthor(string author)
         {
-            foreach (Book book in _library)
+            foreach (Book book in _books)
             {
                 if (SearchAuthorMatch(book, author))
                 {
                     Console.WriteLine("Подходящие книги по автору:");
                     Show(book);
-                    break;
                 }
             }
         }
 
         private void FindTitle(string title)
         {
-            foreach (Book book in _library)
+            foreach (Book book in _books)
             {
                 if (SearchTitleMatch(book, title))
                 {
                     Console.WriteLine("Подходящие книги по названию:");
                     Show(book);
-                    break;
                 }
             }
         }
