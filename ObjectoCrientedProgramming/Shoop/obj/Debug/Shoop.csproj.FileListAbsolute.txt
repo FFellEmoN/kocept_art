@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\bin\Debug\Shoop.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\bin\Debug\Shoop.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\bin\Debug\Shoop.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\obj\Debug\Shoop.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\obj\Debug\Shoop.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\obj\Debug\Shoop.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Shoop\obj\Debug\Shoop.pdb
