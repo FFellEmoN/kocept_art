@@ -9,10 +9,12 @@ namespace BookStorage
         static void Main(string[] args)
         {
             const string AddBookMenu = "1";
-            const string FindBookMenu = "2";
-            const string ShowAllBook = "3";
-            const string DeleteBookMenu = "4";
-            const string ExitMenu = "5";
+            const string FindByTitleMenu = "2";
+            const string FindByAuthorMenu = "3";
+            const string FindByYearMenu = "4";
+            const string ShowAllBook = "5";
+            const string DeleteBookMenu = "6";
+            const string ExitMenu = "7";
 
             bool isWork = true;
 
@@ -23,7 +25,9 @@ namespace BookStorage
             do
             {
                 Console.WriteLine($"{AddBookMenu} - добавить книгу.");
-                Console.WriteLine($"{FindBookMenu} - показать книгу по названию, автору, году издания.");
+                Console.WriteLine($"{FindByTitleMenu} - найти книгу по названию.");
+                Console.WriteLine($"{FindByAuthorMenu} - найти книгу по автору.");
+                Console.WriteLine($"{FindByYearMenu} - найти книгу по году издания.");
                 Console.WriteLine($"{ShowAllBook} - показать все книги.");
                 Console.WriteLine($"{DeleteBookMenu} - удалить книгу по номеру.");
                 Console.WriteLine($"{ExitMenu} - выйти из приложения");
@@ -38,8 +42,16 @@ namespace BookStorage
                         bookStrorage.AddBook();
                         break;
 
-                    case FindBookMenu:
-                        bookStrorage.FindBook();
+                    case FindByTitleMenu:
+                        bookStrorage.FindByTitle();
+                        break;
+
+                    case FindByAuthorMenu:
+                        bookStrorage.FindByAuthor();
+                        break;
+
+                    case FindByYearMenu:
+                        bookStrorage.FindByYear();
                         break;
 
                     case ShowAllBook:
@@ -79,11 +91,10 @@ namespace BookStorage
         }
 
         public int UniqueCode { get; private set; }
+        public int YearRelease { get; private set; }
 
         public string Title { get; private set; }
         public string Author { get; private set; }
-        public int YearRelease { get; private set; }
-
     }
 
     class BookStorage
@@ -112,37 +123,6 @@ namespace BookStorage
             }
         }
 
-        public void FindBook()
-        {
-            if (_books.Count == 0)
-            {
-                Console.WriteLine("Библиотека пуста.");
-                return;
-            }
-
-            Console.Write("Введите год издания книги: ");
-            string year = Console.ReadLine().ToLower();
-
-            if (int.TryParse(year, out int yearRalease))
-            {
-                FindYear(yearRalease);
-            }
-            else
-            {
-                Console.WriteLine("Вы ввели не число.");
-            }
-
-            Console.Write("\nВведите автора книги: ");
-            string author = Console.ReadLine().ToLower();
-
-            FindAuthor(author);
-
-            Console.Write("\nВведите названии книги: ");
-            string title = Console.ReadLine().ToLower();
-
-            FindTitle(title);
-        }
-
         public void ShowAll()
         {
             if (_books.Count == 0)
@@ -157,22 +137,15 @@ namespace BookStorage
             }
         }
 
-        private void Show(Book book)
-        {
-            Console.WriteLine($"Код книги: {book.UniqueCode}\nГод: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}\n");
-        }
-
         public void DealetBook()
         {
             if (_books.Count == 0)
             {
                 Console.WriteLine("Библиотека пуста.");
-
                 return;
             }
 
             Console.WriteLine("Какую книгу удалить ?");
-
             ShowAll();
 
             if (_books.Count > 0)
@@ -180,16 +153,9 @@ namespace BookStorage
                 Console.WriteLine("Введите код книги, которую хотите удалить.");
                 string number = Console.ReadLine();
 
-                if (int.TryParse(number, out int index) && index <= _books.Count && index > 0)
+                if (int.TryParse(number, out int index) && index <= _books.Count && index >= 0)
                 {
-                    foreach (Book book in _books)
-                    {
-                        if (_books[index].Equals(book))
-                        {
-                            _books.Remove(book);
-                            break;
-                        }
-                    }
+                    _books.Remove(_books[index]);
                 }
                 else
                 {
@@ -199,6 +165,76 @@ namespace BookStorage
             else
             {
                 Console.WriteLine("Библиотека пуста.");
+            }
+        }
+
+        public void FindByYear()
+        {
+            if (_books.Count == 0)
+            {
+                Console.WriteLine("Библиотека пуста.");
+                return;
+            }
+
+            Console.Write("Введите год издания книги: ");
+            string year = Console.ReadLine().ToLower();
+
+            if (int.TryParse(year, out int yearRalease))
+            {
+                foreach (Book book in _books)
+                {
+                    if (SearchYearMatch(book, yearRalease))
+                    {
+                        Console.WriteLine("Подходящие книги по году:");
+                        Show(book);
+                    }
+                }
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число.");
+            }
+        }
+
+        public void FindByAuthor()
+        {
+            Console.Write("\nВведите автора книги: ");
+            string author = Console.ReadLine().ToLower();
+
+            if (_books.Count == 0)
+            {
+                Console.WriteLine("Библиотека пуста.");
+                return;
+            }
+
+            foreach (Book book in _books)
+            {
+                if (SearchAuthorMatch(book, author))
+                {
+                    Console.WriteLine("Подходящие книги по автору:");
+                    Show(book);
+                }
+            }
+        }
+
+        public void FindByTitle()
+        {
+            if (_books.Count == 0)
+            {
+                Console.WriteLine("Библиотека пуста.");
+                return;
+            }
+
+            Console.Write("\nВведите названии книги: ");
+            string title = Console.ReadLine().ToLower();
+
+            foreach (Book book in _books)
+            {
+                if (SearchTitleMatch(book, title))
+                {
+                    Console.WriteLine("Подходящие книги по названию:");
+                    Show(book);
+                }
             }
         }
 
@@ -217,40 +253,9 @@ namespace BookStorage
             return book.Title.ToLower() == title;
         }
 
-        private void FindYear(int year)
+        private void Show(Book book)
         {
-            foreach (Book book in _books)
-            {
-                if (SearchYearMatch(book, year))
-                {
-                    Console.WriteLine("Подходящие книги по году:");
-                    Show(book);
-                }
-            }
-        }
-
-        private void FindAuthor(string author)
-        {
-            foreach (Book book in _books)
-            {
-                if (SearchAuthorMatch(book, author))
-                {
-                    Console.WriteLine("Подходящие книги по автору:");
-                    Show(book);
-                }
-            }
-        }
-
-        private void FindTitle(string title)
-        {
-            foreach (Book book in _books)
-            {
-                if (SearchTitleMatch(book, title))
-                {
-                    Console.WriteLine("Подходящие книги по названию:");
-                    Show(book);
-                }
-            }
+            Console.WriteLine($"Код книги: {book.UniqueCode}\nГод: {book.YearRelease}\nАвтор: {book.Author}\nНазвание: {book.Title}\n");
         }
     }
 }
