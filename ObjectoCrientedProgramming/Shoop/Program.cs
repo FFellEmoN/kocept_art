@@ -109,9 +109,11 @@ namespace Shoop
                     case Axe axe:
                         axe.EffectCurse(this);
                         break;
+
                     case Sword sword:
                         sword.EffectStrengthening(this);
                         break;
+
                     default:
                         Console.WriteLine("Такого предмата не существует.");
                         break;
