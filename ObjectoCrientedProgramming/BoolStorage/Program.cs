@@ -43,15 +43,15 @@ namespace BookStorage
                         break;
 
                     case FindByTitleMenu:
-                        bookStrorage.ShowByTitle();
+                        bookStrorage.ShowByBookTitle();
                         break;
 
                     case FindByAuthorMenu:
-                        bookStrorage.ShowByAuthor();
+                        bookStrorage.ShowByBookAuthor();
                         break;
 
                     case FindByYearMenu:
-                        bookStrorage.ShowByYear();
+                        bookStrorage.ShowByBookYear();
                         break;
 
                     case ShowAllBook:
@@ -148,7 +148,7 @@ namespace BookStorage
                 Console.WriteLine("Введите код книги, которую хотите удалить.");
                 string number = Console.ReadLine();
 
-                if (int.TryParse(number, out int index) && index <= _books.Count && index >= 0)
+                if (int.TryParse(number, out int index) && index < _books.Count && index >= 0)
                 {
                     _books.Remove(_books[index]);
                 }
@@ -163,7 +163,7 @@ namespace BookStorage
             }
         }
 
-        public void ShowByYear()
+        public void ShowByBookYear()
         {
             if (_books.Count == 0)
             {
@@ -191,7 +191,7 @@ namespace BookStorage
             }
         }
 
-        public void ShowByAuthor()
+        public void ShowByBookAuthor()
         {
             Console.Write("\nВведите автора книги: ");
             string author = Console.ReadLine().ToLower();
@@ -212,7 +212,7 @@ namespace BookStorage
             }
         }
 
-        public void ShowByTitle()
+        public void ShowByBookTitle()
         {
             if (_books.Count == 0)
             {
