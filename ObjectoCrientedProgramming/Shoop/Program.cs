@@ -14,6 +14,7 @@ namespace Shoop
             const string ExitMenu = "5";
 
             string diciredAction;
+
             bool IsExit = true;
 
             Player player = new Player();
@@ -21,6 +22,7 @@ namespace Shoop
             Saller saller = new Saller();
 
             Shoop shoop = new Shoop(saller, player);
+
             do
             {
                 Console.WriteLine($"{OpenShoopMenu}) - открыть магазин.");
@@ -66,7 +68,9 @@ namespace Shoop
     class Shoop
     {
         private Saller _saller;
+
         private Player _player;
+
         public Shoop(Saller saller, Player player)
         {
             _saller = saller;
@@ -167,6 +171,13 @@ namespace Shoop
             Name = "Торговец";
         }
 
+        public Item GetItem(int number)
+        {
+            int index = number - 1;
+
+            return Items[index];
+        }
+
         public void SellItem(int number)
         {
 
@@ -186,13 +197,6 @@ namespace Shoop
         {
             Console.WriteLine("Товары для продажи:\n");
             base.ShowItems();
-        }
-
-        public Item GetItem(int number)
-        {
-            int index = number - 1;
-
-            return Items[index];
         }
     }
 
