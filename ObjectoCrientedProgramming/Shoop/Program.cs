@@ -7,7 +7,32 @@ namespace Shoop
     {
         static void Main(string[] args)
         {
-            const string OpenShoopMenu = "1";
+            Player player = new Player();
+
+            Saller saller = new Saller();
+
+            Shoop shoop = new Shoop(saller, player);
+        }
+    }
+
+    class Shoop
+    {
+        private Player _player;
+
+        private Saller _saller;
+
+        public Shoop(Saller saller, Player player)
+        {
+            _saller = saller;
+            _player = player;
+            _saller.AddItem(new Item("меч", 15));
+            _saller.AddItem(new Item("топор", 20));
+            Open();
+        }
+
+        public void Open()
+        {
+            const string TradeShoopMenu = "1";
             const string ShowItemsPlayrMenu = "2";
             const string ShowSallerMoneyMenu = "3";
             const string ShowPlayerMoneyMenu = "4";
@@ -15,20 +40,14 @@ namespace Shoop
 
             string diciredAction;
 
-            bool IsExit = true;
-
-            Player player = new Player();
-
-            Saller saller = new Saller();
-
-            Shoop shoop = new Shoop(saller, player);
+            bool isExit = true;
 
             do
             {
-                Console.WriteLine($"{OpenShoopMenu}) - открыть магазин.");
+                Console.WriteLine($"{TradeShoopMenu}) - открыть магазин.");
                 Console.WriteLine($"{ShowItemsPlayrMenu}) - показать предметы игрока.");
-                Console.WriteLine($"{ShowSallerMoneyMenu}) - показать деньги {saller.Name}.");
-                Console.WriteLine($"{ShowPlayerMoneyMenu}) - показать деньги {player.Name}.");
+                Console.WriteLine($"{ShowSallerMoneyMenu}) - показать деньги {_saller.Name}.");
+                Console.WriteLine($"{ShowPlayerMoneyMenu}) - показать деньги {_player.Name}.");
                 Console.WriteLine($"{ExitMenu}) - выйти.");
 
                 Console.Write("\nВведите желаемое действие: ");
@@ -37,50 +56,34 @@ namespace Shoop
 
                 switch (diciredAction)
                 {
-                    case OpenShoopMenu:
-                        shoop.Open();
+                    case TradeShoopMenu:
+                        Trade();
                         break;
 
                     case ShowItemsPlayrMenu:
-                        player.ShowItems();
+                        _player.ShowItems();
                         break;
 
                     case ShowSallerMoneyMenu:
-                        saller.ShowMoney();
+                        _saller.ShowMoney();
                         break;
 
                     case ShowPlayerMoneyMenu:
-                        player.ShowMoney();
+                        _player.ShowMoney();
                         break;
 
                     case ExitMenu:
-                        IsExit = false;
+                        isExit = false;
                         break;
                 }
 
                 Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
                 Console.ReadKey();
                 Console.Clear();
-            } while (IsExit);
-        }
-    }
-
-    class Shoop
-    {
-        private Saller _saller;
-
-        private Player _player;
-
-        public Shoop(Saller saller, Player player)
-        {
-            _saller = saller;
-            _player = player;
-
-            _saller.AddItem(new Item("меч", 15));
-            _saller.AddItem(new Item("топор", 20));
+            } while (isExit);
         }
 
-        public void Open()
+        public void Trade()
         {
             string disiredItem;
 
@@ -96,9 +99,14 @@ namespace Shoop
                 number > 0 &&
                 number <= _saller.GetCountItems())
             {
-                if (_player.BuyItem(_saller.GetItem(number)))
+                if (_player.IsEnoughMoney(_saller.GetItem(number).Coast))
                 {
                     _saller.SellItem(number);
+                    _player.BuyItem(_saller.GetItem(number));
+                }
+                else
+                {
+                    Console.WriteLine("Недостаточно средст.");
                 }
             }
             else
@@ -208,19 +216,15 @@ namespace Shoop
             Name = "Игрок";
         }
 
-        public bool BuyItem(Item item)
+        public void BuyItem(Item item)
         {
-            if (Money >= item.Coast)
-            {
-                Money -= item.Coast;
-                AddItem(item);
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Недостаточно средст.");
-                return false;
-            }
+            Money -= item.Coast;
+            AddItem(item);
+        }
+
+        public bool IsEnoughMoney(float coast)
+        {
+            return Money >= coast;
         }
         public override void ShowItems()
         {
