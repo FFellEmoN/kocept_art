@@ -204,16 +204,16 @@ namespace Shoop
             }
         }
 
-        public override void ShowItems()
-        {
-            Console.WriteLine("Товары для продажи:\n");
-            base.ShowItems();
-        }
-
         private void SellItem(Item item)
         {
                 Money += item.Coast;
                 Items.Remove(item);
+        }
+
+        public override void ShowItems()
+        {
+            Console.WriteLine("Товары для продажи:\n");
+            base.ShowItems();
         }
     }
 
@@ -225,16 +225,17 @@ namespace Shoop
             Name = "Игрок";
         }
 
+        public bool IsEnoughMoney(float coast)
+        {
+            return Money >= coast;
+        }
+
         public void BuyItem(Item item)
         {
             Money -= item.Coast;
             AddItem(item);
         }
 
-        public bool IsEnoughMoney(float coast)
-        {
-            return Money >= coast;
-        }
         public override void ShowItems()
         {
             Console.WriteLine("Ваши вещи:\n");
