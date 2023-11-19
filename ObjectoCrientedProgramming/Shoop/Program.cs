@@ -27,10 +27,10 @@ namespace Shoop
             _player = player;
             _saller.AddItem(new Item("меч", 15));
             _saller.AddItem(new Item("топор", 20));
-            Open();
+            Work();
         }
 
-        public void Open()
+        private void Work()
         {
             const string TradeShoopMenu = "1";
             const string ShowItemsPlayrMenu = "2";
@@ -40,7 +40,7 @@ namespace Shoop
 
             string diciredAction;
 
-            bool isExit = true;
+            bool isRunning = true;
 
             do
             {
@@ -73,19 +73,20 @@ namespace Shoop
                         break;
 
                     case ExitMenu:
-                        isExit = false;
+                        isRunning = false;
                         break;
                 }
 
                 Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
                 Console.ReadKey();
                 Console.Clear();
-            } while (isExit);
+            } while (isRunning);
         }
 
-        public void Trade()
+        private void Trade()
         {
             string disiredItem;
+            Item item;
 
             _saller.ShowMoney();
             _player.ShowMoney();
@@ -99,10 +100,12 @@ namespace Shoop
                 number > 0 &&
                 number <= _saller.GetCountItems())
             {
-                if (_player.IsEnoughMoney(_saller.GetItem(number).Coast))
+                item = _saller.GetItem(number);
+
+                if (_player.IsEnoughMoney(item.Coast))
                 {
-                    _saller.SellItem(number);
-                    _player.BuyItem(_saller.GetItem(number));
+                    _saller.TryGetItem(number);
+                    _player.BuyItem(item);
                 }
                 else
                 {
@@ -186,14 +189,14 @@ namespace Shoop
             return Items[index];
         }
 
-        public void SellItem(int number)
+        public void TryGetItem(int number)
         {
+            Item item = GetItem(number);
 
-            if (Items.Contains(GetItem(number)))
+            if (Items.Contains(item))
             {
-                Money += GetItem(number).Coast;
-                Console.WriteLine($"Продан {GetItem(number).ToString()}");
-                Items.Remove(GetItem(number));
+                Console.WriteLine($"Продан {item.ToString()}");
+                SellItem(item);
             }
             else
             {
@@ -205,6 +208,12 @@ namespace Shoop
         {
             Console.WriteLine("Товары для продажи:\n");
             base.ShowItems();
+        }
+
+        private void SellItem(Item item)
+        {
+                Money += item.Coast;
+                Items.Remove(item);
         }
     }
 

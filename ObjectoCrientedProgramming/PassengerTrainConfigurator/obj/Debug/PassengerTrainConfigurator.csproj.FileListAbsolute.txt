@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\bin\Debug\PassengerTrainConfigurator.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\bin\Debug\PassengerTrainConfigurator.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\bin\Debug\PassengerTrainConfigurator.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\obj\Debug\PassengerTrainConfigurator.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\obj\Debug\PassengerTrainConfigurator.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\obj\Debug\PassengerTrainConfigurator.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\PassengerTrainConfigurator\obj\Debug\PassengerTrainConfigurator.pdb

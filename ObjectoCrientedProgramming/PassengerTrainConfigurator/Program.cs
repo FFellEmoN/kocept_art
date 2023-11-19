@@ -29,7 +29,7 @@ namespace PassengerTrainConfigurator
             _vans.Add(van);
         }
 
-        public Van GetVan(char number)
+        public Van GetVan(int number)
         {
             foreach (Van van in _vans)
             {
@@ -41,7 +41,7 @@ namespace PassengerTrainConfigurator
                 }
                 else
                 {
-                    Console.WriteLine($"В депо вагонов типа {van.Type} больше нет.");
+                    Console.WriteLine($"В депо нет вагонов с {number} посадочных мест.");
                     return null;
                 }
             }
@@ -78,9 +78,18 @@ namespace PassengerTrainConfigurator
 
     class Direction
     {
-        public Direction(int x, int y)
+        public Direction(string firstCity, string secondCity)
         {
+            FirstCity = firstCity;
+            SecondCity = secondCity;
+        }
 
+        public string FirstCity { get; private set; }
+        public string SecondCity { get; private set; }
+
+        public string Get()
+        {
+            return $"{FirstCity} -> {SecondCity}";
         }
     }
 
@@ -141,27 +150,96 @@ namespace PassengerTrainConfigurator
 
         public void Fill(int numberPeople, Depot depot)
         {
-            int minimumAllowedValue = 1;
-            int numberBigVans = numberPeople % depot.MaxSets();
-            int minimumSets = 0;
-            int passengersWithoutSeats = numberPeople - numberBigVans * depot.MaxSets();
+            int numberBigestVans;
+            int passengersWithoutSeats;
+            int sets;
 
-            if (numberBigVans >= minimumAllowedValue)
+            do
             {
-                for (int i = 0; i < numberBigVans; i++)
-                {
-                    _vans.Add(GetType(depot.MaxSets());
-                }
-            }
-            else
-            {
-                do
-                {
-                    minimumSets = depot.MinSets(minimumSets);
-                } while (minimumSets % passengersWithoutSeats >= 1);
+                sets = SearchSuitableVan(numberPeople, depot);
+                numberBigestVans = numberPeople / sets;
+                passengersWithoutSeats = numberPeople - numberBigestVans * sets;
 
-                _vans.Add(GetType)
-            }
+                for (int i = 0; i < numberBigestVans; i++)
+                    _vans.Add(depot.GetVan(sets));
+            } while (passengersWithoutSeats > 0);
+        }
+
+        private int SearchSuitableVan(int people, Depot depot)
+        {
+            int sets = 0;
+
+            do
+            {
+                sets = depot.MinSets(sets);
+            } while (people % sets <= 1 || sets == depot.MaxSets());
+
+            return sets;
+        }
+    }
+
+    class Ticket
+    {
+        public Ticket(float coast,char type)
+        {
+            Coast = coast;
+            Type = type;
+        }
+
+        public float Coast {  get; private set; }
+
+        public char Type { get; private set; }
+    }
+
+    class TicketOffice
+    {
+        private List<Ticket> _tickets;
+
+        public TicketOffice()
+        {
+            _tickets = new List<Ticket>();
+        }
+
+        public float Money {  get; private set; }
+
+        public Ticket SellTicket(Person person, char type)
+        {
+            Money += person.Money;
+
+            return 
+        }
+
+        private Ticket SearchSuitableTicket() 
+        {
+
+        }
+    }
+
+    class Person
+    {
+        private Ticket _ticket;
+
+        public Person(float money)
+        {
+            Money = money;
+        }
+
+        public float Money { get; private set; }
+
+        public bool EnoughMoney(float money)
+        {
+            return Money >= money;
+        }
+
+        public void BuyTicket(Ticket ticket)
+        {
+            _ticket = ticket;
+            Money -= ticket.Coast;
+        }
+
+        public char GetTypeTicket()
+        {
+            return _ticket.Type;
         }
     }
 }
