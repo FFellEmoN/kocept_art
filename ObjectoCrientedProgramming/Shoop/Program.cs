@@ -12,13 +12,14 @@ namespace Shoop
             Saller saller = new Saller();
 
             Shoop shoop = new Shoop(saller, player);
+
+            shoop.Work();
         }
     }
 
     class Shoop
     {
         private Player _player;
-
         private Saller _saller;
 
         public Shoop(Saller saller, Player player)
@@ -27,10 +28,9 @@ namespace Shoop
             _player = player;
             _saller.AddItem(new Item("меч", 15));
             _saller.AddItem(new Item("топор", 20));
-            Work();
         }
 
-        private void Work()
+        public void Work()
         {
             const string TradeShoopMenu = "1";
             const string ShowItemsPlayrMenu = "2";
@@ -93,18 +93,18 @@ namespace Shoop
             Console.WriteLine("\nКакой товар вы хотите приобрести ?\n");
             _saller.ShowItems();
 
-            Console.Write("\nВведите номер товара:");
+            Console.Write("\nВведите номер товара: ");
             disiredItem = Console.ReadLine();
 
             if (int.TryParse(disiredItem, out int number) &&
                 number > 0 &&
-                number <= _saller.GetCountItems())
+                number <= _saller.CountItems)
             {
                 item = _saller.GetItem(number);
 
                 if (_player.IsEnoughMoney(item.Coast))
                 {
-                    _saller.TryGetItem(number);
+                    _saller.TrySellItem(item);
                     _player.BuyItem(item);
                 }
                 else
@@ -128,7 +128,6 @@ namespace Shoop
         }
 
         public string Name { get; private set; }
-
         public float Coast { get; private set; }
 
         public override string ToString()
@@ -147,12 +146,11 @@ namespace Shoop
         }
 
         public float Money { get; protected set; }
-
         public string Name { get; protected set; }
-
-        public int GetCountItems()
+       
+        public int CountItems
         {
-            return Items.Count;
+            get { return Items.Count; }
         }
 
         public void AddItem(Item item)
@@ -189,10 +187,8 @@ namespace Shoop
             return Items[index];
         }
 
-        public void TryGetItem(int number)
+        public void TrySellItem(Item item)
         {
-            Item item = GetItem(number);
-
             if (Items.Contains(item))
             {
                 Console.WriteLine($"Продан {item.ToString()}");
