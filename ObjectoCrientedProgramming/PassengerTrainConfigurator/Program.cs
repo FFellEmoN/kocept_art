@@ -8,80 +8,26 @@ namespace PassengerTrainConfigurator
         static void Main(string[] args)
         {
             RailwayStation railwayStation = new RailwayStation();
+            railwayStation.Work();
         }
     }
 
     class RailwayStation
     {
         private Depot _depot;
-
         private TicketOffice _ticketOffice;
-
         private Train _train;
-
         private Direction _direction;
-
         private List<Person> _people;
-
         private int _valueVansType = 6;
-
         private bool _isTicketsSold = false;
 
         public RailwayStation()
         {
             _depot = new Depot(_valueVansType);
-            Work();
         }
 
-        private string ChooseCity(int sequenceNumber)
-        {
-            const string TakeMoscowMenu = "1";
-            const string TakeSaintPetersburgMenu = "2";
-            const string TakeTverMenu = "3";
-
-            string moscow = "Москва";
-            string saintPetersburg = "Санкт - Петербург";
-            string tver = "Тверь";
-
-            Console.WriteLine($"{TakeMoscowMenu}) - {moscow}");
-            Console.WriteLine($"{TakeSaintPetersburgMenu}) - {saintPetersburg}");
-            Console.WriteLine($"{TakeTverMenu}) - {tver}");
-
-            Console.Write($"\nВыбирите {sequenceNumber} город: ");
-            string diciredAction = Console.ReadLine();
-            Console.WriteLine();
-
-            switch (diciredAction)
-            {
-                case TakeMoscowMenu:
-                    return moscow;
-
-                case TakeSaintPetersburgMenu:
-                    return saintPetersburg;
-
-                case TakeTverMenu:
-                    return tver;
-
-                default:
-                    Console.WriteLine("Города под таким номером нету или вы ввели не число.");
-                    return null;
-            }
-        }
-
-        private int GetPepleWithoutTicket()
-        {
-            int peopleWithoutTickets = 0;
-
-            foreach (Person person in _people)
-            {
-                if (person.HaveTicket == false)
-                    peopleWithoutTickets++;
-            }
-
-            return peopleWithoutTickets;
-        }
-
-        private void Work()
+        public void Work()
         {
             const string CreateDirectionMenu = "1";
             const string CreatePeopleListMenu = "2";
@@ -167,11 +113,11 @@ namespace PassengerTrainConfigurator
 
                     Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 1);
 
-                    Console.WriteLine($"Количество билетов: {_ticketOffice.GetValueAllTickets()}");
+                    Console.WriteLine($"Количество билетов: {_ticketOffice.ValueAllTickets}");
 
                     Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 2);
 
-                    Console.WriteLine($"Средняя цена на билет: {_ticketOffice.GetAvergeCoastTicket()}");
+                    Console.WriteLine($"Средняя цена на билет: {_ticketOffice.TryGetAvergeCoastTicket()}");
 
                     Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 3);
 
@@ -205,7 +151,7 @@ namespace PassengerTrainConfigurator
                 Console.Write("\nВведите желаемое действие: ");
                 diciredAction = Console.ReadLine();
                 Console.WriteLine();
-                
+
                 switch (diciredAction)
                 {
                     case CreateDirectionMenu:
@@ -251,6 +197,54 @@ namespace PassengerTrainConfigurator
                 Console.Clear();
                 Console.SetCursorPosition(0, 0);
             } while (isRunning);
+        }
+
+        private string ChooseCity(int sequenceNumber)
+        {
+            const string TakeMoscowMenu = "1";
+            const string TakeSaintPetersburgMenu = "2";
+            const string TakeTverMenu = "3";
+
+            string moscow = "Москва";
+            string saintPetersburg = "Санкт - Петербург";
+            string tver = "Тверь";
+
+            Console.WriteLine($"{TakeMoscowMenu}) - {moscow}");
+            Console.WriteLine($"{TakeSaintPetersburgMenu}) - {saintPetersburg}");
+            Console.WriteLine($"{TakeTverMenu}) - {tver}");
+
+            Console.Write($"\nВыбирите {sequenceNumber} город: ");
+            string diciredAction = Console.ReadLine();
+            Console.WriteLine();
+
+            switch (diciredAction)
+            {
+                case TakeMoscowMenu:
+                    return moscow;
+
+                case TakeSaintPetersburgMenu:
+                    return saintPetersburg;
+
+                case TakeTverMenu:
+                    return tver;
+
+                default:
+                    Console.WriteLine("Города под таким номером нету или вы ввели не число.");
+                    return null;
+            }
+        }
+
+        private int GetPepleWithoutTicket()
+        {
+            int peopleWithoutTickets = 0;
+
+            foreach (Person person in _people)
+            {
+                if (person.HaveTicket == false)
+                    peopleWithoutTickets++;
+            }
+
+            return peopleWithoutTickets;
         }
 
         private void ResetSeting()
@@ -363,7 +357,7 @@ namespace PassengerTrainConfigurator
             {
                 if (_isTicketsSold == false)
                 {
-                    if (_ticketOffice.GetValueAllTickets() != 0)
+                    if (_ticketOffice.ValueAllTickets != 0)
                     {
                         foreach (Person person in _people)
                         {
@@ -508,7 +502,6 @@ namespace PassengerTrainConfigurator
         }
 
         public float Coast { get; private set; }
-
         public string FirstCity { get; private set; }
         public string SecondCity { get; private set; }
 
@@ -528,18 +521,14 @@ namespace PassengerTrainConfigurator
         }
 
         public int NumberSets { get; private set; }
-
         public char Type { get; private set; }
-
         public float CoastSeat { get; private set; }
     }
 
     class SmallVan : Van
     {
         private static int _numberSets = 30;
-
         private static char _type = 'A';
-
         private static float _coastSeat = 500;
 
         public SmallVan() : base(_numberSets, _type, _coastSeat) { }
@@ -548,9 +537,7 @@ namespace PassengerTrainConfigurator
     class MidleVan : Van
     {
         private static int _numberSets = 40;
-
         private static char _type = 'B';
-
         private static float _coastSeat = 400;
 
         public MidleVan() : base(_numberSets, _type, _coastSeat) { }
@@ -559,9 +546,7 @@ namespace PassengerTrainConfigurator
     class BigVan : Van
     {
         private static int _numberSets = 50;
-
         private static char _type = 'C';
-
         private static float _coastSeat = 300;
 
         public BigVan() : base(_numberSets, _type, _coastSeat) { }
@@ -631,7 +616,6 @@ namespace PassengerTrainConfigurator
         }
 
         public float Coast { get; private set; }
-
         public char Type { get; private set; }
     }
 
@@ -645,13 +629,12 @@ namespace PassengerTrainConfigurator
         }
 
         public float Money { get; private set; }
-
-        public int GetValueAllTickets()
+        public int ValueAllTickets
         {
-            return _tickets.Count;
+            get { return _tickets.Count; }
         }
 
-        public float GetAvergeCoastTicket()
+        public float TryGetAvergeCoastTicket()
         {
             if (_tickets.Count != 0)
             {
@@ -738,13 +721,7 @@ namespace PassengerTrainConfigurator
         }
 
         public float Money { get; private set; }
-
         public bool HaveTicket { get; private set; }
-
-        public char GetTypeTicket()
-        {
-            return _ticket.Type;
-        }
 
         public void BuyTicket(Ticket ticket)
         {

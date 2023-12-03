@@ -9,7 +9,7 @@ namespace Shoop
         {
             Player player = new Player();
 
-            Saller saller = new Saller();
+            Seller saller = new Seller();
 
             Shoop shoop = new Shoop(saller, player);
 
@@ -20,9 +20,9 @@ namespace Shoop
     class Shoop
     {
         private Player _player;
-        private Saller _saller;
+        private Seller _saller;
 
-        public Shoop(Saller saller, Player player)
+        public Shoop(Seller saller, Player player)
         {
             _saller = saller;
             _player = player;
@@ -102,7 +102,7 @@ namespace Shoop
             {
                 item = _saller.GetItem(number);
 
-                if (_player.IsEnoughMoney(item.Coast))
+                if (_player.IsEnoughMoney(item.Cost))
                 {
                     _saller.TrySellItem(item);
                     _player.BuyItem(item);
@@ -121,18 +121,18 @@ namespace Shoop
 
     class Item
     {
-        public Item(string name, float coast)
+        public Item(string name, float cost)
         {
             Name = name;
-            Coast = coast;
+            Cost = cost;
         }
 
         public string Name { get; private set; }
-        public float Coast { get; private set; }
+        public float Cost { get; private set; }
 
         public override string ToString()
         {
-            return $"Товар: {Name}, Цена: {Coast}";
+            return $"Товар: {Name}, Цена: {Cost}";
         }
     }
 
@@ -172,9 +172,9 @@ namespace Shoop
         }
     }
 
-    class Saller : TradeCharacter
+    class Seller : TradeCharacter
     {
-        public Saller()
+        public Seller()
         {
             Money = 300f;
             Name = "Торговец";
@@ -202,7 +202,7 @@ namespace Shoop
 
         private void SellItem(Item item)
         {
-                Money += item.Coast;
+                Money += item.Cost;
                 Items.Remove(item);
         }
 
@@ -228,7 +228,7 @@ namespace Shoop
 
         public void BuyItem(Item item)
         {
-            Money -= item.Coast;
+            Money -= item.Cost;
             AddItem(item);
         }
 
