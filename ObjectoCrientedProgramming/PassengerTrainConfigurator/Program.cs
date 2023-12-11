@@ -12,6 +12,18 @@ namespace PassengerTrainConfigurator
         }
     }
 
+    struct Position
+    {
+        public Position(int left, int top)
+        {
+            Left = left;
+            Top = top;
+        }
+
+        public int Left { get; private set; }
+        public int Top { get; private set; }
+    }
+
     class RailwayStation
     {
         private Depot _depot;
@@ -19,12 +31,18 @@ namespace PassengerTrainConfigurator
         private Train _train;
         private Direction _direction;
         private List<Person> _people;
+        private List<string> _city;
         private int _valueVansType = 6;
-        private bool _isTicketsSold = false;
+        private bool _didSellTickets = false;
 
         public RailwayStation()
         {
             _depot = new Depot(_valueVansType);
+            _city = new List<string>();
+            _ticketOffice = new TicketOffice();
+            _city.Add("Москва");
+            _city.Add("Санкт-Петербург");
+            _city.Add("Тверь");
         }
 
         public void Work()
@@ -32,30 +50,33 @@ namespace PassengerTrainConfigurator
             const string CreateDirectionMenu = "1";
             const string CreatePeopleListMenu = "2";
             const string FormTrainMenu = "3";
-            const string FormTicketOfficeMenu = "4";
+            const string FillTicketOfficeMenu = "4";
             const string OpenTicketSaleMenu = "5";
             const string SentTrainMenu = "6";
             const string ResetAllSeting = "7";
             const string ExitMenu = "8";
 
+            List<String> lines = new List<String>();
+
             string diciredAction;
 
             bool isRunning = true;
-
-            int startPositionLeft = 0;
-            int startPositionTop = 0;
+            int dehaultValueLeft = 0;
+            int dehaultValueTop = 0;
             int positionTitleLeft = 15;
-            int positionTitleTop = 0;
-            int positionLineDirectionLeft = 0;
-            int positionLineDirectionTop = positionTitleTop + 1;
-            int positionTitlePeopleLeft = positionLineDirectionLeft + 30;
-            int positionTitlePeopleTop = positionTitleTop + 1;
-            int positionLineTrainLeft = positionTitlePeopleLeft + 45;
-            int positionLineTrainTop = positionTitleTop + 1;
-            int positionLineTicketOfficeLeft = positionLineDirectionLeft;
-            int positionLineTicketOfficeTop = positionLineDirectionTop + 5;
+            int nextLine = 1;
+            int secondParagraph = 5;
+            int thirdParagraph = 10;
+            int stepRight = 30;
             int windowWidth = 150;
             int windowHeight = 40;
+
+            Position start = new Position(dehaultValueLeft, dehaultValueTop);
+            Position title = new Position(positionTitleLeft, start.Top);
+            Position direction = new Position(start.Left, title.Top + nextLine);
+            Position people = new Position(direction.Left + stepRight, direction.Top);
+            Position train = new Position(people.Left + stepRight, direction.Top);
+            Position ticketOffice = new Position(direction.Left, direction.Top + secondParagraph);
 
             do
             {
@@ -64,85 +85,64 @@ namespace PassengerTrainConfigurator
 
                 if (_direction != null)
                 {
-                    Console.SetCursorPosition(positionTitleLeft, positionTitleTop);
+                    lines.Add("Подробная информация о маршруте");
 
-                    Console.WriteLine("Подробная информация о маршруте");
+                    ToStringDirectonInformation(title.Left, title.Top, ref lines);
 
-                    Console.SetCursorPosition(positionLineDirectionLeft, positionLineDirectionTop);
+                    lines.Add("Направление:");
+                    lines.Add(_direction.Get());
+                    lines.Add($"Затраты: {_direction.Coast}");
 
-                    Console.WriteLine("Направление:");
-                    Console.WriteLine(_direction.Get());
-                    Console.WriteLine($"Затраты: {_direction.Coast}");
+                    ToStringDirectonInformation(direction.Left, direction.Top, ref lines);
                 }
 
                 if (_people != null)
                 {
-                    Console.SetCursorPosition(positionTitlePeopleLeft, positionTitlePeopleTop);
+                    lines.Add("Пассажиры:");
+                    lines.Add($"Количество: {_people.Count}");
+                    lines.Add($"Количество без билетов: {GetPeopleWithoutTicket()}");
 
-                    Console.WriteLine("Пассажиры:");
-
-                    Console.SetCursorPosition(positionTitlePeopleLeft, positionTitlePeopleTop + 1);
-
-                    Console.WriteLine($"Количество: {_people.Count}");
-
-                    Console.SetCursorPosition(positionTitlePeopleLeft, positionTitlePeopleTop + 2);
-
-                    Console.WriteLine($"Количество без билетов: {GetPepleWithoutTicket()}");
+                    ToStringDirectonInformation(people.Left, people.Top, ref lines);
                 }
 
                 if (_train != null)
                 {
-                    Console.SetCursorPosition(positionLineTrainLeft, positionLineTrainTop);
+                    lines.Add("Поезд:");
+                    lines.Add($"Общее число посадочных мест: {_train.GetValueAllSets()}");
+                    lines.Add($"Средняя затраты на посадочное место: {_train.GetAverageCoatSetsTrain()}");
 
-                    Console.WriteLine("Поезд:");
-
-                    Console.SetCursorPosition(positionLineTrainLeft, positionLineTrainTop + 1);
-
-                    Console.WriteLine($"Общее число посадочных мест: {_train.GetValueAllSets()}");
-
-                    Console.SetCursorPosition(positionLineTrainLeft, positionLineTrainTop + 2);
-
-                    Console.WriteLine($"Средняя затраты на посадочное место: {_train.GetAverageCoatSetsTrain()}");
+                    ToStringDirectonInformation(train.Left, train.Top, ref lines);
                 }
 
                 if (_ticketOffice != null)
                 {
-                    Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop);
+                    lines.Add("Касса:");
+                    lines.Add($"Количество билетов: {_ticketOffice.ValueAllTickets}");
+                    lines.Add($"Средняя цена на билет: {_ticketOffice.TryGetAvergeCoastTicket()}");
+                    lines.Add($"Денег в кассе: {_ticketOffice.Money}");
 
-                    Console.WriteLine("Касса:");
-
-                    Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 1);
-
-                    Console.WriteLine($"Количество билетов: {_ticketOffice.ValueAllTickets}");
-
-                    Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 2);
-
-                    Console.WriteLine($"Средняя цена на билет: {_ticketOffice.TryGetAvergeCoastTicket()}");
-
-                    Console.SetCursorPosition(positionLineTicketOfficeLeft, positionLineTicketOfficeTop + 3);
-
-                    Console.WriteLine($"Денег в кассе: {_ticketOffice.Money}");
+                    ToStringDirectonInformation(ticketOffice.Left, ticketOffice.Top, ref lines);
                 }
 
                 if (_direction != null)
                 {
-                    Console.SetCursorPosition(positionLineDirectionLeft, positionLineDirectionTop + 5);
+                    Console.SetCursorPosition(direction.Left, direction.Top + secondParagraph);
                 }
 
                 if (_ticketOffice != null)
                 {
-                    Console.SetCursorPosition(positionLineDirectionLeft, positionLineDirectionTop + 10);
+                    Console.SetCursorPosition(direction.Left, direction.Top + thirdParagraph);
                 }
 
                 if (_direction == null && _ticketOffice == null)
                 {
-                    Console.SetCursorPosition(startPositionLeft, startPositionTop);
+                    Console.SetCursorPosition(start.Left, start.Top);
                 }
 
                 Console.WriteLine($"{CreateDirectionMenu}) - сформировать направление.");
                 Console.WriteLine($"{CreatePeopleListMenu}) - сформировать список пассажиров.");
                 Console.WriteLine($"{FormTrainMenu}) - сформировать поезд.");
-                Console.WriteLine($"{FormTicketOfficeMenu}) - сформировать кассу продажи билетов.");
+                Console.WriteLine($"{FillTicketOfficeMenu}) - заполнить кассу продажи билетов.");
                 Console.WriteLine($"{OpenTicketSaleMenu}) - открыть продажу билетов на направление.");
                 Console.WriteLine($"{SentTrainMenu}) - отправить поезд.");
                 Console.WriteLine($"{ResetAllSeting}) - сбросить все настройки.");
@@ -166,8 +166,8 @@ namespace PassengerTrainConfigurator
                         FormTrain();
                         break;
 
-                    case FormTicketOfficeMenu:
-                        FormTicketOffice();
+                    case FillTicketOfficeMenu:
+                        FillTicketOffice();
                         break;
 
                     case OpenTicketSaleMenu:
@@ -199,42 +199,44 @@ namespace PassengerTrainConfigurator
             } while (isRunning);
         }
 
+        private void ToStringDirectonInformation(int positionLeft, int positionTop, ref List<String> lines)
+        {
+            for (int i = 0; i < lines.Count; i++)
+            {
+                Console.SetCursorPosition(positionLeft, positionTop + i);
+
+                Console.WriteLine(lines[i]);
+            }
+
+            lines = new List<String>();
+        }
+
         private string ChooseCity(int sequenceNumber)
         {
-            const string TakeMoscowMenu = "1";
-            const string TakeSaintPetersburgMenu = "2";
-            const string TakeTverMenu = "3";
-
-            string moscow = "Москва";
-            string saintPetersburg = "Санкт - Петербург";
-            string tver = "Тверь";
-
-            Console.WriteLine($"{TakeMoscowMenu}) - {moscow}");
-            Console.WriteLine($"{TakeSaintPetersburgMenu}) - {saintPetersburg}");
-            Console.WriteLine($"{TakeTverMenu}) - {tver}");
-
             Console.Write($"\nВыбирите {sequenceNumber} город: ");
-            string diciredAction = Console.ReadLine();
-            Console.WriteLine();
+            string numberCity = Console.ReadLine();
 
-            switch (diciredAction)
+            if (int.TryParse(numberCity, out int index) && index > 0 && index <= _city.Count)
             {
-                case TakeMoscowMenu:
-                    return moscow;
-
-                case TakeSaintPetersburgMenu:
-                    return saintPetersburg;
-
-                case TakeTverMenu:
-                    return tver;
-
-                default:
-                    Console.WriteLine("Города под таким номером нету или вы ввели не число.");
-                    return null;
+                Console.WriteLine(_city[index - 1]);
+                return _city[index - 1];
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не число или города под таким номером нет.");
+                return null;
             }
         }
 
-        private int GetPepleWithoutTicket()
+        private void ShowAllCity()
+        {
+            for (int i = 0; i < _city.Count; i++)
+            {
+                Console.WriteLine($"{i + 1}) {_city[i]}");
+            }
+        }
+
+        private int GetPeopleWithoutTicket()
         {
             int peopleWithoutTickets = 0;
 
@@ -253,15 +255,18 @@ namespace PassengerTrainConfigurator
             _train = null;
             _people = null;
             _ticketOffice = null;
+            _didSellTickets = false;
+            _ticketOffice = new TicketOffice();
             _depot = new Depot(_valueVansType);
-            _isTicketsSold = false;
 
             Console.WriteLine("Все настройки маршрута сброшенны до начальных.");
         }
 
         private void SentTrain()
         {
-            if (_isTicketsSold)
+            PutPassengersTrain();
+
+            if (_didSellTickets)
             {
                 Console.WriteLine($"Поезд отправлен в путь по маршруту {_direction.Get()}");
 
@@ -269,13 +274,39 @@ namespace PassengerTrainConfigurator
                 _train = null;
                 _people = null;
                 _ticketOffice.Clear();
-                _isTicketsSold = false;
+                _didSellTickets = false;
 
                 Console.WriteLine("Формируйте новое отправление.");
             }
             else
             {
-                Console.WriteLine("Сначало необходимо продать открыть продажу билетов.");
+                Console.WriteLine("Необходимо посадить всех пассажиров.");
+            }
+        }
+
+        private void PutPassengersTrain()
+        {
+            foreach (Person person in _people)
+            {
+                if (person.HaveTicket == true)
+                {
+                    _train.PutPerson(person);
+                }
+                else
+                {
+                    Console.WriteLine("У пассажира нет билета.");
+                }
+            }
+
+            if (_people.Count == _train.GetCountListPeople())
+            {
+                _people.Clear();
+
+                Console.WriteLine("Все пассажиры на поезде!");
+            }
+            else
+            {
+                Console.WriteLine("Не все сели на поезд, у кого нет билета.");
             }
         }
 
@@ -288,7 +319,12 @@ namespace PassengerTrainConfigurator
                     _train = new Train();
                     _train.Fill(_depot, _people.Count);
 
-                    Console.WriteLine("Поезд сформирован.");
+                    if (_train.GetValueAllSets() == 0)
+                    {
+                        _train = null;
+
+                        Console.WriteLine("Поезд не сформирован.");
+                    }
                 }
                 else
                 {
@@ -315,15 +351,18 @@ namespace PassengerTrainConfigurator
 
             if (_direction == null)
             {
+                ShowAllCity();
+
                 firstCity = ChooseCity(sequenceNumber);
 
                 if (firstCity != null)
                 {
                     sequenceNumber++;
                     secondCity = ChooseCity(sequenceNumber);
+                    Console.WriteLine();
                 }
 
-                if (firstCity != null && secondCity != null)
+                if (firstCity != null && secondCity != null && firstCity != secondCity)
                 {
                     Console.WriteLine($"Введите растояние от {firstCity} -> {secondCity}");
 
@@ -342,6 +381,7 @@ namespace PassengerTrainConfigurator
                 }
                 else
                 {
+                    Console.WriteLine("Нельзя выбрать 1 и 2 город одинаковыми.");
                     Console.WriteLine("Попробуйте сформировать направление заново.");
                 }
             }
@@ -355,7 +395,7 @@ namespace PassengerTrainConfigurator
         {
             if (_ticketOffice != null)
             {
-                if (_isTicketsSold == false)
+                if (_didSellTickets == false)
                 {
                     if (_ticketOffice.ValueAllTickets != 0)
                     {
@@ -364,7 +404,7 @@ namespace PassengerTrainConfigurator
                             _ticketOffice.TrySellTicket(person);
                         }
 
-                        _isTicketsSold = true;
+                        _didSellTickets = true;
                     }
                     else
                     {
@@ -382,22 +422,22 @@ namespace PassengerTrainConfigurator
             }
         }
 
-        private void FormTicketOffice()
+        private void FillTicketOffice()
         {
             if (_train != null)
             {
-                if (_ticketOffice == null)
+                if (_ticketOffice.IsEmpty)
                 {
-                    _ticketOffice = new TicketOffice();
-
                     foreach (Van van in _train.GetCopyListVans())
                     {
                         _ticketOffice.Fill(van, _direction.Coast);
                     }
+
+                    Console.WriteLine("Касса заполненна.");
                 }
                 else
                 {
-                    Console.WriteLine("Касса уже сформированна.");
+                    Console.WriteLine("Касса уже заполненна.");
                 }
             }
             else
@@ -408,6 +448,11 @@ namespace PassengerTrainConfigurator
 
         private void FillPeople()
         {
+            int minNumberPeople = 100;
+            int maxNumberPeople = 500;
+            int minValueMoneyPerson = 3000;
+            int maxValueMoneyPerson = 5000;
+
             if (_direction != null)
             {
                 if (_people == null)
@@ -416,11 +461,11 @@ namespace PassengerTrainConfigurator
 
                     Random random = new Random();
 
-                    int numberPeople = random.Next(100, 500);
+                    int numberPeople = random.Next(minNumberPeople, maxNumberPeople);
 
                     for (int i = 0; i < numberPeople; i++)
                     {
-                        _people.Add(new Person(random.Next(3000, 5000)));
+                        _people.Add(new Person(random.Next(minValueMoneyPerson, maxValueMoneyPerson)));
                     }
                 }
                 else
@@ -555,10 +600,12 @@ namespace PassengerTrainConfigurator
     class Train
     {
         private List<Van> _vans;
+        private List<Person> _people;
 
         public Train()
         {
             _vans = new List<Van>();
+            _people = new List<Person>();
         }
 
         public float GetAverageCoatSetsTrain()
@@ -601,7 +648,25 @@ namespace PassengerTrainConfigurator
                 setsVan = depot.MaxSets();
                 numberSets += setsVan;
                 _vans.Add(depot.GetVanSets(setsVan));
-            } while (numberSets < people);
+            } while (numberSets < people && setsVan != 0);
+
+            if (setsVan == 0)
+            {
+                _vans.Clear();
+
+                Console.WriteLine("К сожалению не получилось заполнить полностью поезд для всех пассажиров.");
+                Console.WriteLine("Больше нельзя отправить поезд до возврата поездов в депо.");
+            }
+        }
+
+        public void PutPerson(Person person)
+        {
+            _people.Add(person);
+        }
+
+        public int GetCountListPeople()
+        {
+            return _people.Count;
         }
     }
 
@@ -626,6 +691,7 @@ namespace PassengerTrainConfigurator
         public TicketOffice()
         {
             _tickets = new List<Ticket>();
+            IsEmpty = true;
         }
 
         public float Money { get; private set; }
@@ -633,6 +699,7 @@ namespace PassengerTrainConfigurator
         {
             get { return _tickets.Count; }
         }
+        public bool IsEmpty { get; private set; }
 
         public float TryGetAvergeCoastTicket()
         {
@@ -656,6 +723,7 @@ namespace PassengerTrainConfigurator
         public void Clear()
         {
             _tickets.Clear();
+            IsEmpty = true;
         }
 
         public void Fill(Van van, float directionCoast)
@@ -664,6 +732,8 @@ namespace PassengerTrainConfigurator
             {
                 _tickets.Add(new Ticket(van, directionCoast));
             }
+
+            IsEmpty = false;
         }
 
         public void TrySellTicket(Person person)
@@ -676,6 +746,10 @@ namespace PassengerTrainConfigurator
             {
                 SellTicket(money, ticket);
                 person.BuyTicket(ticket);
+            }
+            else
+            {
+                IsEmpty = true;
             }
         }
 
@@ -729,6 +803,13 @@ namespace PassengerTrainConfigurator
             Money -= ticket.Coast;
             _ticket = ticket;
             HaveTicket = true;
+        }
+
+        public Ticket GiveTicket()
+        {
+            Ticket ticket = _ticket;
+            _ticket = null;
+            return ticket;
         }
     }
 

@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\obj\Debug\GladiatorArena.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\obj\Debug\GladiatorArena.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\bin\Debug\GladiatorArena.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\bin\Debug\GladiatorArena.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\bin\Debug\GladiatorArena.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\obj\Debug\GladiatorArena.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\GladiatorArena\obj\Debug\GladiatorArena.pdb
