@@ -31,18 +31,18 @@ namespace PassengerTrainConfigurator
         private Train _train;
         private Direction _direction;
         private List<Person> _people;
-        private List<string> _city;
+        private List<string> _cities;
         private int _valueVansType = 6;
         private bool _didSellTickets = false;
 
         public RailwayStation()
         {
             _depot = new Depot(_valueVansType);
-            _city = new List<string>();
+            _cities = new List<string>();
             _ticketOffice = new TicketOffice();
-            _city.Add("Москва");
-            _city.Add("Санкт-Петербург");
-            _city.Add("Тверь");
+            _cities.Add("Москва");
+            _cities.Add("Санкт-Петербург");
+            _cities.Add("Тверь");
         }
 
         public void Work()
@@ -216,10 +216,10 @@ namespace PassengerTrainConfigurator
             Console.Write($"\nВыбирите {sequenceNumber} город: ");
             string numberCity = Console.ReadLine();
 
-            if (int.TryParse(numberCity, out int index) && index > 0 && index <= _city.Count)
+            if (int.TryParse(numberCity, out int index) && index > 0 && index <= _cities.Count)
             {
-                Console.WriteLine(_city[index - 1]);
-                return _city[index - 1];
+                Console.WriteLine(_cities[index - 1]);
+                return _cities[index - 1];
             }
             else
             {
@@ -230,9 +230,9 @@ namespace PassengerTrainConfigurator
 
         private void ShowAllCity()
         {
-            for (int i = 0; i < _city.Count; i++)
+            for (int i = 0; i < _cities.Count; i++)
             {
-                Console.WriteLine($"{i + 1}) {_city[i]}");
+                Console.WriteLine($"{i + 1}) {_cities[i]}");
             }
         }
 
@@ -264,10 +264,10 @@ namespace PassengerTrainConfigurator
 
         private void SentTrain()
         {
-            PutPassengersTrain();
-
             if (_didSellTickets)
             {
+                PutPassengersTrain();
+
                 Console.WriteLine($"Поезд отправлен в путь по маршруту {_direction.Get()}");
 
                 _direction = null;
@@ -368,13 +368,14 @@ namespace PassengerTrainConfigurator
 
                     value = Console.ReadLine();
 
-                    if (int.TryParse(value, out kilometer))
+                    if (int.TryParse(value, out kilometer) && kilometer > 0)
                     {
                         coast = kilometer * coastOneKilometer;
                         _direction = new Direction(firstCity, secondCity, coast);
                     }
                     else
                     {
+                        Console.WriteLine("Растояние между городами должно быть больше 0");
                         Console.WriteLine("Вы ввели не число.");
                         Console.WriteLine("Попробуйте сформировать направление заново.");
                     }
@@ -672,11 +673,11 @@ namespace PassengerTrainConfigurator
 
     class Ticket
     {
-        private float procentCoast = 1.1f;
+        private float _procentCoast = 1.1f;
 
         public Ticket(Van van, float directionCoast)
         {
-            Coast = (directionCoast + van.CoastSeat) * procentCoast;
+            Coast = (directionCoast + van.CoastSeat) * _procentCoast;
             Type = van.Type;
         }
 
