@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace PassengerTrainConfigurator
 {
@@ -65,11 +67,10 @@ namespace PassengerTrainConfigurator
             int dehaultValueTop = 0;
             int positionTitleLeft = 15;
             int nextLine = 1;
-            int secondParagraph = 5;
-            int thirdParagraph = 10;
             int stepRight = 30;
             int windowWidth = 150;
             int windowHeight = 40;
+            int secondParagraph = 5;
 
             Position start = new Position(dehaultValueLeft, dehaultValueTop);
             Position title = new Position(positionTitleLeft, start.Top);
@@ -78,66 +79,12 @@ namespace PassengerTrainConfigurator
             Position train = new Position(people.Left + stepRight, direction.Top);
             Position ticketOffice = new Position(direction.Left, direction.Top + secondParagraph);
 
+            Console.WindowHeight = windowHeight;
+            Console.WindowWidth = windowWidth;
+
             do
             {
-                Console.WindowHeight = windowHeight;
-                Console.WindowWidth = windowWidth;
-
-                if (_direction != null)
-                {
-                    lines.Add("Подробная информация о маршруте");
-
-                    ToStringDirectonInformation(title.Left, title.Top, ref lines);
-
-                    lines.Add("Направление:");
-                    lines.Add(_direction.Get());
-                    lines.Add($"Затраты: {_direction.Coast}");
-
-                    ToStringDirectonInformation(direction.Left, direction.Top, ref lines);
-                }
-
-                if (_people != null)
-                {
-                    lines.Add("Пассажиры:");
-                    lines.Add($"Количество: {_people.Count}");
-                    lines.Add($"Количество без билетов: {GetPeopleWithoutTicket()}");
-
-                    ToStringDirectonInformation(people.Left, people.Top, ref lines);
-                }
-
-                if (_train != null)
-                {
-                    lines.Add("Поезд:");
-                    lines.Add($"Общее число посадочных мест: {_train.GetValueAllSets()}");
-                    lines.Add($"Средняя затраты на посадочное место: {_train.GetAverageCoatSetsTrain()}");
-
-                    ToStringDirectonInformation(train.Left, train.Top, ref lines);
-                }
-
-                if (_ticketOffice != null)
-                {
-                    lines.Add("Касса:");
-                    lines.Add($"Количество билетов: {_ticketOffice.ValueAllTickets}");
-                    lines.Add($"Средняя цена на билет: {_ticketOffice.TryGetAvergeCoastTicket()}");
-                    lines.Add($"Денег в кассе: {_ticketOffice.Money}");
-
-                    ToStringDirectonInformation(ticketOffice.Left, ticketOffice.Top, ref lines);
-                }
-
-                if (_direction != null)
-                {
-                    Console.SetCursorPosition(direction.Left, direction.Top + secondParagraph);
-                }
-
-                if (_ticketOffice != null)
-                {
-                    Console.SetCursorPosition(direction.Left, direction.Top + thirdParagraph);
-                }
-
-                if (_direction == null && _ticketOffice == null)
-                {
-                    Console.SetCursorPosition(start.Left, start.Top);
-                }
+                ShowAllInformation(ref lines, title, direction, people, train, ticketOffice, start);
 
                 Console.WriteLine($"{CreateDirectionMenu}) - сформировать направление.");
                 Console.WriteLine($"{CreatePeopleListMenu}) - сформировать список пассажиров.");
@@ -199,7 +146,68 @@ namespace PassengerTrainConfigurator
             } while (isRunning);
         }
 
-        private void ToStringDirectonInformation(int positionLeft, int positionTop, ref List<String> lines)
+        private void ShowAllInformation(ref List<String> lines, Position title, Position direction, Position people, Position train, Position ticketOffice, Position start)
+        {
+            int secondParagraph = 5;
+            int thirdParagraph = 10;
+
+            if (_direction != null)
+            {
+                lines.Add("Подробная информация о маршруте");
+
+                ShowDirectonInformation(title.Left, title.Top, ref lines);
+
+                lines.Add("Направление:");
+                lines.Add(_direction.Get());
+                lines.Add($"Затраты: {_direction.Coast}");
+
+                ShowDirectonInformation(direction.Left, direction.Top, ref lines);
+            }
+
+            if (_people != null)
+            {
+                lines.Add("Пассажиры:");
+                lines.Add($"Количество: {_people.Count}");
+                lines.Add($"Количество без билетов: {GetPeopleWithoutTicket()}");
+
+                ShowDirectonInformation(people.Left, people.Top, ref lines);
+            }
+
+            if (_train != null)
+            {
+                lines.Add("Поезд:");
+                lines.Add($"Общее число посадочных мест: {_train.GetValueAllSets()}");
+                lines.Add($"Средняя затраты на посадочное место: {_train.GetAverageCoatSetsTrain()}");
+                ShowDirectonInformation(train.Left, train.Top, ref lines);
+            }
+
+            if (_ticketOffice != null)
+            {
+                lines.Add("Касса:");
+                lines.Add($"Количество билетов: {_ticketOffice.ValueAllTickets}");
+                lines.Add($"Средняя цена на билет: {_ticketOffice.TryGetAvergeCoastTicket()}");
+                lines.Add($"Денег в кассе: {_ticketOffice.Money}");
+
+                ShowDirectonInformation(ticketOffice.Left, ticketOffice.Top, ref lines);
+            }
+
+            if (_direction != null)
+            {
+                Console.SetCursorPosition(direction.Left, direction.Top + secondParagraph);
+            }
+
+            if (_ticketOffice != null)
+            {
+                Console.SetCursorPosition(direction.Left, direction.Top + thirdParagraph);
+            }
+
+            if (_direction == null && _ticketOffice == null)
+            {
+                Console.SetCursorPosition(start.Left, start.Top);
+            }
+        }
+
+        private void ShowDirectonInformation(int positionLeft, int positionTop, ref List<String> lines)
         {
             for (int i = 0; i < lines.Count; i++)
             {
@@ -507,7 +515,7 @@ namespace PassengerTrainConfigurator
             return null;
         }
 
-        public int MaxSets()
+        public int GetMaxSets()
         {
             int maxValue = 0;
 
@@ -646,7 +654,7 @@ namespace PassengerTrainConfigurator
 
             do
             {
-                setsVan = depot.MaxSets();
+                setsVan = depot.GetMaxSets();
                 numberSets += setsVan;
                 _vans.Add(depot.GetVanSets(setsVan));
             } while (numberSets < people && setsVan != 0);
