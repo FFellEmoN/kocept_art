@@ -99,14 +99,32 @@ namespace GladiatorArena
 
             diciredCharacter = Console.ReadLine();
             Console.WriteLine();
-            _firstCharacter = CreateCharacter(diciredCharacter);
+
+            if (int.TryParse(diciredCharacter, out int firstCharacter) && firstCharacter <= _characters.Count 
+                && firstCharacter > 0)
+            {
+                _firstCharacter = CreateCharacter(firstCharacter);
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не чилсо или неверное значение.");
+            }
 
             Console.WriteLine("Выбирите второго персонажа: ");
             Console.Write("\nВведите номер желаемого пересонажа: ");
 
             diciredCharacter = Console.ReadLine();
             Console.WriteLine();
-            _secondCharacter = CreateCharacter(diciredCharacter);
+
+            if (int.TryParse(diciredCharacter, out int secondCharacter) && secondCharacter <= _characters.Count
+                && secondCharacter > 0)
+            {
+                _secondCharacter = CreateCharacter(secondCharacter);
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели не чилсо или неверное значение.");
+            }
         }
 
         private void ShowCharacter()
@@ -117,13 +135,13 @@ namespace GladiatorArena
             }
         }
 
-        private Character CreateCharacter(string index)
+        private Character CreateCharacter(int index)
         {
-            const string Wizard = "1";
-            const string Vampire = "2";
-            const string Knight = "3";
-            const string Demon = "4";
-            const string Human = "5";
+            const int Wizard = 1;
+            const int Vampire = 2;
+            const int Knight = 3;
+            const int Demon = 4;
+            const int Human = 5;
 
             switch (index)
             {
@@ -164,7 +182,10 @@ namespace GladiatorArena
                     }
 
                     Console.WriteLine();
+
                     ShowStatsCharacters();
+
+                    Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить.");
                     Console.ReadKey();
                     Console.Clear();
                 }
@@ -263,9 +284,6 @@ namespace GladiatorArena
         private static bool _hasHeSpecialAbilityAttack = true;
         private static bool _hasHeSpecialAbilityDefence = false;
         private float _mana = 100;
-        private float _manaCoast = 50;
-        private float _fireBallDamage = 25;
-        private string _nameSpecialSkill = "Огненный шар";
 
         public Wizard() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
         {
@@ -273,11 +291,15 @@ namespace GladiatorArena
 
         public override void UseSpecialAbilityAttack(Character character)
         {
-            if (_mana >= _manaCoast)
+            string nameSpecialSkill = "Огненный шар";
+            float manaCoast = 50;
+            float fireBallDamage = 25;
+
+            if (_mana >= manaCoast)
             {
-                Console.WriteLine($"{Name} использует {_nameSpecialSkill}");
-                _mana -= _manaCoast;
-                character.TakeDamage(_fireBallDamage);
+                Console.WriteLine($"{Name} использует {nameSpecialSkill}");
+                _mana -= manaCoast;
+                character.TakeDamage(fireBallDamage);
 
                 if (_mana <= 0)
                 {
@@ -298,7 +320,6 @@ namespace GladiatorArena
         private static string _name = "Вампир";
         private static bool _hasHeSpecialAbilityAttack = true;
         private static bool _hasHeSpecialAbilityDefence = false;
-        private float _vampirismCoefficient = 0.3f;
 
         public Vampire() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
         {
@@ -306,7 +327,8 @@ namespace GladiatorArena
 
         public override void UseSpecialAbilityAttack(Character character)
         {
-            float vampirism = Damage * _vampirismCoefficient;
+            float vampirismCoefficient = 0.3f;
+            float vampirism = Damage * vampirismCoefficient;
             Health += vampirism;
 
             if (Health <= _health)
@@ -334,7 +356,6 @@ namespace GladiatorArena
         private static string _name = "Рыцарь";
         private static bool _hasHeSpecialAbilityAttack = false;
         private static bool _hasHeSpecialAbilityDefence = true;
-        private float _armor = 3;
 
         public Knight() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
         {
@@ -342,9 +363,12 @@ namespace GladiatorArena
 
         public override void TakeDamage(float damage)
         {
-            float newDamage = damage - _armor;
+            float armor = 3;
+            float newDamage = damage - armor;
+
             base.TakeDamage(newDamage);
-            Console.WriteLine($"{Name} блокирует {_armor} урона.");
+
+            Console.WriteLine($"{Name} блокирует {armor} урона.");
         }
     }
 
