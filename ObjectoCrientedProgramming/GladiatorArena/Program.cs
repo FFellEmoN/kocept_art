@@ -57,11 +57,11 @@ namespace GladiatorArena
                         break;
 
                     case StartFightMenu:
-                        StartFight();
+                        Fight();
                         break;
 
                     case StartNewFightMenu:
-                        StartNewFight();
+                        CreateNewFight();
                         break;
 
                     case ExitMenu:
@@ -80,7 +80,7 @@ namespace GladiatorArena
             } while (isRunning);
         }
 
-        private void StartNewFight()
+        private void CreateNewFight()
         {
             _firstCharacter = null;
             _secondCharacter = null;
@@ -90,40 +90,44 @@ namespace GladiatorArena
 
         private void ChooseCharacter()
         {
-            string diciredCharacter;
+            ShowCharacter();
 
             Console.WriteLine("Выбирите первого персонажа: ");
-            ShowCharacter();
 
             Console.Write("\nВведите номер желаемого пересонажа: ");
 
-            diciredCharacter = Console.ReadLine();
-            Console.WriteLine();
-
-            if (int.TryParse(diciredCharacter, out int firstCharacter) && firstCharacter <= _characters.Count 
-                && firstCharacter > 0)
-            {
-                _firstCharacter = CreateCharacter(firstCharacter);
-            }
-            else
-            {
-                Console.WriteLine("Вы ввели не чилсо или неверное значение.");
-            }
+            _firstCharacter = CreateCharacter();
 
             Console.WriteLine("Выбирите второго персонажа: ");
             Console.Write("\nВведите номер желаемого пересонажа: ");
 
+            _secondCharacter = CreateCharacter();
+        }
+
+        private Character CreateCharacter()
+        {
+            _characters = new List<Character>();
+            _characters.Add(new Wizard());
+            _characters.Add(new Vampire());
+            _characters.Add(new Knight());
+            _characters.Add(new Demon());
+            _characters.Add(new Human());
+
+            string diciredCharacter;
+
             diciredCharacter = Console.ReadLine();
             Console.WriteLine();
 
-            if (int.TryParse(diciredCharacter, out int secondCharacter) && secondCharacter <= _characters.Count
-                && secondCharacter > 0)
+            if (int.TryParse(diciredCharacter, out int Character) && Character <= _characters.Count
+                && Character > 0)
             {
-                _secondCharacter = CreateCharacter(secondCharacter);
+                return _characters[Character - 1];
             }
             else
             {
                 Console.WriteLine("Вы ввели не чилсо или неверное значение.");
+
+                return null;
             }
         }
 
@@ -135,37 +139,7 @@ namespace GladiatorArena
             }
         }
 
-        private Character CreateCharacter(int index)
-        {
-            const int Wizard = 1;
-            const int Vampire = 2;
-            const int Knight = 3;
-            const int Demon = 4;
-            const int Human = 5;
-
-            switch (index)
-            {
-                case Wizard:
-                    return new Wizard();
-
-                case Vampire:
-                    return new Vampire();
-
-                case Knight:
-                    return new Knight();
-
-                case Demon:
-                    return new Demon();
-
-                case Human:
-                    return new Human();
-
-                default:
-                    return null;
-            }
-        }
-
-        private void StartFight()
+        private void Fight()
         {
             Console.Clear();
 
@@ -173,12 +147,11 @@ namespace GladiatorArena
             {
                 while (_firstCharacter.IsAlive() && _secondCharacter.IsAlive())
                 {
-                    Attack(_firstCharacter, _secondCharacter);
+                    CarryOutFighterAttack(_firstCharacter, _secondCharacter);
 
                     if (_secondCharacter.IsAlive())
                     {
-                        Attack(_secondCharacter, _firstCharacter);
-
+                        CarryOutFighterAttack(_secondCharacter, _firstCharacter);
                     }
 
                     Console.WriteLine();
@@ -198,6 +171,11 @@ namespace GladiatorArena
                 {
                     Console.WriteLine($"Победил 2 персонаж {_secondCharacter.Name}");
                 }
+
+                if (_secondCharacter.IsAlive() == false && _firstCharacter.IsAlive() == false)
+                {
+                    Console.WriteLine("Ничья.");
+                }
             }
             else
             {
@@ -205,7 +183,7 @@ namespace GladiatorArena
             }
         }
 
-        private void Attack(Character firstCharacter, Character secondCharacter)
+        private void CarryOutFighterAttack(Character firstCharacter, Character secondCharacter)
         {
             if (firstCharacter.CanUseSpecialAbilityAttack)
             {
@@ -226,20 +204,18 @@ namespace GladiatorArena
 
     class Character
     {
-        public Character(float health, float damage, string name, bool hasHeSpecialAbilityAttack, bool hasHeSpecialAbilityDefence)
+        public Character(float health, float damage, string name, bool hasHeSpecialAbilityAttack)
         {
             Health = health;
             Damage = damage;
             Name = name;
             CanUseSpecialAbilityAttack = hasHeSpecialAbilityAttack;
-            CanUseSpecialAbilityDefence = hasHeSpecialAbilityDefence;
         }
 
         public float Health { get; protected set; }
         public float Damage { get; protected set; }
         public string Name { get; private set; }
         public bool CanUseSpecialAbilityAttack { get; protected set; }
-        public bool CanUseSpecialAbilityDefence { get; protected set; }
 
         public virtual void TakeDamage(float damage)
         {
@@ -247,13 +223,13 @@ namespace GladiatorArena
             Console.WriteLine($"{Name} получает {damage} урона\n");
         }
 
-        public virtual void Attack(Character character)
+        public void Attack(Character character)
         {
             Console.WriteLine($"Атакует {Name}");
             character.TakeDamage(Damage);
         }
 
-        public virtual void Attack(Character character, float damage)
+        public void Attack(Character character, float damage)
         {
             character.TakeDamage(damage);
             Console.WriteLine($"Атакует {Name}");
@@ -263,16 +239,18 @@ namespace GladiatorArena
         {
         }
 
-        protected virtual void UseSpecialAbilityDefence()
-        {
-        }
-
         public bool IsAlive()
         {
-            if (Health <= 0)
-                Console.WriteLine($"{Name} мертв.");
-
             return Health > 0;
+        }
+    }
+
+    class UserUtils
+    {
+        private static Random _random = new Random();
+        public static int GenerateRandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
         }
     }
 
@@ -282,10 +260,9 @@ namespace GladiatorArena
         private static float _damage = 10;
         private static string _name = "Волшебник";
         private static bool _hasHeSpecialAbilityAttack = true;
-        private static bool _hasHeSpecialAbilityDefence = false;
         private float _mana = 100;
 
-        public Wizard() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
+        public Wizard() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
         {
         }
 
@@ -319,9 +296,8 @@ namespace GladiatorArena
         private static float _damage = 12;
         private static string _name = "Вампир";
         private static bool _hasHeSpecialAbilityAttack = true;
-        private static bool _hasHeSpecialAbilityDefence = false;
 
-        public Vampire() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
+        public Vampire() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
         {
         }
 
@@ -355,9 +331,8 @@ namespace GladiatorArena
         private static float _damage = 10;
         private static string _name = "Рыцарь";
         private static bool _hasHeSpecialAbilityAttack = false;
-        private static bool _hasHeSpecialAbilityDefence = true;
 
-        public Knight() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
+        public Knight() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
         {
         }
 
@@ -378,9 +353,8 @@ namespace GladiatorArena
         private static float _damage = 10;
         private static string _name = "Демон";
         private static bool _hasHeSpecialAbilityAttack = false;
-        private static bool _hasHeSpecialAbilityDefence = true;
 
-        public Demon() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
+        public Demon() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
         {
         }
 
@@ -390,7 +364,13 @@ namespace GladiatorArena
             UseSpecialAbilityDefence();
         }
 
-        protected override void UseSpecialAbilityDefence()
+        public override void UseSpecialAbilityAttack(Character character)
+        {
+            float newDamage = Damage - 2;
+            Attack(character, newDamage);
+        }
+
+        private void UseSpecialAbilityDefence()
         {
             if (Health <= 0)
             {
@@ -400,9 +380,7 @@ namespace GladiatorArena
 
                 float healthAfterResurrection = 60;
 
-                Random random = new Random();
-
-                if (random.Next(minValue, maxValue) <= chanceResurrection)
+                if (UserUtils.GenerateRandomNumber(minValue, maxValue) <= chanceResurrection)
                 {
                     Health = healthAfterResurrection;
 
@@ -422,23 +400,20 @@ namespace GladiatorArena
         private static float _damage = 7;
         private static string _name = "Человек";
         private static bool _hasHeSpecialAbilityAttack = true;
-        private static bool _hasHeSpecialAbilityDefence = false;
 
-        public Human() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack, _hasHeSpecialAbilityDefence)
+        public Human() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
         {
         }
 
         public override void UseSpecialAbilityAttack(Character character)
         {
-            Random random = new Random();
-
             int minValue = 0;
             int maxValue = 10;
             int critMultiplier = 2;
             float chanseCrit = 3;
             float newDamage;
 
-            if (random.Next(minValue, maxValue) <= chanseCrit)
+            if (UserUtils.GenerateRandomNumber(minValue, maxValue) <= chanseCrit)
             {
                 newDamage = Damage * critMultiplier;
 
