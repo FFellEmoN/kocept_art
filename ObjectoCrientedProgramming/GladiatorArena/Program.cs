@@ -30,7 +30,7 @@ namespace GladiatorArena
 
         public void Work()
         {
-            const string ChooseCharacterMenu = "1";
+            const string ChooseCharacterCommand = "1";
             const string StartFightMenu = "2";
             const string StartNewFightMenu = "3";
             const string ExitMenu = "4";
@@ -41,7 +41,7 @@ namespace GladiatorArena
 
             do
             {
-                Console.WriteLine($"{ChooseCharacterMenu}) - выбрать персонажа.");
+                Console.WriteLine($"{ChooseCharacterCommand}) - выбрать персонажа.");
                 Console.WriteLine($"{StartFightMenu}) - Начать бой.");
                 Console.WriteLine($"{StartNewFightMenu}) - Начать новый бой.");
                 Console.WriteLine($"{ExitMenu}) - выйти.");
@@ -52,8 +52,8 @@ namespace GladiatorArena
 
                 switch (diciredAction)
                 {
-                    case ChooseCharacterMenu:
-                        ChooseCharacter();
+                    case ChooseCharacterCommand:
+                        ChooseCharacters();
                         break;
 
                     case StartFightMenu:
@@ -88,9 +88,9 @@ namespace GladiatorArena
             Console.WriteLine("Можите выбрать новых бойцов.");
         }
 
-        private void ChooseCharacter()
+        private void ChooseCharacters()
         {
-            ShowCharacter();
+            ShowCharacters();
 
             Console.WriteLine("Выбирите первого персонажа: ");
 
@@ -113,15 +113,15 @@ namespace GladiatorArena
             _characters.Add(new Demon());
             _characters.Add(new Human());
 
-            string diciredCharacter;
+            string numberCharacter;
 
-            diciredCharacter = Console.ReadLine();
+            numberCharacter = Console.ReadLine();
             Console.WriteLine();
 
-            if (int.TryParse(diciredCharacter, out int Character) && Character <= _characters.Count
-                && Character > 0)
+            if (int.TryParse(numberCharacter, out int character) && character <= _characters.Count
+                && character > 0)
             {
-                return _characters[Character - 1];
+                return _characters[character - 1];
             }
             else
             {
@@ -131,7 +131,7 @@ namespace GladiatorArena
             }
         }
 
-        private void ShowCharacter()
+        private void ShowCharacters()
         {
             for (int i = 0; i < _characters.Count; i++)
             {
@@ -145,13 +145,15 @@ namespace GladiatorArena
 
             if (_firstCharacter != null && _secondCharacter != null)
             {
-                while (_firstCharacter.IsAlive() && _secondCharacter.IsAlive())
+                while (_firstCharacter.IsAlive && _secondCharacter.IsAlive)
                 {
-                    CarryOutFighterAttack(_firstCharacter, _secondCharacter);
+                  //  CarryOutFighterAttack(_firstCharacter, _secondCharacter);
+                    _firstCharacter.Attack(_secondCharacter);
 
-                    if (_secondCharacter.IsAlive())
+                    if (_secondCharacter.IsAlive)
                     {
-                        CarryOutFighterAttack(_secondCharacter, _firstCharacter);
+                       // CarryOutFighterAttack(_secondCharacter, _firstCharacter);
+                       _secondCharacter.Attack(_firstCharacter);
                     }
 
                     Console.WriteLine();
@@ -163,7 +165,7 @@ namespace GladiatorArena
                     Console.Clear();
                 }
 
-                if (_firstCharacter.IsAlive())
+                if (_firstCharacter.IsAlive)
                 {
                     Console.WriteLine($"Победил 1 персонаж {_firstCharacter.Name}");
                 }
@@ -172,7 +174,7 @@ namespace GladiatorArena
                     Console.WriteLine($"Победил 2 персонаж {_secondCharacter.Name}");
                 }
 
-                if (_secondCharacter.IsAlive() == false && _firstCharacter.IsAlive() == false)
+                if (_secondCharacter.IsAlive == false && _firstCharacter.IsAlive == false)
                 {
                     Console.WriteLine("Ничья.");
                 }
@@ -183,17 +185,17 @@ namespace GladiatorArena
             }
         }
 
-        private void CarryOutFighterAttack(Character firstCharacter, Character secondCharacter)
-        {
-            if (firstCharacter.CanUseSpecialAbilityAttack)
-            {
-                firstCharacter.UseSpecialAbilityAttack(secondCharacter);
-            }
-            else
-            {
-                firstCharacter.Attack(secondCharacter);
-            }
-        }
+        //private void CarryOutFighterAttack(Character firstCharacter, Character secondCharacter)
+        //{
+        //    if (firstCharacter.CanUseSpecialAbilityAttack)
+        //    {
+        //        firstCharacter.UseSpecialAbilityAttack(secondCharacter);
+        //    }
+        //    else
+        //    {
+        //        firstCharacter.Attack(secondCharacter);
+        //    }
+        //}
 
         private void ShowStatsCharacters()
         {
@@ -216,6 +218,7 @@ namespace GladiatorArena
         public float Damage { get; protected set; }
         public string Name { get; private set; }
         public bool CanUseSpecialAbilityAttack { get; protected set; }
+        public bool IsAlive => Health > 0;
 
         public virtual void TakeDamage(float damage)
         {
@@ -226,31 +229,43 @@ namespace GladiatorArena
         public void Attack(Character character)
         {
             Console.WriteLine($"Атакует {Name}");
-            character.TakeDamage(Damage);
+
+            if (CanUseSpecialAbilityAttack == true)
+            {
+                UseSpecialAbilityAttack(character);
+            }
+            else
+            {
+                character.TakeDamage(Damage);
+            }
         }
 
         public void Attack(Character character, float damage)
         {
-            character.TakeDamage(damage);
             Console.WriteLine($"Атакует {Name}");
+
+            if (CanUseSpecialAbilityAttack == true)
+            {
+                UseSpecialAbilityAttack(character);
+            }
+            else
+            {
+                character.TakeDamage(Damage);
+            }
         }
 
         public virtual void UseSpecialAbilityAttack(Character character)
         {
         }
-
-        public bool IsAlive()
-        {
-            return Health > 0;
-        }
     }
 
     class UserUtils
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
+
         public static int GenerateRandomNumber(int min, int max)
         {
-            return _random.Next(min, max);
+            return s_random.Next(min, max);
         }
     }
 
@@ -321,7 +336,7 @@ namespace GladiatorArena
                 Health = _health;
             }
 
-            Attack(character);
+            character.TakeDamage(Damage);
         }
     }
 
@@ -367,7 +382,7 @@ namespace GladiatorArena
         public override void UseSpecialAbilityAttack(Character character)
         {
             float newDamage = Damage - 2;
-            Attack(character, newDamage);
+            character.TakeDamage(newDamage);
         }
 
         private void UseSpecialAbilityDefence()
@@ -419,11 +434,11 @@ namespace GladiatorArena
 
                 Console.WriteLine($"{Name} усливает атаку.");
 
-                Attack(character, newDamage);
+                character.TakeDamage(newDamage);
             }
             else
             {
-                Attack(character);
+                character.TakeDamage(Damage);
             }
         }
     }
