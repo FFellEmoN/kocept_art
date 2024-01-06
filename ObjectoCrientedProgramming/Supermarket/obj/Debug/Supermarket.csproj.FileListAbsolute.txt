@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\bin\Debug\Supermarket.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\bin\Debug\Supermarket.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\bin\Debug\Supermarket.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\obj\Debug\Supermarket.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\obj\Debug\Supermarket.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\obj\Debug\Supermarket.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Supermarket\obj\Debug\Supermarket.pdb
