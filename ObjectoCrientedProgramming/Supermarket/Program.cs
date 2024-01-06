@@ -10,12 +10,69 @@ namespace Supermarket
     {
         static void Main(string[] args)
         {
+            Supermarket supermarket = new Supermarket();
+            supermarket.Work();
         }
     }
 
     class Supermarket
     {
+        private BoxOffice _boxOffice;
+        private List<Customer> _customers;
 
+        public Supermarket()
+        {
+            _boxOffice = new BoxOffice();
+            _customers = new List<Customer>();
+            _customers.Add(new Customer());
+            _customers.Add(new Customer());
+            _customers.Add(new Customer());
+        }
+
+        public void Work()
+        {
+            const string ServeCustomerCommand = "1";
+            const string ExitMenu = "2";
+
+            string diciredAction;
+
+            bool isRunning = true;
+
+            do
+            {
+                Console.WriteLine($"{ServeCustomerCommand}) - обслужить клиента.");
+                Console.WriteLine($"{ExitMenu}) - выйти.");
+
+                Console.Write("\nВведите желаемое действие: ");
+                diciredAction = Console.ReadLine();
+                Console.WriteLine();
+
+                switch (diciredAction)
+                {
+                    case ServeCustomerCommand:
+
+                        break;
+
+                    case ExitMenu:
+                        isRunning = false;
+                        break;
+
+                    default:
+                        Console.WriteLine("Такого пункта нет или вы ввели не число.");
+                        break;
+                }
+
+                Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить.");
+
+                Console.ReadKey();
+                Console.Clear();
+            } while (isRunning);
+        }
+
+        public void ServeCustomer()
+        {
+
+        }
     }
 
     class Customer
@@ -23,6 +80,7 @@ namespace Supermarket
         private List<Product> _products;
         public Customer()
         {
+            Money = 1500;
         }
 
         public float Money { get; private set; }
@@ -32,14 +90,6 @@ namespace Supermarket
             _products = products;
             Console.WriteLine("Cпасибо за продукты!");
         }
-
-        //private void DeleteRandomProduct()
-        //{
-        //    int firstProductList = 0;
-        //    int indexProduct = _random.Next(firstProductList, _products.Count);
-
-        //    _products.Remove(_products[indexProduct]);
-        //}
     }
 
     class BoxOffice
@@ -57,12 +107,12 @@ namespace Supermarket
 
         public List<Product> TrySellProducts(float moneyCustomer)
         {
-            while(CheckAmount > moneyCustomer && CheckAmount > 0)
+            while (CheckAmount > moneyCustomer && CheckAmount > 0)
                 DeleteRandomProduct();
 
             if (CheckAmount > 0)
                 Money = CheckAmount;
-            
+
             return _products;
         }
 
@@ -79,7 +129,7 @@ namespace Supermarket
         {
             float sum = 0;
 
-            foreach(Product product in _products)
+            foreach (Product product in _products)
             {
                 sum += product.Coast;
             }

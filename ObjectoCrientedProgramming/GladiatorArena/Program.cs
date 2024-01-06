@@ -98,6 +98,11 @@ namespace GladiatorArena
 
             _firstCharacter = CreateCharacter();
 
+            if( _firstCharacter == null ) 
+            {
+                return;
+            }
+
             Console.WriteLine("Выбирите второго персонажа: ");
             Console.Write("\nВведите номер желаемого пересонажа: ");
 
@@ -147,12 +152,10 @@ namespace GladiatorArena
             {
                 while (_firstCharacter.IsAlive && _secondCharacter.IsAlive)
                 {
-                  //  CarryOutFighterAttack(_firstCharacter, _secondCharacter);
                     _firstCharacter.Attack(_secondCharacter);
 
                     if (_secondCharacter.IsAlive)
                     {
-                       // CarryOutFighterAttack(_secondCharacter, _firstCharacter);
                        _secondCharacter.Attack(_firstCharacter);
                     }
 
@@ -185,18 +188,6 @@ namespace GladiatorArena
             }
         }
 
-        //private void CarryOutFighterAttack(Character firstCharacter, Character secondCharacter)
-        //{
-        //    if (firstCharacter.CanUseSpecialAbilityAttack)
-        //    {
-        //        firstCharacter.UseSpecialAbilityAttack(secondCharacter);
-        //    }
-        //    else
-        //    {
-        //        firstCharacter.Attack(secondCharacter);
-        //    }
-        //}
-
         private void ShowStatsCharacters()
         {
             Console.WriteLine($"1) {_firstCharacter.Name} Здоровье: {_firstCharacter.Health}");
@@ -206,17 +197,9 @@ namespace GladiatorArena
 
     class Character
     {
-        public Character(float health, float damage, string name, bool hasHeSpecialAbilityAttack)
-        {
-            Health = health;
-            Damage = damage;
-            Name = name;
-            CanUseSpecialAbilityAttack = hasHeSpecialAbilityAttack;
-        }
-
         public float Health { get; protected set; }
         public float Damage { get; protected set; }
-        public string Name { get; private set; }
+        public string Name { get; protected set; }
         public bool CanUseSpecialAbilityAttack { get; protected set; }
         public bool IsAlive => Health > 0;
 
@@ -271,14 +254,14 @@ namespace GladiatorArena
 
     class Wizard : Character
     {
-        private static float _health = 100;
-        private static float _damage = 10;
-        private static string _name = "Волшебник";
-        private static bool _hasHeSpecialAbilityAttack = true;
         private float _mana = 100;
 
-        public Wizard() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
+        public Wizard()
         {
+            Health = 100;
+            Damage = 10;
+            Name = "Волшебник";
+            CanUseSpecialAbilityAttack = true;
         }
 
         public override void UseSpecialAbilityAttack(Character character)
@@ -307,13 +290,14 @@ namespace GladiatorArena
 
     class Vampire : Character
     {
-        private static float _health = 90;
-        private static float _damage = 12;
-        private static string _name = "Вампир";
-        private static bool _hasHeSpecialAbilityAttack = true;
-
-        public Vampire() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
+        private float _maxHealth;
+        public Vampire()
         {
+            Health = 90;
+            _maxHealth = Health;
+            Damage = 12;
+            Name = "Вампир";
+            CanUseSpecialAbilityAttack = true;
         }
 
         public override void UseSpecialAbilityAttack(Character character)
@@ -322,18 +306,18 @@ namespace GladiatorArena
             float vampirism = Damage * vampirismCoefficient;
             Health += vampirism;
 
-            if (Health <= _health)
+            if (Health <= _maxHealth)
             {
                 Console.WriteLine($"Востонавливает {vampirism} здоровья.");
             }
 
-            if (Health > _health)
+            if (Health > _maxHealth)
             {
-                vampirism -= (Health - _health);
+                vampirism -= (Health - _maxHealth);
 
                 Console.WriteLine($"Востонавливает {vampirism} здоровья.");
 
-                Health = _health;
+                Health = _maxHealth;
             }
 
             character.TakeDamage(Damage);
@@ -342,13 +326,12 @@ namespace GladiatorArena
 
     class Knight : Character
     {
-        private static float _health = 110;
-        private static float _damage = 10;
-        private static string _name = "Рыцарь";
-        private static bool _hasHeSpecialAbilityAttack = false;
-
-        public Knight() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
+        public Knight()
         {
+            Health = 110;
+            Damage = 10;
+            Name = "Рыцарь";
+            CanUseSpecialAbilityAttack = false;
         }
 
         public override void TakeDamage(float damage)
@@ -364,13 +347,12 @@ namespace GladiatorArena
 
     class Demon : Character
     {
-        private static float _health = 120;
-        private static float _damage = 10;
-        private static string _name = "Демон";
-        private static bool _hasHeSpecialAbilityAttack = false;
-
-        public Demon() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
+        public Demon()
         {
+            Health = 120;
+            Damage = 10;
+            Name = "Демон";
+            CanUseSpecialAbilityAttack = false;
         }
 
         public override void TakeDamage(float damage)
@@ -411,13 +393,12 @@ namespace GladiatorArena
 
     class Human : Character
     {
-        private static float _health = 100;
-        private static float _damage = 7;
-        private static string _name = "Человек";
-        private static bool _hasHeSpecialAbilityAttack = true;
-
-        public Human() : base(_health, _damage, _name, _hasHeSpecialAbilityAttack)
+        public Human()
         {
+            Health = 100;
+            Damage = 7;
+            Name = "Человек";
+            CanUseSpecialAbilityAttack = true;
         }
 
         public override void UseSpecialAbilityAttack(Character character)
