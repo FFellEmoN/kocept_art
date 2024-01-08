@@ -19,6 +19,8 @@ namespace Supermarket
         private BoxOffice _boxOffice;
         private List<Customer> _customers;
         private Warehouse _warehouse;
+        private bool _isSearveCustomers = false;
+        private bool _isFillBusketsCustomers = false;
 
         public Supermarket()
         {
@@ -96,27 +98,46 @@ namespace Supermarket
 
         private void FillBusketsCustomers()
         {
-            foreach (Customer customer in _customers)
+            if (_isFillBusketsCustomers == false)
             {
-                foreach (string nameProduct in _warehouse.GetListNameProducts())
+                foreach (Customer customer in _customers)
                 {
-                    customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
-                    customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
+                    foreach (string nameProduct in _warehouse.GetListNameProducts())
+                    {
+                        customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
+                        customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
+                    }
                 }
+
+                Console.WriteLine("Корзины покупателей заполненны.");
+
+                _isFillBusketsCustomers = true;
+            }
+            else
+            {
+                Console.WriteLine("Корзины покупателей уже заполненны.");
             }
         }
 
         public void ServeCustomer()
         {
-            List<Product> finalShoppingList;
+            if (_isSearveCustomers == false) {
+                List<Product> finalShoppingList;
 
-            for (int i = 0; i < _customers.Count; i++)
+                for (int i = 0; i < _customers.Count; i++)
+                {
+                    finalShoppingList = _boxOffice.TrySellProducts(_customers[i].Money, _customers[i].GetBusket());
+
+                    Console.WriteLine($"\nСумма чека: {_boxOffice.CheakAmount}");
+
+                    _customers[i].Buy(_boxOffice.CheakAmount, finalShoppingList);
+                }
+
+                _isSearveCustomers = true;
+            }
+            else
             {
-                finalShoppingList = _boxOffice.TrySellProducts(_customers[i].Money, _customers[i].GetBusket());
-
-                Console.WriteLine($"\nСумма чека: {_boxOffice.CheckAmount}" );
-
-                _customers[i].Buy(_boxOffice.CheckAmount, finalShoppingList);
+                Console.WriteLine("Клиенты уже обслуженны.");
             }
         }
     }
@@ -138,6 +159,7 @@ namespace Supermarket
                 if (product.Name == nameDiciredProduct)
                 {
                     _products.Remove(product);
+
                     return product;
                 }
             }
@@ -223,17 +245,20 @@ namespace Supermarket
         private List<Product> _products;
 
         public float Money { get; private set; }
-        public float CheckAmount { get; private set; }
+        public float PurchaseAmount { get; private set; }
+        public float CheakAmount { get; private set; }
 
         public List<Product> TrySellProducts(float moneyCustomer, List<Product> products)
         {
             _products = products;
             SumProducts();
 
-            while (CheckAmount > moneyCustomer && moneyCustomer > 0 && _products.Count != 0)
+            while (PurchaseAmount > moneyCustomer && moneyCustomer > 0 && _products.Count != 0)
                 DeleteRandomProduct();
 
-            Money += CheckAmount;
+            Money += PurchaseAmount;
+            CheakAmount = PurchaseAmount;
+            PurchaseAmount = 0;
 
             return _products;
         }
@@ -245,7 +270,7 @@ namespace Supermarket
 
             Product deleteProduct = _products[indexProduct];
 
-            CheckAmount -= deleteProduct.Coast;
+            PurchaseAmount -= deleteProduct.Coast;
             _products.Remove(deleteProduct);
         }
 
@@ -253,7 +278,7 @@ namespace Supermarket
         {
             foreach (Product product in _products)
             {
-                CheckAmount += product.Coast;
+                PurchaseAmount += product.Coast;
             }
         }
     }

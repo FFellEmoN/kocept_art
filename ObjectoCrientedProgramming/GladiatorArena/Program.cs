@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace GladiatorArena
 {
@@ -98,7 +99,7 @@ namespace GladiatorArena
 
             _firstCharacter = CreateCharacter();
 
-            if( _firstCharacter == null ) 
+            if (_firstCharacter == null)
             {
                 return;
             }
@@ -156,7 +157,7 @@ namespace GladiatorArena
 
                     if (_secondCharacter.IsAlive)
                     {
-                       _secondCharacter.Attack(_firstCharacter);
+                        _secondCharacter.Attack(_firstCharacter);
                     }
 
                     Console.WriteLine();
@@ -210,20 +211,6 @@ namespace GladiatorArena
         }
 
         public void Attack(Character character)
-        {
-            Console.WriteLine($"Атакует {Name}");
-
-            if (CanUseSpecialAbilityAttack == true)
-            {
-                UseSpecialAbilityAttack(character);
-            }
-            else
-            {
-                character.TakeDamage(Damage);
-            }
-        }
-
-        public void Attack(Character character, float damage)
         {
             Console.WriteLine($"Атакует {Name}");
 
@@ -337,8 +324,16 @@ namespace GladiatorArena
         public override void TakeDamage(float damage)
         {
             float armor = 3;
-            float newDamage = damage - armor;
+            float newDamage;
 
+            if (damage < armor)
+            {
+                newDamage = damage - armor;
+            }
+            else
+            {
+                newDamage = 0;
+            }
             base.TakeDamage(newDamage);
 
             Console.WriteLine($"{Name} блокирует {armor} урона.");
@@ -363,8 +358,18 @@ namespace GladiatorArena
 
         public override void UseSpecialAbilityAttack(Character character)
         {
-            float newDamage = Damage - 2;
-            character.TakeDamage(newDamage);
+            int attenuationImpact = 2;
+            float halfCharacterHealth = character.Health / 2;
+
+            if (character.Health == halfCharacterHealth)
+            {
+                float newDamage = Damage - attenuationImpact;
+                character.TakeDamage(newDamage);
+            }
+            else
+            {
+                character.TakeDamage(Damage);
+            }
         }
 
         private void UseSpecialAbilityDefence()
