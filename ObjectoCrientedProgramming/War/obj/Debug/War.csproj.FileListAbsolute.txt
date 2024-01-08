@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\bin\Debug\War.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\bin\Debug\War.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\bin\Debug\War.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\obj\Debug\War.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\obj\Debug\War.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\obj\Debug\War.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\War\obj\Debug\War.pdb

@@ -19,8 +19,6 @@ namespace Supermarket
         private BoxOffice _boxOffice;
         private List<Customer> _customers;
         private Warehouse _warehouse;
-        private bool _isSearveCustomers = false;
-        private bool _isFillBusketsCustomers = false;
 
         public Supermarket()
         {
@@ -36,59 +34,20 @@ namespace Supermarket
 
         public void Work()
         {
-            const string FillBusketsCustomersCommand = "1";
-            const string ServeCustomerCommand = "2";
-            const string ShowAllNameProductsMenu = "3";
-            const string ExitMenu = "4";
-
-            string diciredAction;
-
-            bool isRunning = true;
-
-            do
-            {
-                Console.WriteLine($"{FillBusketsCustomersCommand}) - заполнить корзины клиентов.");
-                Console.WriteLine($"{ServeCustomerCommand}) - обслужить клиента.");
-                Console.WriteLine($"{ShowAllNameProductsMenu}) - показать весь список продуктов.");
-                Console.WriteLine($"{ExitMenu}) - выйти.");
-
-                Console.Write("\nВведите желаемое действие: ");
-                diciredAction = Console.ReadLine();
-                Console.WriteLine();
-
-                switch (diciredAction)
-                {
-                    case FillBusketsCustomersCommand:
-                        FillBusketsCustomers();
-                        break;
-
-                    case ServeCustomerCommand:
-                        ServeCustomer();
-                        break;
-
-                    case ShowAllNameProductsMenu:
-                        ShowAllNameProducts();
-                        break;
-
-                    case ExitMenu:
-                        isRunning = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Такого пункта нет или вы ввели не число.");
-                        break;
-                }
-
-                Console.WriteLine("\nНажмите любую клавишу, чтобы продолжить.");
-
-                Console.ReadKey();
-                Console.Clear();
-            } while (isRunning);
+            ShowAllNameProducts();
+            Console.WriteLine();
+            FillBusketsCustomers();
+            Console.WriteLine("\nОбслуживание клиентов.");
+            ServeCustomer();
+            Console.WriteLine("\nОбслуживание клиентов завершенно.");
+            Console.ReadLine();
         }
 
         private void ShowAllNameProducts()
         {
             List<string> allNameProducts = _warehouse.GetListNameProducts();
+
+            Console.WriteLine("Все типы продуктов в супермаркете:");
 
             for (int i = 0; i < allNameProducts.Count; i++)
             {
@@ -98,46 +57,28 @@ namespace Supermarket
 
         private void FillBusketsCustomers()
         {
-            if (_isFillBusketsCustomers == false)
+            int valueProductsOneTypeInBusket = 1;
+            foreach (Customer customer in _customers)
             {
-                foreach (Customer customer in _customers)
+                foreach (string nameProduct in _warehouse.GetListNameProducts())
                 {
-                    foreach (string nameProduct in _warehouse.GetListNameProducts())
+                    for (int i = 0; i < valueProductsOneTypeInBusket; i++)
                     {
-                        customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
                         customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
                     }
                 }
-
-                Console.WriteLine("Корзины покупателей заполненны.");
-
-                _isFillBusketsCustomers = true;
             }
-            else
-            {
-                Console.WriteLine("Корзины покупателей уже заполненны.");
-            }
+
+            Console.WriteLine("Корзины покупателей заполненны.");
         }
 
         public void ServeCustomer()
         {
-            if (_isSearveCustomers == false) {
-                List<Product> finalShoppingList;
-
-                for (int i = 0; i < _customers.Count; i++)
-                {
-                    finalShoppingList = _boxOffice.TrySellProducts(_customers[i].Money, _customers[i].GetBusket());
-
-                    Console.WriteLine($"\nСумма чека: {_boxOffice.CheakAmount}");
-
-                    _customers[i].Buy(_boxOffice.CheakAmount, finalShoppingList);
-                }
-
-                _isSearveCustomers = true;
-            }
-            else
+            for (int i = 0; i < _customers.Count; i++)
             {
-                Console.WriteLine("Клиенты уже обслуженны.");
+                _boxOffice.TrySellProducts(_customers[i]);
+
+                Console.WriteLine($"Сумма чека: {_customers[i].CheakAmount}\n");
             }
         }
     }
@@ -171,9 +112,9 @@ namespace Supermarket
 
         public List<string> GetListNameProducts()
         {
-            List<string> allNameProducts = _products.Select(x => x.Name).Distinct().ToList();
+            List<string> allNameProducts = _products.Select(product => product.Name).Distinct().ToList();
 
-            return new List<string>(allNameProducts);
+            return allNameProducts;
         }
 
         private void Fill()
@@ -182,41 +123,47 @@ namespace Supermarket
 
             for (int i = 0; i < numberRacks; i++)
             {
-                _products.Add(new Cucumber());
-                _products.Add(new Carrot());
-                _products.Add(new Oil());
+                _products.Add(new Product("Огурец", 20));
+                _products.Add(new Product("Морковь", 30));
+                _products.Add(new Product("Масло", 200));
             }
         }
     }
 
     class Customer
     {
-        private List<Product> _busket;
+        private List<Product> _basket;
         public Customer()
         {
-            _busket = new List<Product>();
+            _basket = new List<Product>();
             Money = 200;
         }
 
+        public float CheakAmount { get; private set; }
         public float Money { get; private set; }
 
         public List<Product> GetBusket()
         {
-            return new List<Product>(_busket);
+            return new List<Product>(_basket);
         }
 
-        public void Buy(float coast, List<Product> products)
+        public void TryBuy()
         {
-            _busket = new List<Product>();
-            Money -= coast;
+            SumProducts();
 
-            ShowAllPurchasedProducts(products);
+            while (CheakAmount > Money && Money > 0 && _basket.Count != 0)
+                DeleteRandomProduct();
+
+            ShowAllPurchasedProducts(_basket);
+
+            Money -= CheakAmount;
+
             Console.WriteLine("Cпасибо за продукты!");
         }
 
         public void PutBasketProduct(Product product)
         {
-            _busket.Add(product);
+            _basket.Add(product);
         }
 
         private void ShowAllPurchasedProducts(List<Product> products)
@@ -227,6 +174,25 @@ namespace Supermarket
             {
                 Console.WriteLine(product.Name);
             }
+        }
+
+        private void SumProducts()
+        {
+            foreach (Product product in _basket)
+            {
+                CheakAmount += product.Coast;
+            }
+        }
+
+        private void DeleteRandomProduct()
+        {
+            int firstProductList = 0;
+            int indexProduct = RandomNumber.GenerateRandomNumber(firstProductList, _basket.Count);
+
+            Product deleteProduct = _basket[indexProduct];
+
+            CheakAmount -= deleteProduct.Coast;
+            _basket.Remove(deleteProduct);
         }
     }
 
@@ -242,77 +208,25 @@ namespace Supermarket
 
     class BoxOffice
     {
-        private List<Product> _products;
-
         public float Money { get; private set; }
-        public float PurchaseAmount { get; private set; }
-        public float CheakAmount { get; private set; }
 
-        public List<Product> TrySellProducts(float moneyCustomer, List<Product> products)
+        public void TrySellProducts(Customer customer)
         {
-            _products = products;
-            SumProducts();
-
-            while (PurchaseAmount > moneyCustomer && moneyCustomer > 0 && _products.Count != 0)
-                DeleteRandomProduct();
-
-            Money += PurchaseAmount;
-            CheakAmount = PurchaseAmount;
-            PurchaseAmount = 0;
-
-            return _products;
-        }
-
-        private void DeleteRandomProduct()
-        {
-            int firstProductList = 0;
-            int indexProduct = RandomNumber.GenerateRandomNumber(firstProductList, _products.Count);
-
-            Product deleteProduct = _products[indexProduct];
-
-            PurchaseAmount -= deleteProduct.Coast;
-            _products.Remove(deleteProduct);
-        }
-
-        private void SumProducts()
-        {
-            foreach (Product product in _products)
-            {
-                PurchaseAmount += product.Coast;
-            }
+            customer.TryBuy();
+            Money += customer.CheakAmount;
+            Console.WriteLine("Приходите еще!");
         }
     }
 
     class Product
     {
-        public float Coast { get; protected set; }
+        public Product(string name, float coast) 
+        { 
+            Name = name;
+            Coast = coast;
+        }
+
         public string Name { get; protected set; }
-    }
-
-    class Cucumber : Product
-    {
-        public Cucumber()
-        {
-            Name = "Огурец";
-            Coast = 20;
-        }
-    }
-
-    class Carrot : Product
-    {
-        public Carrot()
-        {
-            Name = "Морковь";
-            Coast = 30;
-        }
-    }
-
-    class Oil : Product
-    {
-        public Oil()
-        {
-            Name = "Масло";
-            Coast = 200;
-        }
+        public float Coast { get; protected set; }
     }
 }
