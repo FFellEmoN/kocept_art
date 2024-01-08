@@ -133,6 +133,7 @@ namespace Supermarket
     class Customer
     {
         private List<Product> _basket;
+
         public Customer()
         {
             _basket = new List<Product>();
