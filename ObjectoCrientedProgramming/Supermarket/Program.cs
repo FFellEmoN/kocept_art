@@ -36,7 +36,7 @@ namespace Supermarket
         {
             ShowAllNameProducts();
             Console.WriteLine();
-            FillBusketsCustomers();
+            FillBasketsCustomers();
             Console.WriteLine("\nОбслуживание клиентов.");
             ServeCustomer();
             Console.WriteLine("\nОбслуживание клиентов завершенно.");
@@ -55,16 +55,16 @@ namespace Supermarket
             }
         }
 
-        private void FillBusketsCustomers()
+        private void FillBasketsCustomers()
         {
-            int valueProductsOneTypeInBusket = 1;
+            int valueProductsOneTypeInBusket = 2;
             foreach (Customer customer in _customers)
             {
                 foreach (string nameProduct in _warehouse.GetListNameProducts())
                 {
                     for (int i = 0; i < valueProductsOneTypeInBusket; i++)
                     {
-                        customer.PutBasketProduct(_warehouse.GetProduct(nameProduct));
+                        customer.PutBasketProduct(_warehouse.GiveProduct(nameProduct));
                     }
                 }
             }
@@ -93,7 +93,7 @@ namespace Supermarket
             Fill();
         }
 
-        public Product GetProduct(string nameDiciredProduct)
+        public Product GiveProduct(string nameDiciredProduct)
         {
             foreach (Product product in _products)
             {
@@ -112,9 +112,7 @@ namespace Supermarket
 
         public List<string> GetListNameProducts()
         {
-            List<string> allNameProducts = _products.Select(product => product.Name).Distinct().ToList();
-
-            return allNameProducts;
+            return _products.Select(product => product.Name).Distinct().ToList();
         }
 
         private void Fill()
@@ -143,23 +141,21 @@ namespace Supermarket
         public float CheakAmount { get; private set; }
         public float Money { get; private set; }
 
-        public List<Product> GetBusket()
-        {
-            return new List<Product>(_basket);
-        }
-
         public void TryBuy()
         {
-            SumProducts();
+            if (Money > 0)
+            {
+                SumProducts();
 
-            while (CheakAmount > Money && Money > 0 && _basket.Count != 0)
-                DeleteRandomProduct();
+                while (CheakAmount > Money && _basket.Count != 0)
+                    DeleteRandomProduct();
 
-            ShowAllPurchasedProducts(_basket);
+                ShowAllPurchasedProducts(_basket);
 
-            Money -= CheakAmount;
+                Money -= CheakAmount;
 
-            Console.WriteLine("Cпасибо за продукты!");
+                Console.WriteLine("Cпасибо за продукты!");
+            }
         }
 
         public void PutBasketProduct(Product product)
