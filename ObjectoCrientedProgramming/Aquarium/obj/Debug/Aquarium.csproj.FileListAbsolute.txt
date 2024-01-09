@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\bin\Debug\Aquarium.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\bin\Debug\Aquarium.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\bin\Debug\Aquarium.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\obj\Debug\Aquarium.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\obj\Debug\Aquarium.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\obj\Debug\Aquarium.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Aquarium\obj\Debug\Aquarium.pdb

@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{28AD78DA-C2EE-492A-8206-D01B7E556DAF}</ProjectGuid>
+    <ProjectGuid>{2EC55292-FEC5-4AF8-BC56-F87274E997D3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>War</RootNamespace>
-    <AssemblyName>War</AssemblyName>
+    <RootNamespace>Aquarium</RootNamespace>
+    <AssemblyName>Aquarium</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
