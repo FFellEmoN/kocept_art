@@ -58,13 +58,14 @@ namespace Supermarket
         private void FillBasketsCustomers()
         {
             int valueProductsOneTypeInBusket = 2;
+
             foreach (Customer customer in _customers)
             {
-                foreach (string nameProduct in _warehouse.GetListNameProducts())
+                for (int i = 0; i < valueProductsOneTypeInBusket; i++)
                 {
-                    for (int i = 0; i < valueProductsOneTypeInBusket; i++)
+                    if (_warehouse.TryGiveProduct(_warehouse.GetRandomNameProduct(), out Product product))
                     {
-                        customer.PutBasketProduct(_warehouse.GiveProduct(nameProduct));
+                        customer.PutBasketProduct(product);
                     }
                 }
             }
@@ -78,7 +79,10 @@ namespace Supermarket
             {
                 _boxOffice.TrySellProducts(_customers[i]);
 
-                Console.WriteLine($"Сумма чека: {_customers[i].CheakAmount}\n");
+                if (_customers[i].CheakAmount == 0)
+                {
+                    Console.WriteLine($"Сумма чека: {_customers[i].CheakAmount}\n");
+                }
             }
         }
     }
@@ -93,7 +97,7 @@ namespace Supermarket
             Fill();
         }
 
-        public Product GiveProduct(string nameDiciredProduct)
+        public bool TryGiveProduct(string nameDiciredProduct, out Product outProduct)
         {
             foreach (Product product in _products)
             {
@@ -101,18 +105,32 @@ namespace Supermarket
                 {
                     _products.Remove(product);
 
-                    return product;
+                    outProduct = product;
+
+                    return true;
                 }
             }
 
             Console.WriteLine("Продукта нет на складе.");
 
-            return null;
+            outProduct = null;
+
+            return false;
         }
 
         public List<string> GetListNameProducts()
         {
             return _products.Select(product => product.Name).Distinct().ToList();
+        }
+
+        public string GetRandomNameProduct()
+        {
+            List<string> list = GetListNameProducts();
+
+            int firstIndex = 0;
+            int lastIndex = list.Count - 1;
+
+            return list[RandomNumber.Generate(firstIndex, lastIndex)];
         }
 
         private void Fill()
@@ -150,6 +168,11 @@ namespace Supermarket
                 while (CheakAmount > Money && _basket.Count != 0)
                     DeleteRandomProduct();
 
+                if(_basket.Count == 0)
+                {
+                    Console.WriteLine("Покупатель ничего не купил.");
+                }
+
                 ShowAllPurchasedProducts(_basket);
 
                 Money -= CheakAmount;
@@ -184,7 +207,7 @@ namespace Supermarket
         private void DeleteRandomProduct()
         {
             int firstProductList = 0;
-            int indexProduct = RandomNumber.GenerateRandomNumber(firstProductList, _basket.Count);
+            int indexProduct = RandomNumber.Generate(firstProductList, _basket.Count);
 
             Product deleteProduct = _basket[indexProduct];
 
@@ -197,7 +220,7 @@ namespace Supermarket
     {
         private static Random s_random = new Random();
 
-        public static int GenerateRandomNumber(int min, int max)
+        public static int Generate(int min, int max)
         {
             return s_random.Next(min, max);
         }
@@ -217,8 +240,8 @@ namespace Supermarket
 
     class Product
     {
-        public Product(string name, float coast) 
-        { 
+        public Product(string name, float coast)
+        {
             Name = name;
             Coast = coast;
         }

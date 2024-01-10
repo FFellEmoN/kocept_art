@@ -79,10 +79,11 @@ namespace Aquarium
 
                 Console.Write("Введите название рыбы: ");
                 name = Console.ReadLine();
+
                 Console.Write("Введите сколько лет рыбе: ");
                 userInput = Console.ReadLine();
 
-                if (int.TryParse(userInput, out int age))
+                if (int.TryParse(userInput, out int age) == false)
                 {
                     Console.WriteLine("Не верный ввод");
                 }
