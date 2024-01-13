@@ -10,26 +10,6 @@ namespace Homework
         {
             World world = new World();
 
-            world.CreateCountry("Вымошленная 1");
-            world.CreateCountry("Реальная 2");
-
-            foreach (var country in world.GetCountries())
-            {
-                int maxNumberPlatoon = 101;
-                int numberPlatoon = RandomNumber.GetRandomNumber(maxNumberPlatoon);
-                int maxNumberWariors = 20;
-
-                country.CreatePlatoon(numberPlatoon, maxNumberWariors);
-
-                foreach (Platoon platoon in country.GetPlatoons())
-                {
-                    platoon.CreateWarriors(country.Name);
-
-                    Console.WriteLine($"\nСоздан взвод страна {country.Name}:\n");
-                    platoon.ShowWarriors();
-                }
-            }
-
             War war = new War(world.GetCountries());
             war.Start();
             Console.ReadLine();
@@ -38,16 +18,27 @@ namespace Homework
 
     class World
     {
-        private List<Country> _countries = new List<Country>();
+        private List<Country> _countries;
+        private int _valueCountry = 2;
 
-        public void CreateCountry(string name)
+        public World()
         {
-            _countries.Add(new Country(name));
+            _countries = new List<Country>();
+
+            CreateCountry();
         }
 
         public List<Country> GetCountries()
         {
             return _countries.ToList<Country>();
+        }
+
+        private void CreateCountry()
+        {
+            for (int i = 0; i < _valueCountry; i++)
+            {
+                _countries.Add(CountryBuilder.CreateCountry());
+            }
         }
     }
 
@@ -193,21 +184,16 @@ namespace Homework
     class Platoon
     {
         private List<Warrior> _warriors = new List<Warrior>();
-        private List<Weapon> _weapons;
 
         public int Number { get; private set; }
-        public int CountWarriors { get { return _warriors.Count; } }
+        public int CountWarriors => _warriors.Count;
         public int MaxCountWarriors { get; private set; }
-        public bool IsWiner => _weapons.Count > 0;
+        public bool IsWiner => _warriors.Count > 0;
 
         public Platoon(int number, int maxCount)
         {
             Number = number;
             MaxCountWarriors = maxCount;
-            _weapons = new List<Weapon>() { 
-                new Rifle(), 
-                new MachineGun() 
-            };
         }
 
         public List<Warrior> GetWarriors()
@@ -219,7 +205,7 @@ namespace Homework
         {
             for (int i = 1; i <= MaxCountWarriors; i++)
             {
-                _warriors.Add(new Warrior(i, Number, nationality, GiveWeapon()));
+                _warriors.Add(new Warrior(i, Number, nationality));
             }
         }
 
@@ -235,39 +221,30 @@ namespace Homework
         {
             _warriors.RemoveAll(warrior => warrior.Health <= 0);
         }
-
-        private Weapon GiveWeapon()
-        {
-            int numberWeapon = RandomNumber.GetRandomNumber(_weapons.Count);
-            Weapon weapon = _weapons[numberWeapon];
-
-            return weapon;
-        }
     }
 
     class Warrior
     {
-        public Warrior(int number, int numberPlatoon, string nationality, Weapon weapon)
+        public Warrior(int number, int numberPlatoon, string nationality)
         {
             Health = 100;
+            Damage = 35;
             Number = number;
             NumberPlatoon = numberPlatoon;
             Nationality = nationality;
-            Weapon = weapon;
         }
 
         public int Health { get; private set; }
         public int Number { get; private set; }
         public int NumberPlatoon { get; private set; }
         public string Nationality { get; private set; }
-        public Weapon Weapon { get; private set; }
+        public int Damage { get; private set; }
 
         public string ShowInfo()
         {
             return $"Национальность: {Nationality}." +
                 $" Номер взвода: {NumberPlatoon}." +
                 $" Порядковый номер: {Number}." +
-                $" Оружие: {Weapon.Name}." +
                 $" Здоровье: {Health})";
         }
 
@@ -287,67 +264,14 @@ namespace Homework
 
             if (target != null)
             {
-                Weapon.Shot(target);
-                Console.WriteLine($"{ShowInfo()}) нанес -{Weapon.Damage} урона\n-> {target.ShowInfo()}");
+                target.TakeDamage(Damage);
+                Console.WriteLine($"{ShowInfo()}) нанес -{Damage} урона\n-> {target.ShowInfo()}");
             }
         }
 
         public void TakeDamage(int damage)
         {
             Health -= damage;
-        }
-    }
-
-    class Weapon
-    {
-        public string Name { get; protected set; }
-        public int Damage { get; protected set; }
-
-        public virtual void Shot(Warrior target) { }
-    }
-
-    class Rifle : Weapon
-    {
-        public Rifle()
-        {
-            Name = "Винтовка";
-            Damage = 50;
-        }
-
-        public override void Shot(Warrior target)
-        {
-            if (target != null)
-            {
-                target.TakeDamage(Damage);
-            }
-            else
-            {
-                Console.WriteLine("Цели не существует.");
-            }
-        }
-    }
-
-    class MachineGun : Weapon
-    {
-        public MachineGun()
-        {
-            Name = "Пулемёт";
-            Damage = 20;
-        }
-
-        public override void Shot(Warrior target)
-        {
-            if (target != null)
-            {
-                for (int i = 0; i < 3; i++)
-                {
-                    target.TakeDamage(Damage);
-                }
-            }
-            else
-            {
-                Console.WriteLine("Цели не существует.");
-            }
         }
     }
 
@@ -358,6 +282,37 @@ namespace Homework
         public static int GetRandomNumber(int number)
         {
             return _random.Next(number);
+        }
+    }
+
+    class CountryBuilder
+    {
+        public static Country CreateCountry()
+        {
+            string nameCountry;
+
+            int maxNumberPlatoon = 101;
+            int numberPlatoon = RandomNumber.GetRandomNumber(maxNumberPlatoon);
+            int maxNumberWariors = 20;
+
+            Console.Write("Введите название страны: ");
+            nameCountry = Console.ReadLine();
+
+            Country country = new Country(nameCountry);
+
+            country.CreatePlatoon(numberPlatoon, maxNumberWariors);
+
+            foreach (Platoon platoon in country.GetPlatoons())
+            {
+                platoon.CreateWarriors(country.Name);
+
+                Console.WriteLine($"\nСоздан взвод страна {country.Name}:\n");
+                platoon.ShowWarriors();
+            }
+
+            Console.WriteLine("\nСтрана успешно создана.\n");
+
+            return country;
         }
     }
 }
