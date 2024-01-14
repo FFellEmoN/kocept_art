@@ -8,37 +8,9 @@ namespace Homework
     {
         static void Main(string[] args)
         {
-            World world = new World();
-
-            War war = new War(world.GetCountries());
+            War war = new War();
             war.Start();
             Console.ReadLine();
-        }
-    }
-
-    class World
-    {
-        private List<Country> _countries;
-        private int _valueCountry = 2;
-
-        public World()
-        {
-            _countries = new List<Country>();
-
-            CreateCountry();
-        }
-
-        public List<Country> GetCountries()
-        {
-            return _countries.ToList<Country>();
-        }
-
-        private void CreateCountry()
-        {
-            for (int i = 0; i < _valueCountry; i++)
-            {
-                _countries.Add(CountryBuilder.CreateCountry());
-            }
         }
     }
 
@@ -46,10 +18,12 @@ namespace Homework
     {
         private List<Country> _countries;
         private Battle _battle;
+        private int _valueCountry = 2;
 
-        public War(List<Country> countries)
+        public War()
         {
-            _countries = countries;
+            _countries = new List<Country>();
+            CreateCountry();
         }
 
         public void Start()
@@ -76,13 +50,6 @@ namespace Homework
             }
         }
 
-        private void ExecuteBattle()
-        {
-            _battle = new Battle(_countries.ToList<Country>());
-
-            _battle.Execute();
-        }
-
         private int GetLifeCountries()
         {
             int lifeCountries = 0;
@@ -99,6 +66,21 @@ namespace Homework
             }
 
             return lifeCountries;
+        }
+
+        private void ExecuteBattle()
+        {
+            _battle = new Battle(_countries.ToList<Country>());
+
+            _battle.Execute();
+        }
+
+        private void CreateCountry()
+        {
+            for (int i = 0; i < _valueCountry; i++)
+            {
+                _countries.Add(CountryBuilder.CreateCountry());
+            }
         }
     }
 
@@ -170,14 +152,14 @@ namespace Homework
             Name = name;
         }
 
-        public void CreatePlatoon(int number, int maxCount)
-        {
-            _platoons.Add(new Platoon(number, maxCount));
-        }
-
         public List<Platoon> GetPlatoons()
         {
             return _platoons.ToList<Platoon>();
+        }
+
+        public void CreatePlatoon(int number, int maxCount)
+        {
+            _platoons.Add(new Platoon(number, maxCount));
         }
     }
 
