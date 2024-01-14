@@ -166,11 +166,10 @@ namespace Zoo
 
     class Animal
     {
-        private static Random _random;
+        private static Random _random = new Random();
 
         public Animal(TypeAnimal typeAnimal)
         {
-            _random = new Random();
             Name = typeAnimal.Name;
             Gender = GetGenderAnimal();
             Voce = typeAnimal.Voce;
