@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\bin\Debug\Zoo.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\bin\Debug\Zoo.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\bin\Debug\Zoo.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\obj\Debug\Zoo.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\obj\Debug\Zoo.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\obj\Debug\Zoo.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\Zoo\obj\Debug\Zoo.pdb
