@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Aquarium
 {
@@ -10,21 +7,26 @@ namespace Aquarium
     {
         static void Main(string[] args)
         {
-            Aquarium aquarium = new Aquarium();
-            aquarium.Work();
+            AquariumManager aquariumManager = new AquariumManager();
+            aquariumManager.Work();
         }
     }
 
-    class Aquarium
+    class AquariumManager
     {
-        private List<Fish> _fish = new List<Fish>();
         private int _maximumFishLife = 10;
+        private Aquarium _aquarium;
+
+        public AquariumManager()
+        {
+            _aquarium = new Aquarium();
+        }
 
         public void Work()
         {
-            const string addFishMenu = "1";
-            const string pickUpFishAquariumMenu = "2";
-            const string ExitMenu = "3";
+            const string addFishCommand = "1";
+            const string pickUpFishCommand = "2";
+            const string ExitCommand = "3";
 
             bool isWork = true;
 
@@ -32,29 +34,29 @@ namespace Aquarium
 
             do
             {
-                RemoveDeedFish();
-                GetRestYourLife();
-                ShowAquarium();
+                _aquarium.RemoveDeedFish();
+                _aquarium.GiveRestYourLife();
+                _aquarium.Show();
 
                 Console.WriteLine("Добро пожаловать!!!");
-                Console.WriteLine($"{addFishMenu} - добавить рыбу.");
-                Console.WriteLine($"{pickUpFishAquariumMenu} - достать рыбу из аквариума.");
-                Console.WriteLine($"{ExitMenu} - выйти.");
+                Console.WriteLine($"{addFishCommand} - добавить рыбу.");
+                Console.WriteLine($"{pickUpFishCommand} - достать рыбу из аквариума.");
+                Console.WriteLine($"{ExitCommand} - выйти.");
 
                 Console.Write("Введите команду:");
                 diciredAction = Console.ReadLine();
 
                 switch (diciredAction)
                 {
-                    case "1":
-                        AddFish();
+                    case addFishCommand:
+                        _aquarium.AddFish();
                         break;
 
-                    case "2":
-                        RemoveFish();
+                    case pickUpFishCommand:
+                        _aquarium.RemoveFish();
                         break;
 
-                    case "3":
+                    case ExitCommand:
                         isWork = false;
                         break;
 
@@ -67,12 +69,18 @@ namespace Aquarium
                 Console.Clear();
             } while (isWork);
         }
+    }
 
-        private void AddFish()
+    class Aquarium
+    {
+        private List<Fish> _fishes = new List<Fish>();
+        private int _maximumFishLife = 10;
+
+        public void AddFish()
         {
             int maximumFish = 10;
 
-            if (_fish.Count < maximumFish)
+            if (_fishes.Count < maximumFish)
             {
                 string name;
                 string userInput;
@@ -93,7 +101,7 @@ namespace Aquarium
                 }
                 else
                 {
-                    _fish.Add(new Fish(name, age));
+                    _fishes.Add(new Fish(name, age));
 
                     Console.WriteLine("Рыба успешно дабавлена");
                 }
@@ -104,26 +112,20 @@ namespace Aquarium
             }
         }
 
-        private void RemoveFish()
+        public void RemoveFish()
         {
             string userInput;
-            int initialQuantity = _fish.Count;
+            int initialQuantity = _fishes.Count;
 
-            if (_fish.Count > 0)
+            if (_fishes.Count > 0)
             {
                 Console.WriteLine("Введите номер рыбы, которую хотите достать из аквариума:");
                 userInput = Console.ReadLine();
 
                 if (int.TryParse(userInput, out int number))
                 {
-                    for (int i = 0; i < _fish.Count; i++)
-                    {
-                        if (number == i + 1)
-                        {
-                            Console.WriteLine("Рыбу успешно достали");
-                            _fish.Remove(_fish[i]);
-                        }
-                    }
+                    Console.WriteLine("Рыбу успешно достали");
+                    _fishes.Remove(_fishes[number - 1]);
                 }
             }
             else
@@ -131,34 +133,55 @@ namespace Aquarium
                 Console.WriteLine("Рыб в аквариуме нету");
             }
 
-            if (initialQuantity == _fish.Count)
+            if (initialQuantity == _fishes.Count)
             {
                 Console.WriteLine("Такой рыбы в аквариуме нету");
             }
         }
 
-        private void RemoveDeedFish()
+        public void RemoveDeedFish()
         {
-            foreach (Fish fish in _fish)
+            while (TryGetFish(out Fish fish))
             {
-                if (fish.Age >= _maximumFishLife)
+                if (fish != null)
                 {
                     Console.WriteLine($"Рыбка {fish.Name} умерла от старости");
-                    _fish.Remove(fish);
+                    _fishes.Remove(fish);
                 }
             }
         }
 
-        private void ShowAquarium()
+        private bool TryGetFish(out Fish objFish)
+        {
+            if (_fishes.Count == 0)
+            {
+                objFish = null;
+                return false;
+            }
+
+            foreach (Fish fish in _fishes)
+            {
+                if (fish.Age == _maximumFishLife)
+                {
+                    objFish = fish;
+                    return true;
+                }
+            }
+
+            objFish = null;
+            return false;
+        }
+
+        public void Show()
         {
             Console.WriteLine("Аквариум:");
 
-            if (_fish.Count > 0)
+            if (_fishes.Count > 0)
             {
-                for (int i = 0; i < _fish.Count; i++)
+                for (int i = 0; i < _fishes.Count; i++)
                 {
                     Console.Write((i + 1) + ") ");
-                    _fish[i].ShowFish();
+                    _fishes[i].Show();
                 }
             }
             else
@@ -169,11 +192,11 @@ namespace Aquarium
             Console.SetCursorPosition(0, 15);
         }
 
-        private void GetRestYourLife()
+        public void GiveRestYourLife()
         {
-            foreach (Fish fish in _fish)
+            foreach (Fish fish in _fishes)
             {
-                fish.LiveToDeath();
+                fish.GrowOld();
             }
         }
     }
@@ -189,12 +212,12 @@ namespace Aquarium
         public string Name { get; private set; }
         public int Age { get; private set; }
 
-        public void ShowFish()
+        public void Show()
         {
             Console.WriteLine($"{Name} - возраст {Age} лет");
         }
 
-        public void LiveToDeath()
+        public void GrowOld()
         {
             Age++;
         }

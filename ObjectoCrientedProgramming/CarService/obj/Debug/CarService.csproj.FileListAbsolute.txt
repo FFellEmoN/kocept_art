@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\bin\Debug\CarService.exe.config
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\bin\Debug\CarService.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\bin\Debug\CarService.pdb
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\obj\Debug\CarService.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\obj\Debug\CarService.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\obj\Debug\CarService.exe
+D:\Repositoryes\kocept_art\ObjectoCrientedProgramming\CarService\obj\Debug\CarService.pdb
