@@ -14,7 +14,6 @@ namespace Aquarium
 
     class AquariumManager
     {
-        private int _maximumFishLife = 10;
         private Aquarium _aquarium;
 
         public AquariumManager()
