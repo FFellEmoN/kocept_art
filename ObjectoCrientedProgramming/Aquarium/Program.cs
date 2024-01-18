@@ -34,7 +34,7 @@ namespace Aquarium
 
             do
             {
-                _aquarium.RemoveDeedFish();
+                _aquarium.RemoveDeedFishes();
                 _aquarium.GiveRestYourLife();
                 _aquarium.Show();
 
@@ -122,7 +122,7 @@ namespace Aquarium
                 Console.WriteLine("Введите номер рыбы, которую хотите достать из аквариума:");
                 userInput = Console.ReadLine();
 
-                if (int.TryParse(userInput, out int number))
+                if (int.TryParse(userInput, out int number) && number <= _fishes.Count && number > 0)
                 {
                     Console.WriteLine("Рыбу успешно достали");
                     _fishes.Remove(_fishes[number - 1]);
@@ -139,37 +139,19 @@ namespace Aquarium
             }
         }
 
-        public void RemoveDeedFish()
+        public void RemoveDeedFishes()
         {
-            while (TryGetFish(out Fish fish))
+            int lastIndex = _fishes.Count - 1;
+
+            for (int i = lastIndex; i >= 0; i--)
             {
-                if (fish != null)
+                if (_fishes[i].Age == _maximumFishLife)
                 {
-                    Console.WriteLine($"Рыбка {fish.Name} умерла от старости");
-                    _fishes.Remove(fish);
+                    Console.WriteLine($"Рыбка {_fishes[i].Name} умерла от старости");
+
+                    _fishes.Remove(_fishes[i]);
                 }
             }
-        }
-
-        private bool TryGetFish(out Fish objFish)
-        {
-            if (_fishes.Count == 0)
-            {
-                objFish = null;
-                return false;
-            }
-
-            foreach (Fish fish in _fishes)
-            {
-                if (fish.Age == _maximumFishLife)
-                {
-                    objFish = fish;
-                    return true;
-                }
-            }
-
-            objFish = null;
-            return false;
         }
 
         public void Show()
