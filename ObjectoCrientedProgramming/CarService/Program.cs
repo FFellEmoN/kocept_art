@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace CarService
 {
@@ -23,44 +24,45 @@ namespace CarService
             _money = 2000;
             _details = new Warehouse();
             _cars = new Queue<Car>();
-            СreateCar(5);
         }
 
         public void Work()
         {
+            const string ServiceСarCommand = "1";
+            const string ExitMenu = "2";
             bool isWork = true;
 
-            while (isWork && 0 <= _cars.Count)
+            do
             {
+                СreateCar();
+
                 _details.ShowStorage();
                 Console.WriteLine($"\nБаланс автомастерской - {_money} монет.");
-                Console.Write($"В мастерской {_cars.Count} машин, стоят на ремонт. " +
-                    $"\nДля их обслуживания введите \"1\". " +
-                    $"\nДля завершения работы введите\"exit\"" +
-                    $"\nДействие: ");
+                Console.WriteLine($"{ServiceСarCommand} - обслужить автомобиль.");
+                Console.WriteLine($"{ExitMenu} - завершить работу.");
+
                 string userInput = Console.ReadLine();
 
                 switch (userInput)
                 {
-                    case "1":
+                    case ServiceСarCommand:
                         ServiceСar();
                         break;
-                    case "exit":
+
+                    case ExitMenu:
                         isWork = false;
                         break;
+
                     default:
                         Console.WriteLine("Хм.. Такой команды нету.");
                         break;
                 }
-            }
+            } while (isWork);
         }
 
-        private void СreateCar(int numberOfCar)
+        private void СreateCar()
         {
-            for (int i = 0; i < numberOfCar; i++)
-            {
-                _cars.Enqueue(new Car());
-            }
+            _cars.Enqueue(new Car());
         }
 
         private void ShowBrakdown(Car car)
@@ -72,20 +74,27 @@ namespace CarService
         private void ServiceСar()
         {
             Console.Clear();
-            var car = _cars.Dequeue();
+
+            const string RepairCarCommand = "1";
+            const string DenyServiceCommand = "2";
+
+            Car car = _cars.Dequeue();
+
             ShowBrakdown(car);
+
             Console.Write("Что вы будете делать. " +
-                "\n(1) Ремонтировать " +
-                "\n(2) Отказать клиенту " +
-                "\n Действие: ");
+                $"\n{RepairCarCommand} Ремонтировать " +
+                $"\n{DenyServiceCommand} Отказать клиенту ");
+            Console.Write("Действие: ");
+
             string userInput = Console.ReadLine();
 
             switch (userInput)
             {
-                case "1":
+                case RepairCarCommand:
                     RepairCar(car);
                     break;
-                case "2":
+                case DenyServiceCommand:
                     DenyService();
                     break;
                 default:
