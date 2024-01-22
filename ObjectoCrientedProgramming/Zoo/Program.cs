@@ -47,8 +47,12 @@ namespace Zoo
 
         public void StartExcursion()
         {
-            const string ChooseAviaryMenu = "1";
-            const string ExitMenu = "2";
+            const string ChooseFirstAviaryMenu = "1";
+            const string ChooseSecondAviaryMenu = "2";
+            const string ChooseThirdAviaryMenu = "3";
+            const string ChooseFourthAviaryMenu = "4";
+            const string ChooseFifthAviaryMenu = "5";
+            const string ExitMenu = "6";
 
             bool isWork = true;
 
@@ -58,7 +62,11 @@ namespace Zoo
             {
                 ShowAviaries();
                 Console.WriteLine();
-                Console.WriteLine($"{ChooseAviaryMenu} - выбрать вольер.");
+                Console.WriteLine($"{ChooseFirstAviaryMenu} - выбрать {ChooseFirstAviaryMenu} вольер.");
+                Console.WriteLine($"{ChooseSecondAviaryMenu} - выбрать {ChooseSecondAviaryMenu} вольер.");
+                Console.WriteLine($"{ChooseThirdAviaryMenu} - выбрать {ChooseThirdAviaryMenu} вольер.");
+                Console.WriteLine($"{ChooseFourthAviaryMenu} - выбрать {ChooseFourthAviaryMenu} вольер.");
+                Console.WriteLine($"{ChooseFifthAviaryMenu} - выбрать {ChooseFifthAviaryMenu} вольер.");
                 Console.WriteLine($"{ExitMenu} - выйти.");
 
                 Console.Write("Введите желаемое действие: ");
@@ -66,12 +74,30 @@ namespace Zoo
 
                 switch (diciredAction)
                 {
-                    case ChooseAviaryMenu:
-                        ChooseAviary();
+                    case ChooseFirstAviaryMenu:
+                        ShowAviary(ChooseFirstAviaryMenu);
                         break;
+
+                    case ChooseSecondAviaryMenu:
+                        ShowAviary(ChooseSecondAviaryMenu);
+                        break;
+
+                    case ChooseThirdAviaryMenu:
+                        ShowAviary(ChooseThirdAviaryMenu);
+                        break;
+
+                    case ChooseFourthAviaryMenu:
+                        ShowAviary(ChooseFourthAviaryMenu);
+                        break;
+
+                    case ChooseFifthAviaryMenu:
+                        ShowAviary(ChooseFifthAviaryMenu);
+                        break;
+
                     case ExitMenu:
                         isWork = false;
                         break;
+
                     default:
                         Console.WriteLine("Такой команды нету.");
                         break;
@@ -100,32 +126,13 @@ namespace Zoo
             }
         }
 
-        private void ShowAviary(int diciredAviary)
+        private void ShowAviary(string inputNumberAviary)
         {
-            Aviary aviary = _aviaries[diciredAviary - 1];
+            int numberAviary = int.Parse(inputNumberAviary);
+
+            Aviary aviary = _aviaries[numberAviary - 1];
             Console.WriteLine($"Тип животного: {aviary.TypeAnimal.Name}");
             aviary.ShowAnimals();
-        }
-
-        private void ChooseAviary()
-        {
-            Console.Write("Введите номер вольера: ");
-
-            if (int.TryParse(Console.ReadLine(), out int inputNumberAviary))
-            {
-                if (inputNumberAviary > 0 && inputNumberAviary <= _aviaries.Count)
-                {
-                    ShowAviary(inputNumberAviary);
-                }
-                else
-                {
-                    Console.WriteLine("Вальера с таким номером в зоопарке нету.");
-                }
-            }
-            else
-            {
-                Console.WriteLine("Неверный ввод, попробуйте еще раз.");
-            }
         }
     }
 
