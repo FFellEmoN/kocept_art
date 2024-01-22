@@ -151,7 +151,7 @@ namespace Zoo
 
             foreach (var animal in _animals)
             {
-                Console.WriteLine($"{animal.Name}. Пол - {animal.Gender}. Звук голоса - {animal.Voce}");
+                Console.WriteLine($"{animal.Name}. Пол - {animal.Gender}. Звук голоса - {animal.Voice}");
             }
         }
 
@@ -166,33 +166,25 @@ namespace Zoo
 
     class Animal
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
+        private string[] _gender = new string[] { "Мужской", "Женский" };
 
         public Animal(TypeAnimal typeAnimal)
         {
             Name = typeAnimal.Name;
             Gender = GetGenderAnimal();
-            Voce = typeAnimal.Voce;
+            Voice = typeAnimal.Voce;
         }
 
         public string Name { get; private set; }
-        public string Voce { get; private set; }
+        public string Voice { get; private set; }
         public string Gender { get; private set; }
 
         private string GetGenderAnimal()
         {
-            int minimumNumberGender = 0;
-            int maximumNumberGender = 2;
-            int gender = _random.Next(minimumNumberGender, maximumNumberGender);
+            int indexGender = s_random.Next(0, _gender.Length);
 
-            if (gender == 0)
-            {
-                return "Мужской";
-            }
-            else
-            {
-                return "Женский";
-            }
+            return _gender[indexGender];
         }
     }
 }
