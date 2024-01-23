@@ -259,18 +259,18 @@ namespace CarService
 
     class FabricRandomDetails
     {
-        private static List<string> _deliverySetCar;
+        private static List<string> s_deliverySetCar;
 
         public FabricRandomDetails(List<string> deliverySetCar)
         {
-            _deliverySetCar = deliverySetCar;
+            s_deliverySetCar = deliverySetCar;
         }
 
         public static Detail GetDetail()
         {
-            int indexDetail = RandomValue.GetValue(0, _deliverySetCar.Count);
+            int indexDetail = RandomValue.GetValue(0, s_deliverySetCar.Count);
 
-            switch (_deliverySetCar[indexDetail])
+            switch (s_deliverySetCar[indexDetail])
             {
                 case "Колесо":
                     return new Detail("Колесо", 60);
@@ -434,11 +434,11 @@ namespace CarService
 
     class RandomValue
     {
-        private static Random _random = new Random();
+        private static Random s_random = new Random();
 
         public static int GetValue(int min, int max)
         {
-            return _random.Next(min, max);
+            return s_random.Next(min, max);
         }
     }
 }
