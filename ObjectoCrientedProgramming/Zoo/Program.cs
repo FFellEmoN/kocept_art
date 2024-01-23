@@ -13,33 +13,33 @@ namespace Zoo
         }
     }
 
-    struct TypeAnimal
+    struct AnimalInfo
     {
-        public TypeAnimal(string name, string voce)
+        public AnimalInfo(string name, string voice)
         {
             Name = name;
-            Voce = voce;
+            Voice = voice;
         }
 
         public string Name { get; private set; }
-        public string Voce { get; private set; }
+        public string Voice { get; private set; }
     }
 
     class Zoo
     {
         private List<Aviary> _aviaries;
-        private List<TypeAnimal> _typesAnimals;
+        private List<AnimalInfo> _typesAnimals;
 
         public Zoo()
         {
             _aviaries = new List<Aviary>();
-            _typesAnimals = new List<TypeAnimal>
+            _typesAnimals = new List<AnimalInfo>
             {
-                new TypeAnimal("Тигр", "Р-р-р"),
-                new TypeAnimal("Овца", "Беее"),
-                new TypeAnimal("Жираф", "Хрум-хрум"),
-                new TypeAnimal("Бегемот", "Фырк-фырк"),
-                new TypeAnimal("Крокодил", "Клоц-клоц")
+                new AnimalInfo("Тигр", "Р-р-р"),
+                new AnimalInfo("Овца", "Беее"),
+                new AnimalInfo("Жираф", "Хрум-хрум"),
+                new AnimalInfo("Бегемот", "Фырк-фырк"),
+                new AnimalInfo("Крокодил", "Клоц-клоц")
             };
 
             CreateAviary();
@@ -47,12 +47,7 @@ namespace Zoo
 
         public void StartExcursion()
         {
-            const string ChooseFirstAviaryMenu = "1";
-            const string ChooseSecondAviaryMenu = "2";
-            const string ChooseThirdAviaryMenu = "3";
-            const string ChooseFourthAviaryMenu = "4";
-            const string ChooseFifthAviaryMenu = "5";
-            const string ExitMenu = "6";
+            string exitMenu = $"{_aviaries.Count + 1}";
 
             bool isWork = true;
 
@@ -62,45 +57,24 @@ namespace Zoo
             {
                 ShowAviaries();
                 Console.WriteLine();
-                Console.WriteLine($"{ChooseFirstAviaryMenu} - выбрать {ChooseFirstAviaryMenu} вольер.");
-                Console.WriteLine($"{ChooseSecondAviaryMenu} - выбрать {ChooseSecondAviaryMenu} вольер.");
-                Console.WriteLine($"{ChooseThirdAviaryMenu} - выбрать {ChooseThirdAviaryMenu} вольер.");
-                Console.WriteLine($"{ChooseFourthAviaryMenu} - выбрать {ChooseFourthAviaryMenu} вольер.");
-                Console.WriteLine($"{ChooseFifthAviaryMenu} - выбрать {ChooseFifthAviaryMenu} вольер.");
-                Console.WriteLine($"{ExitMenu} - выйти.");
+
+                for (int i = 0; i < _aviaries.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1} - выбрать {_aviaries[i].TypeAnimal.Name} вольер.");
+                }
+
+                Console.WriteLine($"{exitMenu} - выйти.");
 
                 Console.Write("Введите желаемое действие: ");
-                string diciredAction = Console.ReadLine();
+                string diciredAviary = Console.ReadLine();
 
-                switch (diciredAction)
+                if (diciredAviary != exitMenu)
                 {
-                    case ChooseFirstAviaryMenu:
-                        ShowAviary(ChooseFirstAviaryMenu);
-                        break;
-
-                    case ChooseSecondAviaryMenu:
-                        ShowAviary(ChooseSecondAviaryMenu);
-                        break;
-
-                    case ChooseThirdAviaryMenu:
-                        ShowAviary(ChooseThirdAviaryMenu);
-                        break;
-
-                    case ChooseFourthAviaryMenu:
-                        ShowAviary(ChooseFourthAviaryMenu);
-                        break;
-
-                    case ChooseFifthAviaryMenu:
-                        ShowAviary(ChooseFifthAviaryMenu);
-                        break;
-
-                    case ExitMenu:
-                        isWork = false;
-                        break;
-
-                    default:
-                        Console.WriteLine("Такой команды нету.");
-                        break;
+                    ShowAviary(diciredAviary);
+                }
+                else
+                {
+                    isWork = false;
                 }
 
                 Console.WriteLine("Для того, чтобы продолжить, нажмите любую клавишу.");
@@ -111,7 +85,7 @@ namespace Zoo
 
         private void CreateAviary()
         {
-            foreach (TypeAnimal typeAnimal in _typesAnimals)
+            foreach (AnimalInfo typeAnimal in _typesAnimals)
             {
                 _aviaries.Add(new Aviary(typeAnimal));
             }
@@ -140,7 +114,7 @@ namespace Zoo
     {
         private List<Animal> _animals;
 
-        public Aviary(TypeAnimal typeAnimal)
+        public Aviary(AnimalInfo typeAnimal)
         {
             _animals = new List<Animal>();
             ValueAnimals = 5;
@@ -149,7 +123,7 @@ namespace Zoo
             Fill();
         }
 
-        public TypeAnimal TypeAnimal { get; private set; }
+        public AnimalInfo TypeAnimal { get; private set; }
         public int ValueAnimals { get; private set; }
 
         public void ShowAnimals()
@@ -176,11 +150,11 @@ namespace Zoo
         private static Random s_random = new Random();
         private string[] _gender = new string[] { "Мужской", "Женский" };
 
-        public Animal(TypeAnimal typeAnimal)
+        public Animal(AnimalInfo typeAnimal)
         {
             Name = typeAnimal.Name;
             Gender = GetGenderAnimal();
-            Voice = typeAnimal.Voce;
+            Voice = typeAnimal.Voice;
         }
 
         public string Name { get; private set; }
