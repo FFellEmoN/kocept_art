@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\LINQ\Amnesty\bin\Debug\Amnesty.exe.config
+D:\Repositoryes\kocept_art\LINQ\Amnesty\bin\Debug\Amnesty.exe
+D:\Repositoryes\kocept_art\LINQ\Amnesty\bin\Debug\Amnesty.pdb
+D:\Repositoryes\kocept_art\LINQ\Amnesty\obj\Debug\Amnesty.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\LINQ\Amnesty\obj\Debug\Amnesty.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\LINQ\Amnesty\obj\Debug\Amnesty.exe
+D:\Repositoryes\kocept_art\LINQ\Amnesty\obj\Debug\Amnesty.pdb
