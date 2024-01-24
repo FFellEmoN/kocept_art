@@ -102,8 +102,8 @@ namespace Zoo
 
         private void ShowAviary(string inputNumberAviary)
         {
-            if (int.TryParse(inputNumberAviary, out int numberAviary) && 
-                numberAviary <= _aviaries.Count && 
+            if (int.TryParse(inputNumberAviary, out int numberAviary) &&
+                numberAviary <= _aviaries.Count &&
                 numberAviary > 0)
             {
                 Aviary aviary = _aviaries[numberAviary - 1];
@@ -155,13 +155,18 @@ namespace Zoo
     class Animal
     {
         private static Random s_random = new Random();
-        private string[] _gender = new string[] { "Мужской", "Женский" };
+        private string[] _gender;
 
         public Animal(AnimalInfo typeAnimal)
         {
             Name = typeAnimal.Name;
             Gender = GetGenderAnimal();
             Voice = typeAnimal.Voice;
+            _gender = new string[]
+            {
+                "Мужской",
+                "Женский" 
+            };
         }
 
         public string Name { get; private set; }
