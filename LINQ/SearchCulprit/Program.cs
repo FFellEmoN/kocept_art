@@ -55,19 +55,16 @@ namespace SearchCulprit
                         Console.Write("Введите национальность: ");
                         string nationality = Console.ReadLine();
 
-
-                        var filtredCulpritByHeigh = _culprits.Where(culprit => culprit.Heigh == inputHeigh).
-                            Select(culprit => culprit);
-                        var filtredCulpritByWeight = filtredCulpritByHeigh.Where(culprit => culprit.Weight == weight).
-                            Select(culprit => culprit);
-                        var filtredCulpritByNationality = filtredCulpritByWeight.Where(culprit => culprit.Nationality.ToLower() == nationality.ToLower()).
-                            Select(culprit => culprit);
-                        var filtredCulpritByCustody = filtredCulpritByNationality.Where(culprit => culprit.IsCustody == false).
+                        var filtredCulpritByCustody = _culprits.Where(culprit => 
+                        culprit.Heigh == inputHeigh && 
+                        culprit.IsCustody == false && 
+                        culprit.Weight == weight &&
+                        culprit.Nationality.ToLower() == nationality.ToLower()).
                             Select(culprit => culprit);
 
                         if (filtredCulpritByCustody.Any())
                         {
-                            foreach (var culpritName in filtredCulpritByHeigh)
+                            foreach (var culpritName in filtredCulpritByCustody)
                             {
                                 Console.WriteLine(culpritName.FullName);
                             }
