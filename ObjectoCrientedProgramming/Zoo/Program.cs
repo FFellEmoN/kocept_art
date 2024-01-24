@@ -8,7 +8,7 @@ namespace Zoo
         static void Main(string[] args)
         {
             Zoo zoo = new Zoo();
-            zoo.StartExcursion();
+            zoo.Work();
             Console.ReadLine();
         }
     }
@@ -45,7 +45,7 @@ namespace Zoo
             CreateAviary();
         }
 
-        public void StartExcursion()
+        public void Work()
         {
             string exitMenu = $"{_aviaries.Count + 1}";
 
@@ -102,11 +102,18 @@ namespace Zoo
 
         private void ShowAviary(string inputNumberAviary)
         {
-            int numberAviary = int.Parse(inputNumberAviary);
-
-            Aviary aviary = _aviaries[numberAviary - 1];
-            Console.WriteLine($"Тип животного: {aviary.TypeAnimal.Name}");
-            aviary.ShowAnimals();
+            if (int.TryParse(inputNumberAviary, out int numberAviary) && 
+                numberAviary <= _aviaries.Count && 
+                numberAviary > 0)
+            {
+                Aviary aviary = _aviaries[numberAviary - 1];
+                Console.WriteLine($"Тип животного: {aviary.TypeAnimal.Name}");
+                aviary.ShowAnimals();
+            }
+            else
+            {
+                Console.WriteLine("Вы ввели неверное значение, попробуйте еще раз.");
+            }
         }
     }
 
