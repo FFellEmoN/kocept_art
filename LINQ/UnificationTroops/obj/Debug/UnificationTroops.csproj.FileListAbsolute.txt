@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\bin\Debug\UnificationTroops.exe.config
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\bin\Debug\UnificationTroops.exe
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\bin\Debug\UnificationTroops.pdb
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\obj\Debug\UnificationTroops.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\obj\Debug\UnificationTroops.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\obj\Debug\UnificationTroops.exe
+D:\Repositoryes\kocept_art\LINQ\UnificationTroops\obj\Debug\UnificationTroops.pdb

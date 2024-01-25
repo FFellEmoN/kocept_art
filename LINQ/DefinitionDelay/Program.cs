@@ -42,6 +42,7 @@ namespace ConsoleApp7
             const string ExitMenu = "3";
 
             bool isWork = true;
+
             string diciredAction;
 
             while (isWork == true)
@@ -89,9 +90,9 @@ namespace ConsoleApp7
 
         private void ShowExpiredStews()
         {
-            int todaysYear = 2022;
+            var todaysYear = DateTime.Now.Year;
 
-            var expiredStews = _stews.Where(_stews => (_stews.YearOfProduction + _stews.ExpirationDate) < todaysYear).ToList();
+            var expiredStews = _stews.Where(stew => (stew.YearOfProduction + stew.ExpirationDate) < todaysYear).ToList();
 
             Console.WriteLine($"Просроченная тушёнка, по сегодняшнему {todaysYear} году:");
 
