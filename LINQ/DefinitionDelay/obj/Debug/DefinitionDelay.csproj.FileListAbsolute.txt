@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\bin\Debug\DefinitionDelay.exe.config
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\bin\Debug\DefinitionDelay.exe
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\bin\Debug\DefinitionDelay.pdb
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\obj\Debug\DefinitionDelay.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\obj\Debug\DefinitionDelay.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\obj\Debug\DefinitionDelay.exe
+D:\Repositoryes\kocept_art\LINQ\DefinitionDelay\obj\Debug\DefinitionDelay.pdb

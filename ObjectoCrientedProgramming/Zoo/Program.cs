@@ -51,26 +51,20 @@ namespace Zoo
 
             bool isWork = true;
 
-            Console.WriteLine($"Добро пожаловать в зоопарк. У нас есть {_aviaries.Count} вальеров с животными.");
+            Console.WriteLine($"Добро пожаловать в зоопарк. У нас есть {_aviaries.Count} вальеров с животными.\n");
 
             while (isWork)
             {
                 ShowAviaries();
-                Console.WriteLine();
 
-                for (int i = 0; i < _aviaries.Count; i++)
-                {
-                    Console.WriteLine($"{i + 1} - выбрать {_aviaries[i].TypeAnimal.Name} вольер.");
-                }
+                Console.WriteLine($"{exitMenu}) выйти.");
 
-                Console.WriteLine($"{exitMenu} - выйти.");
-
-                Console.Write("Введите желаемое действие: ");
+                Console.Write("\nВведите желаемый вальер: ");
                 string diciredAviary = Console.ReadLine();
 
                 if (diciredAviary != exitMenu)
                 {
-                    ShowAviary(diciredAviary);
+                    TryShowAviary(diciredAviary);
                 }
                 else
                 {
@@ -100,14 +94,15 @@ namespace Zoo
             }
         }
 
-        private void ShowAviary(string inputNumberAviary)
+        private void TryShowAviary(string inputNumberAviary)
         {
             if (int.TryParse(inputNumberAviary, out int numberAviary) &&
                 numberAviary <= _aviaries.Count &&
                 numberAviary > 0)
             {
                 Aviary aviary = _aviaries[numberAviary - 1];
-                Console.WriteLine($"Тип животного: {aviary.TypeAnimal.Name}");
+
+                Console.WriteLine($"\nТип животного: {aviary.TypeAnimal.Name}");
                 aviary.ShowAnimals();
             }
             else
@@ -155,18 +150,18 @@ namespace Zoo
     class Animal
     {
         private static Random s_random = new Random();
-        private string[] _gender;
+        private string[] _genders;
 
         public Animal(AnimalInfo typeAnimal)
         {
-            Name = typeAnimal.Name;
-            Gender = GetGenderAnimal();
-            Voice = typeAnimal.Voice;
-            _gender = new string[]
+            _genders = new string[]
             {
                 "Мужской",
                 "Женский" 
             };
+            Name = typeAnimal.Name;
+            Gender = GetGenderAnimal();
+            Voice = typeAnimal.Voice;
         }
 
         public string Name { get; private set; }
@@ -175,9 +170,9 @@ namespace Zoo
 
         private string GetGenderAnimal()
         {
-            int indexGender = s_random.Next(0, _gender.Length);
+            int indexGender = s_random.Next(0, _genders.Length);
 
-            return _gender[indexGender];
+            return _genders[indexGender];
         }
     }
 }

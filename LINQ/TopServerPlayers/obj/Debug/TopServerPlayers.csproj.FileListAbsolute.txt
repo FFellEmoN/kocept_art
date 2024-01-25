@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\bin\Debug\TopServerPlayers.exe.config
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\bin\Debug\TopServerPlayers.exe
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\bin\Debug\TopServerPlayers.pdb
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\obj\Debug\TopServerPlayers.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\obj\Debug\TopServerPlayers.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\obj\Debug\TopServerPlayers.exe
+D:\Repositoryes\kocept_art\LINQ\TopServerPlayers\obj\Debug\TopServerPlayers.pdb
