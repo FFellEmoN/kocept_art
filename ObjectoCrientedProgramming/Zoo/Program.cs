@@ -150,15 +150,9 @@ namespace Zoo
     class Animal
     {
         private static Random s_random = new Random();
-        private string[] _genders;
 
         public Animal(AnimalInfo typeAnimal)
         {
-            _genders = new string[]
-            {
-                "Мужской",
-                "Женский" 
-            };
             Name = typeAnimal.Name;
             Gender = GetGenderAnimal();
             Voice = typeAnimal.Voice;
@@ -170,9 +164,15 @@ namespace Zoo
 
         private string GetGenderAnimal()
         {
-            int indexGender = s_random.Next(0, _genders.Length);
+            string[] genders = new string[]
+            {
+                "Мужской",
+                "Женский"
+            };
 
-            return _genders[indexGender];
+            int indexGender = s_random.Next(0, genders.Length);
+
+            return genders[indexGender];
         }
     }
 }
