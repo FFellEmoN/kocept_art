@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace CarService
@@ -7,20 +8,11 @@ namespace CarService
     {
         static void Main(string[] args)
         {
-            ManagerCarService managerCarService = new ManagerCarService();
-            managerCarService.Work();
-        }
-    }
+            const string AddCarQueueCommand = "1";
+            const string ServiceСarCommand = "2";
+            const string ExitCommand = "3";
 
-    class ManagerCarService
-    {
-        private CarService _carService;
-        private Warehouse _warehouse;
-        private List<string> _deliverySetCar;
-
-        public ManagerCarService()
-        {
-            _deliverySetCar = new List<string>
+            List<string> deliverySetCar = new List<string>
             {
                 "Колесо",
                 "Стекло",
@@ -28,27 +20,23 @@ namespace CarService
                 "Бампер",
                 "Замок"
             };
-            new FabricRandomDetails(new List<string>(_deliverySetCar));
-            _warehouse = new Warehouse();
-            _carService = new CarService(_warehouse);
-        }
 
-        public void Work()
-        {
-            const string AddCarQueueCommand = "1";
-            const string ServiceСarCommand = "2";
-            const string ExitMenu = "3";
+            new FabricDetails(new List<string>(deliverySetCar));
+
+            Warehouse warehouse = new Warehouse();
+
+            CarService carService = new CarService(warehouse);
 
             bool isWork = true;
 
             do
             {
-                _warehouse.ShowStorage();
-                Console.WriteLine($"\nБаланс автомастерской - {_carService.Money} монет.");
-                Console.WriteLine($"Авто на обслуживании в очереди: {_carService.CountCars}");
+                warehouse.ShowStorage();
+                Console.WriteLine($"\nБаланс автомастерской - {carService.Money} монет.");
+                Console.WriteLine($"Авто на обслуживании в очереди: {carService.CountCars}");
                 Console.WriteLine($"\n{AddCarQueueCommand} - запустить авто для обслуживания.");
                 Console.WriteLine($"{ServiceСarCommand} - обслужить автомобиль.");
-                Console.WriteLine($"{ExitMenu} - завершить работу.");
+                Console.WriteLine($"{ExitCommand} - завершить работу.");
 
                 Console.Write("\nВведите желаемое действие: ");
                 string diceredAction = Console.ReadLine();
@@ -56,14 +44,14 @@ namespace CarService
                 switch (diceredAction)
                 {
                     case AddCarQueueCommand:
-                        _carService.AddCar(CreateCar());
+                        carService.AddCar(FabricCar.CreateCar(deliverySetCar));
                         break;
 
                     case ServiceСarCommand:
-                        _carService.TryServe();
+                        carService.Serve();
                         break;
 
-                    case ExitMenu:
+                    case ExitCommand:
                         isWork = false;
                         break;
 
@@ -78,10 +66,13 @@ namespace CarService
                 Console.Clear();
             } while (isWork);
         }
+    }
 
-        private Car CreateCar()
+    class FabricCar
+    {
+        public static Car CreateCar(List<string> deliverySetCar)
         {
-            return new Car(_deliverySetCar);
+            return new Car(deliverySetCar);
         }
     }
 
@@ -90,7 +81,7 @@ namespace CarService
         private Queue<Car> _cars;
         private Warehouse _warehouse;
         private int _carServiceCapacity;
-        private int _penaltyError = 500;
+        private int _penalty = 500;
 
         public CarService(Warehouse warehouse)
         {
@@ -105,56 +96,63 @@ namespace CarService
 
         public void AddCar(Car car)
         {
-            if (CountCars < _carServiceCapacity)
-            {
-                _cars.Enqueue(car);
-
-                Console.WriteLine("Авто успешно поставленно в автосервис.");
-            }
-            else
+            if (_carServiceCapacity == CountCars)
             {
                 Console.WriteLine("Автосервис заполнен.");
+                return;
             }
+
+            Console.WriteLine("Авто успешно поставленно в автосервис.");
+            _cars.Enqueue(car);
         }
 
-        public void TryServe()
+        public void Serve()
         {
-            if (_cars.Count != 0)
+            if (_cars.Count == 0)
             {
-                if (Money >= _penaltyError && Money >= _warehouse.GetMaxCostWork())
-                {
-                    Console.Clear();
+                Console.WriteLine("В автосервисе нет машин.");
 
-                    Car firstCarQueue = _cars.Peek();
+                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
+                Console.ReadKey();
 
-                    _warehouse.ShowStorage();
-                    Console.WriteLine();
+                return;
+            }
 
-                    if (_warehouse.IsHaveDetailStorage(firstCarQueue.BreakdownDetail))
-                    {
-                        ShowBrakdown(firstCarQueue.BreakdownDetail);
-                        TryRepair();
-                    }
-                    else
-                    {
-                        Console.WriteLine($"К сожилению у нас нет на складе подходящей детали: {firstCarQueue.BreakdownDetail.Name} для вас.");
+            if (Money <= _penalty && Money <= _warehouse.GetMaxCostWork())
+            {
+                Console.WriteLine("К сожилению у вас недостаточно денег для выплоты штрафа в случаи ошибки.");
+                Console.WriteLine("Закрывайтесь!");
 
-                        DenyService();
-                        _cars.Dequeue();
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("К сожилению у вас недостаточно денег для выплоты штрафа в случаи ошибки.");
-                    Console.WriteLine("Закрывайтесь!");
-                }
+                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
+                Console.ReadKey();
+
+                return;
+            }
+
+            Console.Clear();
+
+            Car firstCarQueue = _cars.Dequeue();
+
+            _warehouse.ShowStorage();
+            Console.WriteLine();
+
+            if (firstCarQueue.HasBreakdown() == false)
+            {
+                Console.WriteLine("Автомобиль полностью исправен и не нуждается в починки.");
+                
+                return;
+            }
+
+            if (_warehouse.Contains(firstCarQueue.BreakdownDetail))
+            {
+                ShowBrakdown(firstCarQueue.BreakdownDetail);
+                TryRepair(firstCarQueue);
             }
             else
             {
-                Console.WriteLine("В автосервисе нет машин.");
-                Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
+                Console.WriteLine($"К сожилению у нас нет на складе подходящей детали: {firstCarQueue.BreakdownDetail.Name} для вас.");
 
-                Console.ReadKey();
+                DenyService();
             }
         }
 
@@ -164,14 +162,18 @@ namespace CarService
             Console.WriteLine($"\nЦена за работу будет - {_warehouse.RepairPrice} монет.");
         }
 
-        private void TryRepair()
+        private void TryRepair(Car car)
         {
-            Car car = _cars.Dequeue();
-
             if (_warehouse.TryGetDetail(car.BreakdownDetail, out Detail detail))
             {
                 car.ReplacePart(detail);
-                car.CheckAllServiceabilityDetails();
+
+                if (car.HasBreakdown())
+                {
+                    Console.WriteLine("Вы не поченили авто. У него есть поломка.");
+
+                    return;
+                }
 
                 Console.WriteLine($"Вы успешно починили автомобиль!" +
                     $"\nИ заработали {_warehouse.RepairPrice} монет.");
@@ -182,27 +184,26 @@ namespace CarService
             {
                 Console.WriteLine("Вы установили не ту деталь. Клиент не доволен вашей работой. " +
                      $"\n Вы возместитли ущерб клиенту в размере - {_warehouse.RepairPrice} монет.");
+
                 Money -= _warehouse.RepairPrice;
             }
         }
 
         private void DenyService()
         {
-            Console.WriteLine($"Вы отказали клиенту. С вас шраф - {_penaltyError} монет.");
-            Money -= _penaltyError;
+            Console.WriteLine($"Вы отказали клиенту. С вас шраф - {_penalty} монет.");
+
+            Money -= _penalty;
         }
     }
 
     class Car
     {
         private List<Detail> _details = new List<Detail>();
-        private List<string> _deliverySet;
 
         public Car(List<string> deliverySet)
         {
-            _deliverySet = deliverySet;
-
-            InstallParts();
+            AddDetails(deliverySet);
             СreateBreakdown();
         }
 
@@ -216,27 +217,27 @@ namespace CarService
                 {
                     _details.Remove(detail);
                     _details.Add(newDetail);
+
                     break;
                 }
             }
         }
 
-        public void CheckAllServiceabilityDetails()
+        public bool HasBreakdown()
         {
-            int valueServiceabilityDetails = 0;
+            bool hasBreakdown = false;
 
             foreach (Detail detail in _details)
             {
-                if (detail.IsServiceability)
+                if (detail.IsServiceability == false)
                 {
-                    valueServiceabilityDetails++;
+                    hasBreakdown = true;
+
+                    return hasBreakdown;
                 }
             }
 
-            if (valueServiceabilityDetails == _details.Count)
-            {
-                Console.WriteLine("У автомобиля все детали исправны.");
-            }
+            return hasBreakdown;
         }
 
         private void СreateBreakdown()
@@ -248,20 +249,20 @@ namespace CarService
             BreakdownDetail.Break();
         }
 
-        private void InstallParts()
+        private void AddDetails(List<string> deliverySet)
         {
-            foreach (string nameDetail in _deliverySet)
+            foreach (string nameDetail in deliverySet)
             {
                 _details.Add(new Detail(nameDetail));
             }
         }
     }
 
-    class FabricRandomDetails
+    class FabricDetails
     {
         private static List<string> s_deliverySetCar;
 
-        public FabricRandomDetails(List<string> deliverySetCar)
+        public FabricDetails(List<string> deliverySetCar)
         {
             s_deliverySetCar = deliverySetCar;
         }
@@ -274,12 +275,16 @@ namespace CarService
             {
                 case "Колесо":
                     return new Detail("Колесо", 60);
+
                 case "Стекло":
                     return new Detail("Стекло", 80);
+
                 case "Фары":
                     return new Detail("Фары", 40);
+
                 case "Бампер":
                     return new Detail("Бампер", 30);
+
                 case "Замок":
                     return new Detail("Замок", 50);
             }
@@ -317,7 +322,7 @@ namespace CarService
             return maxCost * _costWork;
         }
 
-        public bool IsHaveDetailStorage(Detail carDetail)
+        public bool Contains(Detail carDetail)
         {
             foreach (Detail detail in _storage)
             {
@@ -349,7 +354,8 @@ namespace CarService
                 else if (numberDetail > 0 &&
                     numberDetail <= _storage.Count)
                 {
-                    if (breakdownDetail.Name == _storage[numberDetail - 1].Name) {
+                    if (breakdownDetail.Name == _storage[numberDetail - 1].Name)
+                    {
                         int indexDetail = numberDetail - 1;
 
                         Detail detailStorage = _storage[indexDetail];
@@ -390,6 +396,7 @@ namespace CarService
                 if (carDetail.Name == detail.Name)
                 {
                     RepairPrice = detail.Cost * _costWork;
+
                     break;
                 }
             }
@@ -401,7 +408,7 @@ namespace CarService
 
             for (int i = 0; i < numberDetails; i++)
             {
-                _storage.Add(FabricRandomDetails.GetDetail());
+                _storage.Add(FabricDetails.GetDetail());
             }
         }
     }
