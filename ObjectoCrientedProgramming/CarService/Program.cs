@@ -82,7 +82,15 @@ namespace CarService
 
         public Car CreateCar()
         {
-            return new Car(new List<Detail>(s_deliverySetCar));
+
+            List<Detail> detailsForCar = new List<Detail>();
+
+            for (int i = 0; i < s_deliverySetCar.Count; i++)
+            {
+                detailsForCar.Add(new Detail(s_deliverySetCar[i].Name, s_deliverySetCar[i].Cost));
+            }
+
+            return new Car(detailsForCar);
         }
     }
 
