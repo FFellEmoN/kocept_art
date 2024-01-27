@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CarService
 {
@@ -12,20 +13,22 @@ namespace CarService
             const string ServiceСarCommand = "2";
             const string ExitCommand = "3";
 
-            List<string> deliverySetCar = new List<string>
+            List<Detail> deliverySetCar = new List<Detail>
             {
-                "Колесо",
-                "Стекло",
-                "Фары",
-                "Бампер",
-                "Замок"
+                new Detail("Колесо", 60),
+                new Detail("Стекло", 100),
+                new Detail("Фары", 50),
+                new Detail("Бампер", 120),
+                new Detail("Замок", 30)
             };
 
-            new FabricDetails(new List<string>(deliverySetCar));
+            FabricDetails fabricDetails = new FabricDetails(new List<Detail>(deliverySetCar));
 
-            Warehouse warehouse = new Warehouse();
+            Warehouse warehouse = new Warehouse(fabricDetails);
 
             CarService carService = new CarService(warehouse);
+
+            FabricCar fabricCar = new FabricCar(new List<Detail>(deliverySetCar));
 
             bool isWork = true;
 
@@ -44,7 +47,7 @@ namespace CarService
                 switch (diceredAction)
                 {
                     case AddCarQueueCommand:
-                        carService.AddCar(FabricCar.CreateCar(deliverySetCar));
+                        carService.AddCar(fabricCar.CreateCar());
                         break;
 
                     case ServiceСarCommand:
@@ -70,9 +73,16 @@ namespace CarService
 
     class FabricCar
     {
-        public static Car CreateCar(List<string> deliverySetCar)
+        private List<Detail> s_deliverySetCar;
+
+        public FabricCar(List<Detail> deliverySetCar)
         {
-            return new Car(deliverySetCar);
+            s_deliverySetCar = deliverySetCar;
+        }
+
+        public Car CreateCar()
+        {
+            return new Car(new List<Detail>(s_deliverySetCar));
         }
     }
 
@@ -83,14 +93,17 @@ namespace CarService
         private int _carServiceCapacity;
         private int _penalty = 500;
 
+
         public CarService(Warehouse warehouse)
         {
             Money = 2000;
+            CoefficientWork = 10;
             _carServiceCapacity = 3;
             _cars = new Queue<Car>();
             _warehouse = warehouse;
         }
 
+        public int CoefficientWork { get; private set; }
         public int Money { get; private set; }
         public int CountCars => _cars.Count;
 
@@ -99,6 +112,7 @@ namespace CarService
             if (_carServiceCapacity == CountCars)
             {
                 Console.WriteLine("Автосервис заполнен.");
+
                 return;
             }
 
@@ -118,7 +132,7 @@ namespace CarService
                 return;
             }
 
-            if (Money <= _penalty && Money <= _warehouse.GetMaxCostWork())
+            if (Money <= _penalty && Money <= _warehouse.GetMaxCostWork(CoefficientWork))
             {
                 Console.WriteLine("К сожилению у вас недостаточно денег для выплоты штрафа в случаи ошибки.");
                 Console.WriteLine("Закрывайтесь!");
@@ -139,11 +153,11 @@ namespace CarService
             if (firstCarQueue.HasBreakdown() == false)
             {
                 Console.WriteLine("Автомобиль полностью исправен и не нуждается в починки.");
-                
+
                 return;
             }
 
-            if (_warehouse.Contains(firstCarQueue.BreakdownDetail))
+            if (_warehouse.Contains(firstCarQueue.BreakdownDetail, CoefficientWork))
             {
                 ShowBrakdown(firstCarQueue.BreakdownDetail);
                 TryRepair(firstCarQueue);
@@ -201,9 +215,9 @@ namespace CarService
     {
         private List<Detail> _details = new List<Detail>();
 
-        public Car(List<string> deliverySet)
+        public Car(List<Detail> deliverySet)
         {
-            AddDetails(deliverySet);
+            _details = deliverySet;
             СreateBreakdown();
         }
 
@@ -248,70 +262,42 @@ namespace CarService
 
             BreakdownDetail.Break();
         }
-
-        private void AddDetails(List<string> deliverySet)
-        {
-            foreach (string nameDetail in deliverySet)
-            {
-                _details.Add(new Detail(nameDetail));
-            }
-        }
     }
 
     class FabricDetails
     {
-        private static List<string> s_deliverySetCar;
+        private static List<Detail> s_deliverySetCar;
 
-        public FabricDetails(List<string> deliverySetCar)
+        public FabricDetails(List<Detail> deliverySetCar)
         {
             s_deliverySetCar = deliverySetCar;
         }
 
-        public static Detail GetDetail()
+        public Detail GetDetail()
         {
             int indexDetail = RandomValue.GetValue(0, s_deliverySetCar.Count);
 
-            switch (s_deliverySetCar[indexDetail])
-            {
-                case "Колесо":
-                    return new Detail("Колесо", 60);
-
-                case "Стекло":
-                    return new Detail("Стекло", 80);
-
-                case "Фары":
-                    return new Detail("Фары", 40);
-
-                case "Бампер":
-                    return new Detail("Бампер", 30);
-
-                case "Замок":
-                    return new Detail("Замок", 50);
-            }
-
-            return null;
+            return new Detail(s_deliverySetCar[indexDetail].Name, s_deliverySetCar[indexDetail].Cost);
         }
     }
 
     class Warehouse
     {
-        private List<Detail> _storage = new List<Detail>();
-        private int _costWork;
+        private List<Detail> _details = new List<Detail>();
+        private int _coefficientWork;
 
-        public Warehouse()
+        public Warehouse(FabricDetails fabricDetails)
         {
-            _costWork = 10;
-
-            Fill();
+            Fill(fabricDetails);
         }
 
         public int RepairPrice { get; private set; }
 
-        public int GetMaxCostWork()
+        public int GetMaxCostWork(int coefficientWork)
         {
             int maxCost = 0;
 
-            foreach (Detail detail in _storage)
+            foreach (Detail detail in _details)
             {
                 if (maxCost < detail.Cost)
                 {
@@ -319,16 +305,16 @@ namespace CarService
                 }
             }
 
-            return maxCost * _costWork;
+            return maxCost * coefficientWork;
         }
 
-        public bool Contains(Detail carDetail)
+        public bool Contains(Detail carDetail, int coefficientWork)
         {
-            foreach (Detail detail in _storage)
+            foreach (Detail detail in _details)
             {
                 if (carDetail.Name == detail.Name)
                 {
-                    Pricing(detail);
+                    Pricing(detail, coefficientWork);
 
                     return true;
                 }
@@ -352,16 +338,16 @@ namespace CarService
                     isActionIncorrect = true;
                 }
                 else if (numberDetail > 0 &&
-                    numberDetail <= _storage.Count)
+                    numberDetail <= _details.Count)
                 {
-                    if (breakdownDetail.Name == _storage[numberDetail - 1].Name)
+                    if (breakdownDetail.Name == _details[numberDetail - 1].Name)
                     {
                         int indexDetail = numberDetail - 1;
 
-                        Detail detailStorage = _storage[indexDetail];
+                        Detail detailStorage = _details[indexDetail];
 
                         detail = detailStorage;
-                        _storage.Remove(detailStorage);
+                        _details.Remove(detailStorage);
 
                         return true;
                     }
@@ -383,32 +369,32 @@ namespace CarService
         {
             Console.WriteLine("На складе есть такие детали: ");
 
-            for (int i = 0; i < _storage.Count; i++)
+            for (int i = 0; i < _details.Count; i++)
             {
-                Console.WriteLine($"{i + 1}. Название - {_storage[i].Name}. Стоимость - {_storage[i].Cost}");
+                Console.WriteLine($"{i + 1}. Название - {_details[i].Name}. Стоимость - {_details[i].Cost}");
             }
         }
 
-        private void Pricing(Detail carDetail)
+        private void Pricing(Detail carDetail, int coefficientWork)
         {
-            foreach (Detail detail in _storage)
+            foreach (Detail detail in _details)
             {
                 if (carDetail.Name == detail.Name)
                 {
-                    RepairPrice = detail.Cost * _costWork;
+                    RepairPrice = detail.Cost * coefficientWork;
 
                     break;
                 }
             }
         }
 
-        private void Fill()
+        public void Fill(FabricDetails fabricDetail)
         {
             int numberDetails = 10;
 
             for (int i = 0; i < numberDetails; i++)
             {
-                _storage.Add(FabricDetails.GetDetail());
+                _details.Add(fabricDetail.GetDetail());
             }
         }
     }
