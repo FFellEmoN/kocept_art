@@ -186,7 +186,7 @@ namespace CarService
 
         private void TryRepair(Car car)
         {
-            if (_warehouse.TryGetDetail(car.BreakdownDetail, out Detail detail))
+            if (_warehouse.TryGiveDetail(car.BreakdownDetail, out Detail detail))
             {
                 car.ReplacePart(detail);
 
@@ -322,7 +322,7 @@ namespace CarService
             {
                 if (carDetail.Name == detail.Name)
                 {
-                    Pricing(detail, coefficientWork);
+                    CalculatePrice(detail, coefficientWork);
 
                     return true;
                 }
@@ -331,7 +331,7 @@ namespace CarService
             return false;
         }
 
-        public bool TryGetDetail(Detail breakdownDetail, out Detail detail)
+        public bool TryGiveDetail(Detail breakdownDetail, out Detail detail)
         {
             bool isActionIncorrect = false;
 
@@ -383,7 +383,7 @@ namespace CarService
             }
         }
 
-        private void Pricing(Detail carDetail, int coefficientWork)
+        private void CalculatePrice(Detail carDetail, int coefficientWork)
         {
             foreach (Detail detail in _details)
             {
