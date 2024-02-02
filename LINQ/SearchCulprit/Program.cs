@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace SearchCulprit
 {
@@ -14,16 +12,16 @@ namespace SearchCulprit
             Console.OutputEncoding = Encoding.Unicode;
             Console.InputEncoding = Encoding.Unicode;
 
-            SearchCulpritManager searchCulpritManager = new SearchCulpritManager();
+            SearcherCulprit searchCulpritManager = new SearcherCulprit();
             searchCulpritManager.ShowCriminalsOnRunRequest();
         }
     }
 
-    class SearchCulpritManager
+    class SearcherCulprit
     {
         private List<Culprit> _culprits;
 
-        public SearchCulpritManager()
+        public SearcherCulprit()
         {
             _culprits = new List<Culprit>
             {
@@ -38,6 +36,8 @@ namespace SearchCulprit
 
         public void ShowCriminalsOnRunRequest()
         {
+            string nationality;
+
             bool isWork = false;
 
             do
@@ -49,44 +49,54 @@ namespace SearchCulprit
                 if (int.TryParse(Console.ReadLine(), out int inputHeigh))
                 {
                     Console.Write("Введите вес: ");
-
-                    if (int.TryParse(Console.ReadLine(), out int weight))
-                    {
-                        Console.Write("Введите национальность: ");
-                        string nationality = Console.ReadLine();
-
-                        var filtredCulpritByCustody = _culprits.Where(culprit => 
-                        culprit.Heigh == inputHeigh && 
-                        culprit.IsCustody == false && 
-                        culprit.Weight == weight &&
-                        culprit.Nationality.ToLower() == nationality.ToLower()).
-                            Select(culprit => culprit);
-
-                        if (filtredCulpritByCustody.Any())
-                        {
-                            foreach (var culpritName in filtredCulpritByCustody)
-                            {
-                                Console.WriteLine(culpritName.FullName);
-                            }
-                        }
-                        else
-                        {
-                            Console.WriteLine("По вашему запросу ни какого не найдено.");
-                        }
-
-                        isWork = false;
-                        Console.WriteLine("Введите любую клавишу, чтобы продолжить.");
-                        Console.ReadKey();
-                    }
-                    else
-                    {
-                        isWork = InputError();
-                    }
                 }
                 else
                 {
                     isWork = InputError();
+                    Console.WriteLine();
+                    continue;
                 }
+
+                if (int.TryParse(Console.ReadLine(), out int weight))
+                {
+                    Console.Write("Введите национальность: ");
+                    nationality = Console.ReadLine();
+                }
+                else
+                {
+                    isWork = InputError();
+                    Console.WriteLine();
+                    continue;
+                }
+
+                if (nationality.Any(char.IsLetter) == false)
+                {
+                    isWork = InputError();
+                    Console.WriteLine();
+                    continue;
+                }
+
+                var filtredCulpritByCustody = _culprits.Where(culprit =>
+                culprit.Heigh == inputHeigh &&
+                culprit.IsCustody == false &&
+                culprit.Weight == weight &&
+                culprit.Nationality.ToLower() == nationality.ToLower()).Select(culprit => culprit);
+
+                if (filtredCulpritByCustody.Any())
+                {
+                    foreach (var culpritName in filtredCulpritByCustody)
+                    {
+                        Console.WriteLine(culpritName.FullName);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("По вашему запросу ни какого не найдено.");
+                }
+
+                isWork = false;
+                Console.WriteLine("Введите любую клавишу, чтобы продолжить.");
+                Console.ReadKey();
             } while (isWork);
         }
 
@@ -108,10 +118,10 @@ namespace SearchCulprit
             IsCustody = isCustody;
         }
 
-        public string FullName { get; private set; }
-        public int Heigh { get; private set; }
-        public int Weight { get; private set; }
-        public string Nationality { get; private set; }
-        public bool IsCustody { get; private set; }
+        public string FullName { get; }
+        public int Heigh { get; }
+        public int Weight { get; }
+        public string Nationality { get; }
+        public bool IsCustody { get; }
     }
 }
