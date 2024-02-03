@@ -1,0 +1,7 @@
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\bin\Debug\AnarchyHospital.exe.config
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\bin\Debug\AnarchyHospital.exe
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\bin\Debug\AnarchyHospital.pdb
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\obj\Debug\AnarchyHospital.csproj.AssemblyReference.cache
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\obj\Debug\AnarchyHospital.csproj.CoreCompileInputs.cache
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\obj\Debug\AnarchyHospital.exe
+D:\Repositoryes\kocept_art\LINQ\AnarchyHospital\obj\Debug\AnarchyHospital.pdb

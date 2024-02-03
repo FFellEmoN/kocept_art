@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 
 namespace AnarchyHospital
 {
@@ -8,6 +10,9 @@ namespace AnarchyHospital
     {
         static void Main(string[] args)
         {
+            Console.OutputEncoding = Encoding.Unicode;
+            Console.InputEncoding = Encoding.Unicode;
+
             Hospital hospital = new Hospital();
             hospital.Work();
         }
@@ -19,17 +24,19 @@ namespace AnarchyHospital
 
         public Hospital()
         {
-            _patients = new List<Patient>();
-            _patients.Add(new Patient("Иванов Иван Иванович", 72, "Инфаркт"));
-            _patients.Add(new Patient("Чистяков Иван Юрьевич", 25, "Переломы ребер"));
-            _patients.Add(new Patient("Ковалев Марк Елисеевич", 30, "Чахотка"));
-            _patients.Add(new Patient("Мельников Даниил Владиславович", 22, "Чахотка"));
-            _patients.Add(new Patient("Трофимов Сергей Иванович", 35, "Глухонемота"));
-            _patients.Add(new Patient("Быков Егор Захарович", 44, "Побои"));
-            _patients.Add(new Patient("Горбачев Егор Макарович", 21, "Синяки"));
-            _patients.Add(new Patient("Колесников Илья Иванович", 24, "Головная боль"));
-            _patients.Add(new Patient("Фокин Артур Андреевич", 27, "Головная боль"));
-            _patients.Add(new Patient("Антонов Али Григорьевич", 66, "Инсульт"));
+            _patients = new List<Patient>
+            {
+                new Patient("Иванов Иван Иванович", 72, "Инфаркт"),
+                new Patient("Чистяков Иван Юрьевич", 25, "Переломы ребер"),
+                new Patient("Ковалев Марк Елисеевич", 30, "Чахотка"),
+                new Patient("Мельников Даниил Владиславович", 22, "Чахотка"),
+                new Patient("Трофимов Сергей Иванович", 35, "Глухонемота"),
+                new Patient("Быков Егор Захарович", 44, "Побои"),
+                new Patient("Горбачев Егор Макарович", 21, "Синяки"),
+                new Patient("Колесников Илья Иванович", 24, "Головная боль"),
+                new Patient("Фокин Артур Андреевич", 27, "Головная боль"),
+                new Patient("Антонов Али Григорьевич", 66, "Инсульт")
+            };
         }
 
         public void Work()
@@ -41,7 +48,7 @@ namespace AnarchyHospital
 
             bool isWork = true;
 
-            while (isWork)
+            do
             {
                 Console.WriteLine("Добро пожаловать в больницу.");
 
@@ -51,9 +58,9 @@ namespace AnarchyHospital
                 Console.WriteLine($"{ExitMenu}) - выход.");
 
                 Console.Write("Дейстиве: ");
-                string userInput = Console.ReadLine();
+                string diciredAction = Console.ReadLine();
 
-                switch (userInput)
+                switch (diciredAction)
                 {
                     case SortPatientsByFullNameCommand:
                         SortPatientsByFullName();
@@ -64,7 +71,7 @@ namespace AnarchyHospital
                         break;
 
                     case ShowPatientsByDiseaseCommand:
-                        DischargePatient();
+                        ShowPatientsCertainDisease();
                         break;
 
                     case ExitMenu:
@@ -75,7 +82,11 @@ namespace AnarchyHospital
                         Console.WriteLine("Хм.. Такой команды нету.");
                         break;
                 }
-            }
+
+                Console.WriteLine("\nНажмите любую клавишу чтобы продолжить.");
+                Console.ReadKey();
+                Console.Clear();
+            } while (isWork);
         }
 
         private void SortPatientsByFullName()
@@ -90,13 +101,24 @@ namespace AnarchyHospital
             ShowPatientsInfo(_patients);
         }
 
-        private void DischargePatient()
+        private void ShowPatientsCertainDisease()
         {
+            ShowAllDisease();
+
             Console.Write("Введите заболевание: ");
             string disease = Console.ReadLine();
 
-            _patients = _patients.Where(patient => patient.Disease.ToLower() == disease.ToLower()).ToList();
-            ShowPatientsInfo(_patients);
+            if (disease.Any(char.IsLetter))
+            {
+                var patientsCertainDisease = _patients.Where(patient => patient.Disease.ToLower() == disease.ToLower()).ToList();
+
+                Console.WriteLine($"\nВсе пацинты с заболеванием {disease}");
+                ShowPatientsInfo(patientsCertainDisease);
+            }
+            else
+            {
+                Console.WriteLine("Не верный ввод.");
+            }
         }
 
         private void ShowPatientsInfo(List<Patient> patients)
@@ -106,6 +128,17 @@ namespace AnarchyHospital
                 Console.Write($"{i + 1}. ");
                 patients[i].ShowPatient();
             }
+        }
+        private void ShowAllDisease()
+        {
+            Console.WriteLine("\nПеречень всех заболеваний в больнице: ");
+
+            foreach (Patient patient in _patients)
+            {
+                Console.WriteLine(patient.Disease);
+            }
+
+            Console.WriteLine();
         }
     }
 
@@ -118,9 +151,9 @@ namespace AnarchyHospital
             Disease = disease;
         }
 
-        public string FullName { get; private set; }
-        public int Age { get; private set; }
-        public string Disease { get; private set; }
+        public string FullName { get; }
+        public int Age { get; }
+        public string Disease { get; }
 
         public void ShowPatient()
         {
