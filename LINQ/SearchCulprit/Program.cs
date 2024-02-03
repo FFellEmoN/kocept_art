@@ -80,7 +80,7 @@ namespace SearchCulprit
                 culprit.Heigh == inputHeigh &&
                 culprit.IsCustody == false &&
                 culprit.Weight == weight &&
-                culprit.Nationality.ToLower() == nationality.ToLower()).Select(culprit => culprit);
+                culprit.Nationality.ToLower() == nationality.ToLower());
 
                 if (filtredCulpritByCustody.Any())
                 {
