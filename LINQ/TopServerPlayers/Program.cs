@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace TopServerPlayers
 {
@@ -17,23 +15,26 @@ namespace TopServerPlayers
 
     class Server
     {
-        private List<Player> _players = new List<Player>();
+        private List<Player> _players;
 
         public Server()
         {
-            _players.Add(new Player("_LEON_", 20, 71));
-            _players.Add(new Player("ARBUS", 55, 82));
-            _players.Add(new Player("LOL", 56, 78));
-            _players.Add(new Player("Win_1", 34, 83));
-            _players.Add(new Player("Luti", 86, 94));
-            _players.Add(new Player("Dad", 36, 63));
-            _players.Add(new Player("Brawler", 46, 86));
-            _players.Add(new Player("Toxic", 24, 45));
-            _players.Add(new Player("432_", 74, 64));
-            _players.Add(new Player("GG_OMG", 35, 74));
-            _players.Add(new Player("S_S_S", 168, 75));
-            _players.Add(new Player("One1", 234, 111));
-            _players.Add(new Player("LiGA", 35, 45));
+            _players = new List<Player>
+            {
+                new Player("_LEON_", 20, 71),
+                new Player("ARBUS", 55, 82),
+                new Player("LOL", 56, 78),
+                new Player("Win_1", 34, 83),
+                new Player("Luti", 86, 94),
+                new Player("Dad", 36, 63),
+                new Player("Brawler", 46, 86),
+                new Player("Toxic", 24, 45),
+                new Player("432_", 74, 64),
+                new Player("GG_OMG", 35, 74),
+                new Player("S_S_S", 168, 75),
+                new Player("One1", 234, 111),
+                new Player("LiGA", 35, 45)
+            };
         }
 
         public void Work()
@@ -58,11 +59,11 @@ namespace TopServerPlayers
                 switch (diciredAction)
                 {
                     case ShowTopPlayersByLevelMenu:
-                        ShowPlayersByLevel();
+                        ShowTopThreePlayersByLevel();
                         break;
 
                     case ShowTopPlayersByPowerMenu:
-                        ShowPlayersByPower();
+                        ShowTopThreePlayersByPower();
                         break;
 
                     case ExitMenu:
@@ -79,7 +80,7 @@ namespace TopServerPlayers
             } while (isWork == true) ;
         }
 
-        private void ShowPlayersByLevel()
+        private void ShowTopThreePlayersByLevel()
         {
             int numberTopPlayers = 3;
 
@@ -87,10 +88,10 @@ namespace TopServerPlayers
 
             Console.WriteLine($"\nТоп {numberTopPlayers} игрока по уровню:\n");
 
-            ShowInfo(playersByLevel);
+            ShowPlayerInfo(playersByLevel);
         }
 
-        private void ShowPlayersByPower()
+        private void ShowTopThreePlayersByPower()
         {
             int numberTopPlayers = 3;
 
@@ -98,10 +99,10 @@ namespace TopServerPlayers
 
             Console.WriteLine($"\nТоп {numberTopPlayers} игрока по силе:\n");
 
-            ShowInfo(playersByPower);
+            ShowPlayerInfo(playersByPower);
         }
 
-        private void ShowInfo(List<Player> players)
+        private void ShowPlayerInfo(List<Player> players)
         {
             foreach (var player in players)
             {
@@ -119,9 +120,9 @@ namespace TopServerPlayers
             Power = power;
         }
 
-        public string Name { get; private set; }
-        public int Level { get; private set; }
-        public int Power { get; private set; }
+        public string Name { get;}
+        public int Level { get;}
+        public int Power { get;}
 
         public void ShowInfo()
         {
