@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ConsoleApp7
+namespace DrfinitionDelay
 {
     class Program
     {
@@ -17,22 +15,25 @@ namespace ConsoleApp7
 
     class Warehouse
     {
-        private List<Stew> _stews = new List<Stew>();
+        private List<Stew> _stews;
 
         public Warehouse()
         {
-            _stews.Add(new Stew("Моя цена", 2005, 20));
-            _stews.Add(new Stew("Лента", 2014, 8));
-            _stews.Add(new Stew("365 дней", 1990, 1));
-            _stews.Add(new Stew("Каждый день", 2020, 1));
-            _stews.Add(new Stew("Красная цена", 2019, 5));
-            _stews.Add(new Stew("ГОСТ", 2017, 8));
-            _stews.Add(new Stew("Барко", 2025, 6));
-            _stews.Add(new Stew("ГродФуд", 2010, 6));
-            _stews.Add(new Stew("ВкусВилл", 2024, 10));
-            _stews.Add(new Stew("Честный продукт", 2021, 4));
-            _stews.Add(new Stew("ГлавПродукт", 2022, 6));
-            _stews.Add(new Stew("Наша семья", 2020, 5));
+            _stews = new List<Stew>
+            {
+                new Stew("Моя цена", 2005, 20),
+                new Stew("Лента", 2014, 8),
+                new Stew("365 дней", 1990, 1),
+                new Stew("Каждый день", 2020, 1),
+                new Stew("Красная цена", 2019, 5),
+                new Stew("ГОСТ", 2017, 8),
+                new Stew("Барко", 2025, 6),
+                new Stew("ГродФуд", 2010, 6),
+                new Stew("ВкусВилл", 2024, 10),
+                new Stew("Честный продукт", 2021, 4),
+                new Stew("ГлавПродукт", 2022, 6),
+                new Stew("Наша семья", 2020, 5)
+            };
         }
 
         public void Work()
@@ -57,7 +58,7 @@ namespace ConsoleApp7
                 switch (diciredAction)
                 {
                     case ShowStewsMenu:
-                        ShowStews(_stews);
+                        ShowStews();
                         break;
 
                     case ShowExpiredStewsMenu:
@@ -78,13 +79,23 @@ namespace ConsoleApp7
             }
         }
 
+        private void ShowStews()
+        {
+            Console.WriteLine("\nТушёнка:");
+
+            foreach (var stew in _stews)
+            {
+                stew.ShowIhfo();
+            }
+        }
+
         private void ShowStews(List<Stew> stews)
         {
             Console.WriteLine("\nТушёнка:");
 
             foreach (var stew in stews)
             {
-                stew.ShowDetails();
+                stew.ShowIhfo();
             }
         }
 
@@ -94,7 +105,7 @@ namespace ConsoleApp7
 
             var expiredStews = _stews.Where(stew => (stew.YearOfProduction + stew.ExpirationDate) < todaysYear).ToList();
 
-            Console.WriteLine($"Просроченная тушёнка, по сегодняшнему {todaysYear} году:");
+            Console.WriteLine($"Просроченная тушёнка, на нынешний {todaysYear} год:");
 
             ShowStews(expiredStews);
         }
@@ -102,18 +113,18 @@ namespace ConsoleApp7
 
     class Stew
     {
-        public string Name { get; private set; }
-        public int YearOfProduction { get; private set; }
-        public int ExpirationDate { get; private set; }
-
-        public Stew(string initials, int yearOfProduction, int expirationDate)
+        public Stew(string name, int yearOfProduction, int expirationDate)
         {
-            Name = initials;
+            Name = name;
             YearOfProduction = yearOfProduction;
             ExpirationDate = expirationDate;
         }
 
-        public void ShowDetails()
+        public string Name { get; }
+        public int YearOfProduction { get; }
+        public int ExpirationDate { get; }
+
+        public void ShowIhfo()
         {
             Console.WriteLine($"Тушёнка - {Name}, год поизводства - {YearOfProduction}, срок годности - {ExpirationDate}.");
         }
