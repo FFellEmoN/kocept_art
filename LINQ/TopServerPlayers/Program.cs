@@ -47,10 +47,12 @@ namespace TopServerPlayers
 
             string diciredAction;
 
+            int numberTopPlayers = 3;
+
             do
             {
-                Console.WriteLine($"{ShowTopPlayersByLevelMenu}) - топ 3 игрока по уровню");
-                Console.WriteLine($"{ShowTopPlayersByPowerMenu}) - топ 3 игрока по силе");
+                Console.WriteLine($"{ShowTopPlayersByLevelMenu}) - топ {numberTopPlayers} игрока по уровню");
+                Console.WriteLine($"{ShowTopPlayersByPowerMenu}) - топ {numberTopPlayers} игрока по силе");
                 Console.WriteLine($"{ExitMenu}) - выход.");
 
                 Console.Write("\nВедите желаемое действие: ");
@@ -59,11 +61,11 @@ namespace TopServerPlayers
                 switch (diciredAction)
                 {
                     case ShowTopPlayersByLevelMenu:
-                        ShowTopThreePlayersByLevel();
+                        ShowTopPlayersByLevel(numberTopPlayers);
                         break;
 
                     case ShowTopPlayersByPowerMenu:
-                        ShowTopThreePlayersByPower();
+                        ShowTopPlayersByPower(numberTopPlayers);
                         break;
 
                     case ExitMenu:
@@ -80,29 +82,25 @@ namespace TopServerPlayers
             } while (isWork == true) ;
         }
 
-        private void ShowTopThreePlayersByLevel()
+        private void ShowTopPlayersByLevel(int numberTopPlayers)
         {
-            int numberTopPlayers = 3;
-
             var playersByLevel = _players.OrderByDescending(_patients => _patients.Level).Take(numberTopPlayers).ToList();
 
             Console.WriteLine($"\nТоп {numberTopPlayers} игрока по уровню:\n");
 
-            ShowPlayerInfo(playersByLevel);
+            ShowPlayersInfo(playersByLevel);
         }
 
-        private void ShowTopThreePlayersByPower()
+        private void ShowTopPlayersByPower(int numberTopPlayers)
         {
-            int numberTopPlayers = 3;
-
             var playersByPower = _players.OrderByDescending(_patients => _patients.Power).Take(numberTopPlayers).ToList();
 
             Console.WriteLine($"\nТоп {numberTopPlayers} игрока по силе:\n");
 
-            ShowPlayerInfo(playersByPower);
+            ShowPlayersInfo(playersByPower);
         }
 
-        private void ShowPlayerInfo(List<Player> players)
+        private void ShowPlayersInfo(List<Player> players)
         {
             foreach (var player in players)
             {
