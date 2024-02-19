@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Weapons
@@ -17,32 +18,35 @@ namespace Weapons
 
     class Database
     {
-        private List<Soldier> _soldiers = new List<Soldier>();
+        private List<Soldier> _soldiers;
 
         public Database()
         {
-            _soldiers.Add(new Soldier("Вова", "СГК Канарейка", "Майор", 12));
-            _soldiers.Add(new Soldier("Петя", "АК-9", "Капитан", 6));
-            _soldiers.Add(new Soldier("Витя", "АК-74М", "Рядовой", 24));
-            _soldiers.Add(new Soldier("Серёжа", "Пистолет Макарова", "Лейтенант", 15));
-            _soldiers.Add(new Soldier("Саша", "М4", "Сержант", 20));
-            _soldiers.Add(new Soldier("Рома", "АК47", "Прапорщик", 16));
-
+            _soldiers = new List<Soldier>
+            {
+                new Soldier("Вова", "СГК Канарейка", "Майор", 12),
+                new Soldier("Петя", "АК-9", "Капитан", 6),
+                new Soldier("Витя", "АК-74М", "Рядовой", 24),
+                new Soldier("Серёжа", "Пистолет Макарова", "Лейтенант", 15),
+                new Soldier("Саша", "М4", "Сержант", 20),
+                new Soldier("Рома", "АК47", "Прапорщик", 16)
+            };
         }
 
         public void Work()
         {
             const string ShowSoldiersInformationMenu = "1";
-            const string ShowNameRankSoldiersMenu = "2";
+            const string ShowNamesRanksSoldiersMenu = "2";
             const string ExitMenu = "3";
 
             bool isWork = true;
+
             string diciredAction;
 
-            while (isWork == true)
+            do
             {
                 Console.WriteLine($"{ShowSoldiersInformationMenu} - вывести всю информацию о солдатах.");
-                Console.WriteLine($"{ShowNameRankSoldiersMenu} - вывести имя и воинское звание.");
+                Console.WriteLine($"{ShowNamesRanksSoldiersMenu} - вывести имя и воинское звание.");
                 Console.WriteLine($"{ExitMenu} - выход.");
 
                 Console.Write("\nВведите желаемое действие: ");
@@ -55,8 +59,8 @@ namespace Weapons
                         ShowSoldiersInformation();
                         break;
 
-                    case ShowNameRankSoldiersMenu:
-                        ShowNameRankSoldiers();
+                    case ShowNamesRanksSoldiersMenu:
+                        ShowNamesRanksSoldiers();
                         break;
 
                     case ExitMenu:
@@ -71,7 +75,7 @@ namespace Weapons
                 Console.WriteLine("Нажмите любую клавишу, чтобы продолжить.");
                 Console.ReadKey();
                 Console.Clear();
-            }
+            } while (isWork);
         }
 
         private void ShowSoldiersInformation()
@@ -82,9 +86,9 @@ namespace Weapons
             }
         }
 
-        private void ShowNameRankSoldiers()
+        private void ShowNamesRanksSoldiers()
         {
-            var newSoldiers = _soldiers.Select( soldier => new { soldier.Name, soldier.Rank });
+            var newSoldiers = _soldiers.Select(soldier => new { soldier.Name, soldier.Rank });
 
             foreach (var soldier in newSoldiers)
             {
@@ -95,18 +99,18 @@ namespace Weapons
 
     class Soldier
     {
-        public Soldier(string name, string armament, string title, int serviceLife)
+        public Soldier(string name, string armament, string rank, int serviceLife)
         {
             Name = name;
             Armament = armament;
-            Rank = title;
+            Rank = rank;
             ServiceLife = serviceLife;
         }
 
-        public string Name { get; private set; }
-        public string Armament { get; private set; }
-        public string Rank { get; private set; }
-        public int ServiceLife { get; private set; }
+        public string Name { get; }
+        public string Armament { get; }
+        public string Rank { get; }
+        public int ServiceLife { get; }
 
         public void ShowInformation()
         {
